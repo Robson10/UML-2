@@ -12,7 +12,7 @@ namespace UmlDesigner2.Component
 {
     public partial class Canvas : UserControl
     {
-        List<MyCanvasObject> CanvasObjects = new List<MyCanvasObject>();
+        ListCanvasObject CanvasObjects = new ListCanvasObject();
         private MyDictionary.Shape _ShapeToDraw = MyDictionary.Shape.Nothing;
         public MyDictionary.Shape ShapeToDraw
         {
@@ -44,7 +44,7 @@ namespace UmlDesigner2.Component
         //lewy utworzenie controlki, zaznaczenie, ppm menu kontekstowe
 
         Keys _IsMultiSelect = Keys.None;
-        private Keys IsMultiSelect
+        public Keys IsMultiSelect
         {
             get { return _IsMultiSelect; }
             set
@@ -53,29 +53,10 @@ namespace UmlDesigner2.Component
                 if (value == Keys.Escape)
                 {
                     ShapeToDraw = MyDictionary.Shape.Nothing;
-                    CanvasObjectsIsSelected(false);
+                    CanvasObjects.IsSelectedSetValueForAll(false);
                 }
 
             }
-        }
-        private void CanvasObjectsIsSelected(bool isSelected)
-        {
-            for (int i = 0; i < CanvasObjects.Count; i++)
-            {
-                CanvasObjects[i].BackColor = (isSelected)?new SolidBrush(Color.Yellow):new SolidBrush(Color.Gray);//-----------------------------------
-                CanvasObjects[i].IsSelected = isSelected;
-            }
-            Invalidate();
-        }
-        private void CanvasObjectsIsSelected(MyCanvasObject myCanvasObject,bool isSelected, int i)
-        {
-            myCanvasObject.IsSelected = isSelected; //(IsMultiSelect == Keys.ControlKey) ? !myCanvasObject.IsSelected : true; 
-
-
-            myCanvasObject.BackColor = (myCanvasObject.IsSelected) ? new SolidBrush(Color.Yellow) : new SolidBrush(Color.Gray);
-            CanvasObjects.Insert(0,myCanvasObject);
-            CanvasObjects.RemoveAt(i+1);
-            Invalidate();
         }
         protected override void OnKeyDown( KeyEventArgs e)
         {
@@ -86,10 +67,10 @@ namespace UmlDesigner2.Component
             IsMultiSelect = Keys.None;
         }
 
-        bool ppm = true;
+        bool ppm = true;//czy teraz resize czu moze menu kontekstowe
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (IsMultiSelect != Keys.ControlKey) CanvasObjectsIsSelected(false);
+            if (IsMultiSelect != Keys.ControlKey) CanvasObjects.IsSelectedSetValueForAll(false);
 
             if (e.Button == MouseButtons.Left)
             {
@@ -100,18 +81,12 @@ namespace UmlDesigner2.Component
                 }
                 else
                 {
-                    for (int i = 0; i < CanvasObjects.Count; i++)
-                        if (CanvasObjects[i].IsContain(e.Location))
-                        {
-                            CanvasObjectsIsSelected(CanvasObjects[i], true, i);
-                            break;
-                        }
+                    CanvasObjects.SelectObjectContainingPoint(e.Location);
                 }
             }
             else if (e.Button == MouseButtons.Right&& ppm==true)
             {
-                for (int i = 0; i < CanvasObjects.Count; i++)
-                    if (CanvasObjects[i].IsContain(e.Location))
+                if (CanvasObjects.IsAnyObjectContainingPoint(e.Location))
                         MessageBox.Show("menu kontekstowe poszło i do tej pory nie wrociło");
             }
             Invalidate();
@@ -120,16 +95,11 @@ namespace UmlDesigner2.Component
         private Point MouseDownLocation;
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if (IsMultiSelect != Keys.ControlKey) CanvasObjectsIsSelected(false);
+            if (IsMultiSelect != Keys.ControlKey) CanvasObjects.IsSelectedSetValueForAll(false);
 
             if (e.Button == MouseButtons.Left || e.Button == MouseButtons.Right)
             {
-                for (int i = 0; i < CanvasObjects.Count; i++)
-                    if (CanvasObjects[i].IsContain(e.Location))
-                    {
-                        CanvasObjectsIsSelected(CanvasObjects[i],true, i);
-                        break;
-                    }
+                CanvasObjects.SelectObjectContainingPoint(e.Location);
                 ppm = true;
             }
             MouseDownLocation = e.Location;
@@ -140,26 +110,14 @@ namespace UmlDesigner2.Component
         {
             if (e.Button == MouseButtons.Left)
             {
-                ppm = false;
-                for (int i = 0; i < CanvasObjects.Count; i++)
-                    if (CanvasObjects[i].IsSelected && !CanvasObjects[i].IsLocked)
-                    {
-                        CanvasObjects[i].Rect.Location = new Point((e.X - MouseDownLocation.X) + CanvasObjects[i].Rect.Left, (e.Y - MouseDownLocation.Y) + CanvasObjects[i].Rect.Top);
-                    }
+                CanvasObjects.MoveSelectedObjects(ref MouseDownLocation,  e.Location);
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
             else if (e.Button == MouseButtons.Right)
             {
                 ppm = false;
-                for (int i = 0; i < CanvasObjects.Count; i++)
-                {
-                    if (CanvasObjects[i].IsSelected && !CanvasObjects[i].IsLocked)
-                    {
-                        CanvasObjects[i].Rect.Width = e.X - CanvasObjects[i].Rect.X + (CanvasObjects[i].Rect.X + CanvasObjects[i].Rect.Width - MouseDownLocation.X);
-                        CanvasObjects[i].Rect.Height = e.Y - CanvasObjects[i].Rect.Y + (CanvasObjects[i].Rect.Y + CanvasObjects[i].Rect.Height - MouseDownLocation.Y);
-                    }
-                }
+                CanvasObjects.ResizeSelectedObjects(ref MouseDownLocation, e.Location);
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
@@ -173,23 +131,52 @@ namespace UmlDesigner2.Component
     }
     public class ListCanvasObject : List<MyCanvasObject>
     {
-        public void IsAnyObjectContainPoint(Point location)
+        public void SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsContain(location))
                 {
-                    CanvasObjectsIsSelected(base[i], true, i);
+                    base[i].IsSelected = true;
+                    base[i].BackColor = (base[i].IsSelected) ? new SolidBrush(Color.Yellow) : new SolidBrush(Color.Gray);
+                    base.Insert(0, base[i]);
+                    base.RemoveAt(i + 1);
                     break;
                 }
         }
-        private void CanvasObjectsIsSelected(MyCanvasObject myCanvasObject, bool isSelected, int i)
+        public bool IsAnyObjectContainingPoint(Point location)
         {
-            myCanvasObject.IsSelected = isSelected; //(IsMultiSelect == Keys.ControlKey) ? !myCanvasObject.IsSelected : true; 
+            for (int i = 0; i < base.Count; i++)
+                if (base[i].IsContain(location))
+                    return true;
+            return false;
+        }
+        public void MoveSelectedObjects(ref Point MouseDownLocation, Point e)
+        {
+            for (int i = 0; i < base.Count; i++)
+                if (base[i].IsSelected && !base[i].IsLocked)
+                {
+                    base[i].Rect.Location = new Point((e.X - MouseDownLocation.X) + base[i].Rect.Left, (e.Y - MouseDownLocation.Y) + base[i].Rect.Top);
+                }
+        }
+        public void ResizeSelectedObjects(ref Point MouseDownLocation, Point e)
+        {
+            for (int i = 0; i < base.Count; i++)
+            {
+                if (base[i].IsSelected && !base[i].IsLocked)
+                {
+                    base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
+                    base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+                }
+            }
+        }
 
-
-            myCanvasObject.BackColor = (myCanvasObject.IsSelected) ? new SolidBrush(Color.Yellow) : new SolidBrush(Color.Gray);
-            base.Insert(0, myCanvasObject);
-            base.RemoveAt(i + 1);
+        public void IsSelectedSetValueForAll(bool isSelected)
+        {
+            for (int i = 0; i < base.Count; i++)
+            {
+                base[i].BackColor = (isSelected) ? new SolidBrush(Color.Yellow) : new SolidBrush(Color.Gray);//-----------------------------------
+                base[i].IsSelected = isSelected;
+            }
         }
     }
 
