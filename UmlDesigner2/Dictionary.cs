@@ -122,5 +122,18 @@ namespace UmlDesigner2
             else if (shape == Shape.Decision) return 21;
             else return 1;
         }
+        public static string CanvasObjectText(Shape shape)
+        {
+            if (shape == Shape.Start) return "Start";
+            else if (shape == Shape.Input) return "Input";
+            else if (shape == Shape.Execution) return "Execution";
+            else if (shape == Shape.End) return "End";
+            else if (shape == Shape.Decision) return "Decision";
+            else return "Error";
+        }
+
+        public static string BlockStart_Text = "Start";
+        public static string BlockEnd_Text = "End";
+        public static Size RubberSize = new Size(10, 10);
     }
 }
