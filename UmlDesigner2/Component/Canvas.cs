@@ -29,13 +29,110 @@ namespace UmlDesigner2.Component
                     Cursor = Cursors.Cross;
                 }
             }
-        } 
+        }
 
+        private Label[] Rubbers = new Label[8] { new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label() };
+        private void RubbersPresets()
+        {
+            for (int i = 0; i < Rubbers.Length; i++)
+            {
+                Rubbers[i].BackColor = Color.Silver;
+                Controls.Add(Rubbers[i]);
+                Rubbers[i].Visible = false;
+                Rubbers[i].Size = MyDictionary.RubberSize;
+                Rubbers[i].TabIndex = i;
+                Rubbers[i].MouseDown += Rubbers_MouseDown;
+                Rubbers[i].MouseMove += Rubbers_MouseMove;
+            }
+            Rubbers[0].Cursor = Cursors.SizeNWSE;
+            Rubbers[1].Cursor = Cursors.SizeNS;
+            Rubbers[2].Cursor = Cursors.SizeNESW;
+            Rubbers[3].Cursor = Cursors.SizeWE;
+            Rubbers[4].Cursor = Cursors.SizeNWSE;
+            Rubbers[5].Cursor = Cursors.SizeNS;
+            Rubbers[6].Cursor = Cursors.SizeNESW;
+            Rubbers[7].Cursor = Cursors.SizeWE;
+        }
+        private Point MouseDownLocation_Rubbers;
+        /// <summary>
+        /// Metoda służąca do zapisania miejsca wcisniecia LPM na 1z8 gumek
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Rubbers_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+                MouseDownLocation_Rubbers = e.Location;
+        }
+        /// <summary>
+        /// Metoda służąca do zmiany rozmiaru kontrolki w wyniku ciągnięcia jednej z gumek
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void Rubbers_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                //if ((sender as Label).TabIndex == 0) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; }
+                //else if ((sender as Label).TabIndex == 1) { Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; }
+                //else if ((sender as Label).TabIndex == 2) { Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; Width += e.X; }
+                //else if ((sender as Label).TabIndex == 3) { Width += e.X; }
+                //else if ((sender as Label).TabIndex == 4) { Width += e.X; Height += e.Y; }
+                //else if ((sender as Label).TabIndex == 5) { Height += e.Y; }
+                //else if ((sender as Label).TabIndex == 6) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; Height += e.Y; }
+                //else if ((sender as Label).TabIndex == 7) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; }
+                CanvasObjects.ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers,e.Location, (sender as Label).TabIndex);
+                if (CanvasObjects.Count > 0) UpdateRubbers(CanvasObjects[0]);
+                Invalidate();
+            }
+        }
+        /// <summary>
+        /// Metoda aktualizująca położenie gumek wywoływana przez event OnResize();
+        /// </summary>
+        protected void UpdateRubbers(MyCanvasObject canvasObject)
+        {
+
+                int left = canvasObject.Rect.Location.X;
+                int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2;
+                int right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
+                int up = canvasObject.Rect.Location.Y;
+                int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2;
+                int down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+
+                Point topLeft = new Point(left, up);
+                Point topCenter = new Point(centerX, up);
+                Point topRight = new Point(right, up);
+                Point centerLeft = new Point(left, centerY);
+                Point centerRight = new Point(right, centerY);
+                Point bottomLeft = new Point(left, down);
+                Point bottomCenter = new Point(centerX, down);
+                Point bottomRight = new Point(right, down);
+
+                Rubbers[0].Location = topLeft;
+                Rubbers[1].Location = topCenter;
+                Rubbers[2].Location = topRight;
+                Rubbers[3].Location = centerRight;
+                Rubbers[4].Location = bottomRight;
+                Rubbers[5].Location = bottomCenter;
+                Rubbers[6].Location = bottomLeft;
+                Rubbers[7].Location = centerLeft;
+                UpdateRubberVisible(canvasObject.IsSelected);
+
+        }
+        /// <summary>
+        /// Metoda aktualizująca widoczność gumek wywoływana w geterze IsSelected
+        /// </summary>
+        private void UpdateRubberVisible(bool isSelected)
+        {
+            for (int i = 0; i < Rubbers.Length; i++)
+                Rubbers[i].Visible = isSelected;
+        }
 
         public Canvas()
         {
             InitializeComponent();
             DoubleBuffered = true;
+            RubbersPresets();
         }
         public void ResizeAll( Size clientSize)
         {
@@ -82,6 +179,8 @@ namespace UmlDesigner2.Component
                 else
                 {
                     CanvasObjects.SelectObjectContainingPoint(e.Location);
+                    UpdateRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
+
                 }
             }
             else if (e.Button == MouseButtons.Right&& ppm==true)
@@ -110,7 +209,8 @@ namespace UmlDesigner2.Component
         {
             if (e.Button == MouseButtons.Left)
             {
-                CanvasObjects.MoveSelectedObjects(ref MouseDownLocation,  e.Location);
+                CanvasObjects.MoveSelectedObjects(ref MouseDownLocation, e.Location);
+                if (CanvasObjects.Count > 0) UpdateRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
@@ -118,6 +218,7 @@ namespace UmlDesigner2.Component
             {
                 ppm = false;
                 CanvasObjects.ResizeSelectedObjects(ref MouseDownLocation, e.Location);
+                if (CanvasObjects.Count > 0) UpdateRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
@@ -125,12 +226,13 @@ namespace UmlDesigner2.Component
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode=System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            for (int i = 0; i < CanvasObjects.Count; i++)
+            for (int i = CanvasObjects.Count-1; i >=0 ; i--)
                 CanvasObjects[i].Draw( e.Graphics);
         }
     }
     public class ListCanvasObject : List<MyCanvasObject>
     {
+
         public void SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
@@ -169,6 +271,83 @@ namespace UmlDesigner2.Component
                 }
             }
         }
+        public void ResizeSelectedObjectsByRubbers(ref Point MouseDownLocation, Point e,int RubberID)
+        {
+            //zaradzenie na obroconą kontrolkę
+            switch(RubberID)
+            {
+                case 0:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Location = new Point( e.X + base[i].Rect.Location.X - MouseDownLocation.X, e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
+                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
+                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
+                        }
+                    break;
+                case 1:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Location= new Point(base[i].Rect.Location.X, e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
+                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
+                        }
+                    break;
+                case 2:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Location = new Point(base[i].Rect.Location.X,e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
+                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
+                            base[i].Rect.Width += e.X;
+                        }
+                    break;
+                case 3:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                            base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
+                    break;
+                case 4:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
+                            base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+                        }
+                    break;
+                case 5: 
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                            base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+                    break;
+                case 6:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Location = new Point(e.X + base[i].Rect.Location.X - MouseDownLocation.X, base[i].Rect.Location.Y);
+                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
+                            base[i].Rect.Height += e.Y;
+                        }
+                    break;
+                case 7:
+                    for (int i = 0; i < base.Count; i++)
+                        if (base[i].IsSelected && !base[i].IsLocked)
+                        {
+                            base[i].Rect.Location = new Point(e.X + base[i].Rect.Location.X - MouseDownLocation.X, base[i].Rect.Location.Y);
+                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
+                        }
+                    break;
+            }
+            
+            //for (int i = 0; i < base.Count; i++)
+            //{
+            //    if (base[i].IsSelected && !base[i].IsLocked)
+            //    {
+            //        base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
+            //        base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+            //    }
+            //}
+        }
 
         public void IsSelectedSetValueForAll(bool isSelected)
         {
@@ -189,9 +368,8 @@ namespace UmlDesigner2.Component
             Text = MyDictionary.CanvasObjectText(Shape);
         }
 
-        
-        
-        
+
+
         public int FontSize;
         public string Text; //zawartosc tekstowa kontrolki
         public bool IsSelected=false;//czy jest zaznaczona
@@ -306,7 +484,6 @@ namespace UmlDesigner2.Component
         private void DrawExecution(Graphics g)
         {
             g.FillRectangle(BackColor, Rect);
-            DrawText(g);
         }
         private void DrawDecision(Graphics g)
         {
