@@ -18,10 +18,9 @@ namespace UmlDesigner2.Component.Workspace.Clock
             this.DoubleBuffered = true;
             update();
 
+            timer.Tick += Timer_Tick;
             Start();//bedzie wywolywane z zewnątrz
 
-            timer.Start();
-            timer.Tick += Timer_Tick;
         }
         
         private void Timer_Tick(object sender, EventArgs e)
@@ -43,6 +42,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         {
             if (ClockVariables.isRunnable)
             {
+                timer.Start();
                 BeginExam = new DateTime(DateTime.Now.Ticks);
                 if (ClockVariables.TimeForExam != null)
                     EndExam = BeginExam.Add(ClockVariables.TimeForExam);
@@ -83,7 +83,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
             {
                 case (ClockVariables.ClockType.DigitalCountingDown):
                     DrawDigitalCountingDown(ref e);
-                break;
+                    break;
                 case (ClockVariables.ClockType.DigitalCountingUp):
                     DrawDigitalCountingUp(ref e);
                     break;

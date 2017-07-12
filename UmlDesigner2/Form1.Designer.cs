@@ -256,7 +256,6 @@
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "Form1";
             this.Text = "spli";
-            this.Load += new System.EventHandler(this.Form1_Load);
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.tabControl1.ResumeLayout(false);
