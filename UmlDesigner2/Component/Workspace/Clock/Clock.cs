@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,61 +9,104 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.Clock
 {
-    public partial class Clock: Panel
+    public sealed partial class Clock : Panel
     {
-        Timer timer = new Timer() { Interval = 1000 };
-        DateTime BeginExam;
-        DateTime EndExam;
+        readonly Timer _timer = new Timer() {Interval = 100};
+        private DateTime _beginExam;
+        private DateTime _endExam;
+        private ToolTip _toolTip;
+        private ContextMenuStrip _contextMenu;
         public Clock()
         {
-            this.DoubleBuffered = true;
-            update();
-
-            timer.Tick += Timer_Tick;
-            Start();//bedzie wywolywane z zewnątrz
+            DoubleBuffered = true;
+            UpdateChanges();
+            Start(); //bedzie wywolywane z zewnątrz
+            _contextMenu=new ContextMenuStrip();
+            _contextMenu.Items.Add("Zegar Analogowy");
+            _contextMenu.Items.Add("Zegar Cyfrowy #1");
+            _contextMenu.Items.Add("Zegar Cyfrowy #2");
+            _contextMenu.Items.Add("Wyłącz");
+            _contextMenu.ItemClicked += _contextMenu_ItemClicked;
+            this.ContextMenuStrip = _contextMenu;
 
         }
-        
+
+        private void _contextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text.Equals("Zegar Analogowy"))
+            {
+                ClockVariables.ChoosenClockType = ClockVariables.ClockType.Analog;
+                UpdateChanges();
+            }
+            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1"))
+            {
+                ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingDown;
+                UpdateChanges();
+            }
+            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2"))
+            {
+                ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingUp;
+                UpdateChanges();
+            }
+            if (e.ClickedItem.Text.Equals("Wyłącz"))
+            {
+                this.Dispose();
+            }
+        }
+
         private void Timer_Tick(object sender, EventArgs e)
         {
-            //if (ClockVariables.TimeForExam != null)
-            //{
-            //    if (DateTime.Now > EndExam)
-            //    {
-            //        string asd = DateTime.Now.ToLongTimeString() + "XXX" + EndExam.ToLongTimeString();
-            //        End();
-            //    }
-            //    else
-            //    {
-            //    }
-            //}
-            this.Invalidate();
+            Invalidate();
+            if (ClockVariables.TimeForExam != null)
+            {
+                if (DateTime.Now >= _endExam)
+                {
+                    End();
+                }
+            }
         }
+
         public void Start()
         {
             if (ClockVariables.isRunnable)
             {
-                timer.Start();
-                BeginExam = new DateTime(DateTime.Now.Ticks);
+                _timer.Start();
+                _timer.Tick += Timer_Tick;
+                _beginExam = new DateTime(DateTime.Now.Ticks);
                 if (ClockVariables.TimeForExam != null)
-                    EndExam = BeginExam.Add(ClockVariables.TimeForExam);
+                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
                 ClockVariables.isRunning = true;
                 ClockVariables.isRunnable = false;
+                _toolTip = new ToolTip() { AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
+                
+
             }
-
         }
-        //public void End()
-        //{
-        //    if (!ClockVariables.isRunnable)
-        //    {
-        //        timer.Stop();
-        //        ClockVariables.isRunning = false;
-        //        ClockVariables.isRunnable = true;
-        //        MessageBox.Show("koniec");
-        //    }
-        //}
+        protected override void OnMouseEnter(EventArgs e)
+        {
+            base.OnMouseEnter(e);
+            try
+            {
+                _toolTip.SetToolTip(this,
+                    "Pozostało ci: " + new DateTime(_endExam.Ticks - DateTime.Now.Ticks).ToLongTimeString());
+            }
+            catch
+            {
+                _toolTip.SetToolTip(this,
+                    "Skończył ci się czas");
+            }
+        }
+        public void End()
+        {
+            if (!ClockVariables.isRunnable)
+            {
+                _timer.Stop();
+                ClockVariables.isRunning = false;
+                ClockVariables.isRunnable = true;
+            }
+        }
 
-        protected override void CreateHandle()//ustawienie położenia po dodaniu kontrolki do "parenta"
+        protected override void CreateHandle() //ustawienie położenia po dodaniu kontrolki do "parenta"
         {
             base.CreateHandle();
             this.Location = new Point(this.Parent.Size.Width - this.Width, 0);
@@ -71,15 +115,15 @@ namespace UmlDesigner2.Component.Workspace.Clock
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (this.Parent!=null)
-            this.Location = new Point(this.Parent.Size.Width - this.Width, 0);
+            if (this.Parent != null)
+                this.Location = new Point(this.Parent.Size.Width - this.Width, 0);
         }
 
         //rysowanie odpowiedniego zegara na podstawie wybranej opcji
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            switch(ClockVariables.ChoosenClockType)
+            switch (ClockVariables.ChoosenClockType)
             {
                 case (ClockVariables.ClockType.DigitalCountingDown):
                     DrawDigitalCountingDown(ref e);
@@ -92,45 +136,21 @@ namespace UmlDesigner2.Component.Workspace.Clock
                     break;
             }
         }
-        private void update() //metoda służąca do aktualizowania wrazie zmian.
+
+        public void UpdateChanges() //metoda służąca do aktualizowania wrazie zmian.
         {
             this.BackColor = ClockVariables.bgColor;
             this.Size = ClockVariables.ClockSize;
-        }
-    }
+            switch (ClockVariables.ChoosenClockType)
+            {
+                case (ClockVariables.ClockType.Analog):
+                    AnalogUpdate();
+                    break;
+                default:
+                    DigitalUpdate();
+                    break;
+            }
 
-    //Digital Clock Class
-    partial class Clock
-    {
-        StringBuilder digitalTime=new StringBuilder();
-        private void DrawDigitalCountingUp(ref PaintEventArgs e)
-        {
-            digitalTime.Clear();
-            digitalTime.Append(BeginExam.ToLongTimeString()+ Environment.NewLine + (BeginExam-DateTime.Now).ToString());
-            e.Graphics.DrawString(digitalTime.ToString(), FindMeasuredFont(e.Graphics, digitalTime, this.Size, new Font("Arial", 10)), Brushes.Black, new PointF(0, 0));
-        }
-        private void DrawDigitalCountingDown(ref PaintEventArgs e)
-        {
-            digitalTime.Clear();
-            digitalTime.Append(BeginExam.ToLongTimeString() + Environment.NewLine + new DateTime(DateTime.Now.Ticks - BeginExam.Ticks).ToLongTimeString());
-            e.Graphics.DrawString(digitalTime.ToString(), FindMeasuredFont(e.Graphics, digitalTime, this.Size, new Font("Arial", 10)), Brushes.Black, new PointF(0, 0));
-        }
-        private Font FindMeasuredFont(System.Drawing.Graphics g, StringBuilder longString, Size Room, Font PreferedFont)
-        {
-            SizeF RealSize = g.MeasureString(longString.ToString(), PreferedFont);
-            float HeightScaleRatio = Room.Height / RealSize.Height;
-            float WidthScaleRatio = Room.Width / RealSize.Width;
-            float ScaleRatio = (HeightScaleRatio < WidthScaleRatio) ? ScaleRatio = HeightScaleRatio : ScaleRatio = WidthScaleRatio;
-            float ScaleFontSize = PreferedFont.Size * ScaleRatio;
-            return new Font(PreferedFont.FontFamily, ScaleFontSize);
-        }
-    }
-    //Analog Clock Class
-    partial class Clock
-    {
-        private void DrawAnalog(ref PaintEventArgs e)
-        {
-            //e.Graphics.DrawString(DateTime.Now.ToLongTimeString(), FindMeasuredFont(e.Graphics, DateTime.Now.ToLongTimeString(), new Size(100, 10), new Font("Arial", 40)), Brushes.Black, new PointF(0, 0));
         }
     }
 }

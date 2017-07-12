@@ -49,10 +49,16 @@
     <Compile Include="Component\SettingsWindow.cs" />
     <Compile Include="Component\TabsArea\BlocksTab.cs" />
     <Compile Include="Component\TabsArea\SchematsTab.cs" />
+    <Compile Include="Component\Workspace\Clock\Analog.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component\Workspace\Clock\Clock.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\Clock\ClockVariables.cs" />
+    <Compile Include="Component\Workspace\Clock\Digital.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component\Workspace\Workspace.cs">
       <SubType>UserControl</SubType>
     </Compile>

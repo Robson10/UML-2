@@ -18,9 +18,9 @@ namespace UmlDesigner2.Component.Workspace.Clock
             DigitalCountingDown = 2,
                 DigitalCountingUp =3
         };
-        public static ClockType ChoosenClockType = ClockType.DigitalCountingDown;
+        public static ClockType ChoosenClockType = ClockType.Analog;
         public static Size ClockSize = new Size(200,100);
-        public static TimeSpan TimeForExam = new TimeSpan(0, 0, 15);
+        public static TimeSpan TimeForExam = new TimeSpan(0, 0, 80);
         public static int ClockFontSize = 16;
     }
 }
