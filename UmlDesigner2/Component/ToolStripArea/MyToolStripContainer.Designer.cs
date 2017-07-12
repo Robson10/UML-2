@@ -1,6 +1,6 @@
-﻿namespace UmlDesigner2.Component
+﻿namespace UmlDesigner2.Component.ToolStripArea
 {
-    partial class Canvas
+    partial class MyToolStrip
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             components = new System.ComponentModel.Container();
+            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
         }
 
         #endregion

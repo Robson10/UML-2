@@ -8,19 +8,19 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Component
+namespace UmlDesigner2.Component.Workspace
 {
-    public partial class Canvas : UserControl
+    public partial class Workspace : UserControl
     {
         ListCanvasObject CanvasObjects = new ListCanvasObject();
-        private MyDictionary.Shape _ShapeToDraw = MyDictionary.Shape.Nothing;
-        public MyDictionary.Shape ShapeToDraw
+        private BlockParameters.Shape _ShapeToDraw = BlockParameters.Shape.Nothing;
+        public BlockParameters.Shape ShapeToDraw
         {
             get {return _ShapeToDraw; }
             set
             {
                 _ShapeToDraw = value;
-                if(value==MyDictionary.Shape.Nothing)
+                if(value== BlockParameters.Shape.Nothing)
                 {
                     Cursor = Cursors.Arrow;
                 }
@@ -30,8 +30,8 @@ namespace UmlDesigner2.Component
                 }
             }
         }
-
         private Label[] Rubbers = new Label[8] { new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label() };
+        #region Rubbers
         private void RubbersPresets()
         {
             for (int i = 0; i < Rubbers.Length; i++)
@@ -39,7 +39,7 @@ namespace UmlDesigner2.Component
                 Rubbers[i].BackColor = Color.Silver;
                 Controls.Add(Rubbers[i]);
                 Rubbers[i].Visible = false;
-                Rubbers[i].Size = MyDictionary.RubberSize;
+                Rubbers[i].Size = BlockParameters.RubberSize;
                 Rubbers[i].TabIndex = i;
                 Rubbers[i].MouseDown += Rubbers_MouseDown;
                 Rubbers[i].MouseMove += Rubbers_MouseMove;
@@ -73,14 +73,6 @@ namespace UmlDesigner2.Component
         {
             if (e.Button == MouseButtons.Left)
             {
-                //if ((sender as Label).TabIndex == 0) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; }
-                //else if ((sender as Label).TabIndex == 1) { Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; }
-                //else if ((sender as Label).TabIndex == 2) { Top = e.Y + Top - MouseDownLocation_Rubbers.Y; Height -= e.Y - MouseDownLocation_Rubbers.Y; Width += e.X; }
-                //else if ((sender as Label).TabIndex == 3) { Width += e.X; }
-                //else if ((sender as Label).TabIndex == 4) { Width += e.X; Height += e.Y; }
-                //else if ((sender as Label).TabIndex == 5) { Height += e.Y; }
-                //else if ((sender as Label).TabIndex == 6) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; Height += e.Y; }
-                //else if ((sender as Label).TabIndex == 7) { Left = e.X + Left - MouseDownLocation_Rubbers.X; Width -= e.X - MouseDownLocation_Rubbers.X; }
                 CanvasObjects.ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers,e.Location, (sender as Label).TabIndex);
                 if (CanvasObjects.Count > 0) UpdateRubbers(CanvasObjects[0]);
                 Invalidate();
@@ -91,32 +83,49 @@ namespace UmlDesigner2.Component
         /// </summary>
         protected void UpdateRubbers(MyCanvasObject canvasObject)
         {
+            //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
-                int left = canvasObject.Rect.Location.X;
-                int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2;
-                int right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-                int up = canvasObject.Rect.Location.Y;
-                int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2;
-                int down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+            int left, right, up, down;
+            int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 - BlockParameters.RubberSize.Width / 2;
+            int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 - BlockParameters.RubberSize.Height / 2;
+            if (canvasObject.Rect.Size.Width < 0)
+            {
+                left = canvasObject.Rect.Location.X;
+                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlockParameters.RubberSize.Width;
+            }
+            else
+            {
+                left = canvasObject.Rect.Location.X - BlockParameters.RubberSize.Width;
+                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
+            }
+            if (canvasObject.Rect.Size.Height < 0)
+            {
+                up = canvasObject.Rect.Location.Y;
+                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlockParameters.RubberSize.Height;
+            }
+            else
+            {
+                up = canvasObject.Rect.Location.Y - BlockParameters.RubberSize.Height;
+                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+            }
+            Point topLeft = new Point(left, up);
+            Point topCenter = new Point(centerX, up);
+            Point topRight = new Point(right, up);
+            Point centerLeft = new Point(left, centerY);
+            Point centerRight = new Point(right, centerY);
+            Point bottomLeft = new Point(left, down);
+            Point bottomCenter = new Point(centerX, down);
+            Point bottomRight = new Point(right, down);
 
-                Point topLeft = new Point(left, up);
-                Point topCenter = new Point(centerX, up);
-                Point topRight = new Point(right, up);
-                Point centerLeft = new Point(left, centerY);
-                Point centerRight = new Point(right, centerY);
-                Point bottomLeft = new Point(left, down);
-                Point bottomCenter = new Point(centerX, down);
-                Point bottomRight = new Point(right, down);
-
-                Rubbers[0].Location = topLeft;
-                Rubbers[1].Location = topCenter;
-                Rubbers[2].Location = topRight;
-                Rubbers[3].Location = centerRight;
-                Rubbers[4].Location = bottomRight;
-                Rubbers[5].Location = bottomCenter;
-                Rubbers[6].Location = bottomLeft;
-                Rubbers[7].Location = centerLeft;
-                UpdateRubberVisible(canvasObject.IsSelected);
+            Rubbers[0].Location = topLeft;
+            Rubbers[1].Location = topCenter;
+            Rubbers[2].Location = topRight;
+            Rubbers[3].Location = centerRight;
+            Rubbers[4].Location = bottomRight;
+            Rubbers[5].Location = bottomCenter;
+            Rubbers[6].Location = bottomLeft;
+            Rubbers[7].Location = centerLeft;
+            UpdateRubberVisible(canvasObject.IsSelected);
 
         }
         /// <summary>
@@ -127,13 +136,17 @@ namespace UmlDesigner2.Component
             for (int i = 0; i < Rubbers.Length; i++)
                 Rubbers[i].Visible = isSelected;
         }
+        #endregion
 
-        public Canvas()
+        private Clock.Clock clock = new Clock.Clock();
+        public Workspace()
         {
             InitializeComponent();
             DoubleBuffered = true;
             RubbersPresets();
+            this.Controls.Add(clock);
         }
+        
         public void ResizeAll( Size clientSize)
         {
             Size = clientSize;
@@ -149,7 +162,7 @@ namespace UmlDesigner2.Component
                 _IsMultiSelect = value;
                 if (value == Keys.Escape)
                 {
-                    ShapeToDraw = MyDictionary.Shape.Nothing;
+                    ShapeToDraw = BlockParameters.Shape.Nothing;
                     CanvasObjects.IsSelectedSetValueForAll(false);
                 }
 
@@ -167,20 +180,22 @@ namespace UmlDesigner2.Component
         bool ppm = true;//czy teraz resize czu moze menu kontekstowe
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (IsMultiSelect != Keys.ControlKey) CanvasObjects.IsSelectedSetValueForAll(false);
+            if (IsMultiSelect != BlockParameters.MultiselectKey )CanvasObjects.IsSelectedSetValueForAll(false);
 
             if (e.Button == MouseButtons.Left)
             {
-                if (ShapeToDraw != MyDictionary.Shape.Nothing)
+                if (ShapeToDraw != BlockParameters.Shape.Nothing)
                 {
-                    CanvasObjects.Add(new MyCanvasObject(new Rectangle(e.Location.X - MyDictionary.defaultCanvasControlSize.Width / 2, e.Location.Y - MyDictionary.defaultCanvasControlSize.Height / 2, MyDictionary.defaultCanvasControlSize.Width, MyDictionary.defaultCanvasControlSize.Height),ShapeToDraw));
-                    ShapeToDraw = MyDictionary.Shape.Nothing;
+                    CanvasObjects.Add(new MyCanvasObject(new Rectangle(e.Location.X - BlockParameters.defaultCanvasControlSize.Width / 2, e.Location.Y - BlockParameters.defaultCanvasControlSize.Height / 2, BlockParameters.defaultCanvasControlSize.Width, BlockParameters.defaultCanvasControlSize.Height),ShapeToDraw));
+                    ShapeToDraw = BlockParameters.Shape.Nothing;
                 }
                 else
                 {
-                    CanvasObjects.SelectObjectContainingPoint(e.Location);
-                    UpdateRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
-
+                    if (CanvasObjects.Count > 0)
+                    {
+                        CanvasObjects.SelectObjectContainingPoint(e.Location);
+                        UpdateRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
+                    }
                 }
             }
             else if (e.Button == MouseButtons.Right&& ppm==true)
@@ -190,7 +205,6 @@ namespace UmlDesigner2.Component
             }
             Invalidate();
         }
-        
         private Point MouseDownLocation;
         protected override void OnMouseDown(MouseEventArgs e)
         {
@@ -204,9 +218,9 @@ namespace UmlDesigner2.Component
             MouseDownLocation = e.Location;
             Invalidate();
         }
-        //http://stackoverflow.com/questions/15981840/how-to-draw-and-move-shapes-using-mouse-in-c-sharp
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            //http://stackoverflow.com/questions/15981840/how-to-draw-and-move-shapes-using-mouse-in-c-sharp
             if (e.Button == MouseButtons.Left)
             {
                 CanvasObjects.MoveSelectedObjects(ref MouseDownLocation, e.Location);
@@ -266,8 +280,10 @@ namespace UmlDesigner2.Component
             {
                 if (base[i].IsSelected && !base[i].IsLocked)
                 {
-                    base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
-                    base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+                    int NewWidth= e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
+                    int NewHeight= e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
+                        base[i].Rect.Width = NewWidth;
+                        base[i].Rect.Height = NewHeight;
                 }
             }
         }
@@ -338,15 +354,6 @@ namespace UmlDesigner2.Component
                         }
                     break;
             }
-            
-            //for (int i = 0; i < base.Count; i++)
-            //{
-            //    if (base[i].IsSelected && !base[i].IsLocked)
-            //    {
-            //        base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
-            //        base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
-            //    }
-            //}
         }
 
         public void IsSelectedSetValueForAll(bool isSelected)
@@ -361,14 +368,12 @@ namespace UmlDesigner2.Component
 
     public class MyCanvasObject
     {
-        public MyCanvasObject(Rectangle rect,MyDictionary.Shape shape)
+        public MyCanvasObject(Rectangle rect, BlockParameters.Shape shape)
         {
             Rect = rect;
             Shape = shape;
-            Text = MyDictionary.CanvasObjectText(Shape);
+            Text = BlockParameters.CanvasObjectText(Shape);
         }
-
-
 
         public int FontSize;
         public string Text; //zawartosc tekstowa kontrolki
@@ -379,27 +384,27 @@ namespace UmlDesigner2.Component
 
         #region Done
         public Rectangle Rect;//obszar dla figury - point , size
-        private MyDictionary.Shape _Shape;
-        public MyDictionary.Shape Shape//jaką kontrolke rysujemy
+        private BlockParameters.Shape _Shape;
+        public BlockParameters.Shape Shape//jaką kontrolke rysujemy
         {
             get { return _Shape; }
             set
             {
                 _Shape = value;
-                BackColor = MyDictionary.CanvasObjectBackColor(_Shape);
-                FontColor = MyDictionary.CanvasObjectFontColor(_Shape);
-                FontSize = MyDictionary.CanvasObjectFontSize(_Shape);
+                BackColor = BlockParameters.CanvasObjectBackColor(_Shape);
+                FontColor = BlockParameters.CanvasObjectFontColor(_Shape);
+                FontSize = BlockParameters.CanvasObjectFontSize(_Shape);
 
             }
         }
         public SolidBrush BackColor;
         public Color FontColor;
 
-        //http://stackoverflow.com/questions/34582234/how-to-detect-if-mouse-has-clicked-inside-of-a-certain-shape-in-c-sharp-on-winfo
         public bool IsContain(Point location)
         {
+            //http://stackoverflow.com/questions/34582234/how-to-detect-if-mouse-has-clicked-inside-of-a-certain-shape-in-c-sharp-on-winfo
             var contains = false;
-            if (Shape==MyDictionary.Shape.Start)
+            if (Shape== BlockParameters.Shape.Start)
             { 
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -407,7 +412,7 @@ namespace UmlDesigner2.Component
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == MyDictionary.Shape.End)
+            else if (Shape == BlockParameters.Shape.End)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -415,7 +420,7 @@ namespace UmlDesigner2.Component
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == MyDictionary.Shape.Execution)
+            else if (Shape == BlockParameters.Shape.Execution)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -423,7 +428,7 @@ namespace UmlDesigner2.Component
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == MyDictionary.Shape.Input)
+            else if (Shape == BlockParameters.Shape.Input)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -432,7 +437,7 @@ namespace UmlDesigner2.Component
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == MyDictionary.Shape.Decision)
+            else if (Shape == BlockParameters.Shape.Decision)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -449,15 +454,15 @@ namespace UmlDesigner2.Component
         {
             switch(Shape)
             {
-                case (MyDictionary.Shape.Start):DrawStart(g);
+                case (BlockParameters.Shape.Start):DrawStart(g);
                     break;
-                case (MyDictionary.Shape.End):DrawEnd(g);
+                case (BlockParameters.Shape.End):DrawEnd(g);
                     break;
-                case (MyDictionary.Shape.Input):DrawInput(g);
+                case (BlockParameters.Shape.Input):DrawInput(g);
                     break;
-                case (MyDictionary.Shape.Execution):DrawExecution(g);
+                case (BlockParameters.Shape.Execution):DrawExecution(g);
                     break;
-                case (MyDictionary.Shape.Decision):DrawDecision(g);
+                case (BlockParameters.Shape.Decision):DrawDecision(g);
                     break;
                 default:
                     MessageBox.Show("nie znalazłem odpowiedniego kształtu i nwm co teraz mam narysować ;(");
@@ -511,7 +516,7 @@ namespace UmlDesigner2.Component
                 (
                 Text,
                 font,
-                new SolidBrush(MyDictionary.CanvasObjectFontColor(Shape)),
+                new SolidBrush(BlockParameters.CanvasObjectFontColor(Shape)),
                 Rect.Location.X + (Rect.Width - stringSize.Width) / 2,
                 Rect.Location.Y + Rect.Height / 2 - stringSize.Height / 2
                 );

@@ -46,19 +46,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component\Canvas.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Component\Canvas.Designer.cs">
-      <DependentUpon>Canvas.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Component\MyToolStripContainer.cs">
+    <Compile Include="Component\SettingsWindow.cs" />
+    <Compile Include="Component\TabsArea\BlocksTab.cs" />
+    <Compile Include="Component\TabsArea\SchematsTab.cs" />
+    <Compile Include="Component\Workspace\Clock\Clock.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\MyToolStripContainer.Designer.cs">
+    <Compile Include="Component\Workspace\Clock\ClockVariables.cs" />
+    <Compile Include="Component\Workspace\Workspace.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Component\Workspace\Workspace.Designer.cs">
+      <DependentUpon>Workspace.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Component\ToolStripArea\MyToolStripContainer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Component\ToolStripArea\MyToolStripContainer.Designer.cs">
       <DependentUpon>MyToolStripContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Dictionary.cs" />
+    <Compile Include="Component\ToolStripArea\ToolStripButtonParameters.cs" />
+    <Compile Include="Component\Workspace\BlockParameters.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -67,6 +75,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="Component\Workspace\Workspace.resx">
+      <DependentUpon>Workspace.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -78,6 +89,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -92,7 +104,69 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\Big\Debug.png" />
+    <EmbeddedResource Include="Icons\Big\Decision.jpg" />
+    <EmbeddedResource Include="Icons\Big\End.jpg" />
+    <EmbeddedResource Include="Icons\Big\Error.png" />
+    <EmbeddedResource Include="Icons\Big\Execution.jpg" />
+    <EmbeddedResource Include="Icons\Big\Input.jpg" />
+    <EmbeddedResource Include="Icons\Big\LogIn.png" />
+    <EmbeddedResource Include="Icons\Big\NewFile.png" />
+    <EmbeddedResource Include="Icons\Big\OpenCloudFile.png" />
+    <EmbeddedResource Include="Icons\Big\OpenFile.png" />
+    <EmbeddedResource Include="Icons\Big\Redo.png" />
+    <EmbeddedResource Include="Icons\Big\Run.png" />
+    <EmbeddedResource Include="Icons\Big\SaveFile.png" />
+    <EmbeddedResource Include="Icons\Big\SaveFileAs.png" />
+    <EmbeddedResource Include="Icons\Big\Settings.png" />
+    <EmbeddedResource Include="Icons\Big\Start.jpg" />
+    <EmbeddedResource Include="Icons\Big\Undo.png" />
+    <EmbeddedResource Include="Icons\Decision.jpg" />
+    <EmbeddedResource Include="Icons\End.jpg" />
+    <EmbeddedResource Include="Icons\Execution.jpg" />
+    <EmbeddedResource Include="Icons\Input.jpg" />
+    <EmbeddedResource Include="Icons\Medium\Debug.png" />
+    <EmbeddedResource Include="Icons\Medium\Decision.jpg" />
+    <EmbeddedResource Include="Icons\Medium\End.jpg" />
+    <EmbeddedResource Include="Icons\Medium\Error.png" />
+    <EmbeddedResource Include="Icons\Medium\Execution.jpg" />
+    <EmbeddedResource Include="Icons\Medium\Input.jpg" />
+    <EmbeddedResource Include="Icons\Medium\LogIn.png" />
+    <EmbeddedResource Include="Icons\Medium\NewFile.png" />
+    <EmbeddedResource Include="Icons\Medium\OpenCloudFile.png" />
+    <EmbeddedResource Include="Icons\Medium\OpenFile.png" />
+    <EmbeddedResource Include="Icons\Medium\Redo.png" />
+    <EmbeddedResource Include="Icons\Medium\Run.png" />
+    <EmbeddedResource Include="Icons\Medium\SaveFile.png" />
+    <EmbeddedResource Include="Icons\Medium\SaveFileAs.png" />
+    <EmbeddedResource Include="Icons\Medium\Settings.png" />
+    <EmbeddedResource Include="Icons\Medium\Start.jpg" />
+    <EmbeddedResource Include="Icons\Medium\Undo.png" />
+    <EmbeddedResource Include="Icons\Small\Debug.png" />
+    <EmbeddedResource Include="Icons\Small\Decision.jpg" />
+    <EmbeddedResource Include="Icons\Small\End.jpg" />
+    <EmbeddedResource Include="Icons\Small\Error.png" />
+    <EmbeddedResource Include="Icons\Small\Execution.jpg" />
+    <EmbeddedResource Include="Icons\Small\Input.jpg" />
+    <EmbeddedResource Include="Icons\Small\LogIn.png" />
+    <EmbeddedResource Include="Icons\Small\NewFile.png" />
+    <EmbeddedResource Include="Icons\Small\OpenCloudFile.png" />
+    <EmbeddedResource Include="Icons\Small\OpenFile.png" />
+    <EmbeddedResource Include="Icons\Small\Redo.png" />
+    <EmbeddedResource Include="Icons\Small\Run.png" />
+    <EmbeddedResource Include="Icons\Small\SaveFile.png" />
+    <EmbeddedResource Include="Icons\Small\SaveFileAs.png" />
+    <EmbeddedResource Include="Icons\Small\Settings.png" />
+    <EmbeddedResource Include="Icons\Small\Start.jpg" />
+    <EmbeddedResource Include="Icons\Small\Undo.png" />
+    <EmbeddedResource Include="Icons\Start.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Component\MenuStrip\" />
+    <Folder Include="Component\TabsArea\BlockPropertis\" />
+    <Folder Include="Component\Workspace\ResultComponent\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

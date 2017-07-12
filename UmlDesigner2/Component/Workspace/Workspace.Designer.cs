@@ -1,6 +1,6 @@
-﻿namespace UmlDesigner2.Component
+﻿namespace UmlDesigner2.Component.Workspace
 {
-    partial class MyToolStripContainer
+    partial class Workspace
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.SuspendLayout();
+            // 
+            // Workspace
+            // 
+            this.Name = "Workspace";
+            this.Size = new System.Drawing.Size(424, 430);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
