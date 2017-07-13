@@ -25,12 +25,51 @@ namespace UmlDesigner2.Component.Workspace.Clock
             _contextMenu.Items.Add("Zegar Analogowy");
             _contextMenu.Items.Add("Zegar Cyfrowy #1");
             _contextMenu.Items.Add("Zegar Cyfrowy #2");
-            _contextMenu.Items.Add("Wyłącz");
+            _contextMenu.Items.Add("Wyłącz zegar");
             _contextMenu.ItemClicked += _contextMenu_ItemClicked;
             this.ContextMenuStrip = _contextMenu;
-
+        }
+        public void Start()
+        {
+            if (ClockVariables.isRunnable)
+            {
+                _timer.Start();
+                _timer.Tick += Timer_Tick;
+                _beginExam = new DateTime(DateTime.Now.Ticks);
+                if (ClockVariables.TimeForExam.TotalSeconds!=0)
+                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
+                ClockVariables.isRunning = true;
+                ClockVariables.isRunnable = false;
+                _toolTip = new ToolTip {AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
+            }
         }
 
+        public void End()
+        {
+            if (!ClockVariables.isRunnable)
+            {
+                _timer.Stop();
+                ClockVariables.isRunning = false;
+                ClockVariables.isRunnable = true;
+                MessageBox.Show(ClockVariables.MessageWhenTimeIsOver);
+            }
+        }
+
+        public void UpdateChanges() //metoda służąca do aktualizowania wrazie zmian.
+        {
+            BackColor = ClockVariables.bgColor;
+            Size = new Size(ClockVariables.ClockSize, ClockVariables.ClockSize);
+            switch (ClockVariables.ChoosenClockType)
+            {
+                case (ClockVariables.ClockType.Analog):
+                    AnalogUpdate();
+                    break;
+                default:
+                    DigitalUpdate();
+                    break;
+            }
+
+        }
         private void _contextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text.Equals("Zegar Analogowy"))
@@ -38,17 +77,17 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.Analog;
                 UpdateChanges();
             }
-            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1"))
+            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Odliczający"))
             {
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingDown;
                 UpdateChanges();
             }
-            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2"))
+            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Naliczający"))
             {
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingUp;
                 UpdateChanges();
             }
-            if (e.ClickedItem.Text.Equals("Wyłącz"))
+            if (e.ClickedItem.Text.Contains("Wyłącz"))
             {
                 this.Dispose();
             }
@@ -57,7 +96,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private void Timer_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            if (ClockVariables.TimeForExam != null)
+            if (ClockVariables.TimeForExam.TotalSeconds!=0)
             {
                 if (DateTime.Now >= _endExam)
                 {
@@ -66,22 +105,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
             }
         }
 
-        public void Start()
-        {
-            if (ClockVariables.isRunnable)
-            {
-                _timer.Start();
-                _timer.Tick += Timer_Tick;
-                _beginExam = new DateTime(DateTime.Now.Ticks);
-                if (ClockVariables.TimeForExam != null)
-                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
-                ClockVariables.isRunning = true;
-                ClockVariables.isRunnable = false;
-                _toolTip = new ToolTip() { AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
-                
-
-            }
-        }
+      
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
@@ -93,18 +117,10 @@ namespace UmlDesigner2.Component.Workspace.Clock
             catch
             {
                 _toolTip.SetToolTip(this,
-                    "Skończył ci się czas");
+                    ClockVariables.MessageWhenTimeIsOver);
             }
         }
-        public void End()
-        {
-            if (!ClockVariables.isRunnable)
-            {
-                _timer.Stop();
-                ClockVariables.isRunning = false;
-                ClockVariables.isRunnable = true;
-            }
-        }
+       
 
         protected override void CreateHandle() //ustawienie położenia po dodaniu kontrolki do "parenta"
         {
@@ -135,22 +151,6 @@ namespace UmlDesigner2.Component.Workspace.Clock
                     DrawAnalog(ref e);
                     break;
             }
-        }
-
-        public void UpdateChanges() //metoda służąca do aktualizowania wrazie zmian.
-        {
-            this.BackColor = ClockVariables.bgColor;
-            this.Size = ClockVariables.ClockSize;
-            switch (ClockVariables.ChoosenClockType)
-            {
-                case (ClockVariables.ClockType.Analog):
-                    AnalogUpdate();
-                    break;
-                default:
-                    DigitalUpdate();
-                    break;
-            }
-
         }
     }
 }

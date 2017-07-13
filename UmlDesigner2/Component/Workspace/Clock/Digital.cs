@@ -13,42 +13,47 @@ namespace UmlDesigner2.Component.Workspace.Clock
         {
             private void DigitalUpdate()
             {
-
+            using (var f = new Font("Arial", 10))
+                using (Graphics g = CreateGraphics())
+            {
+                var tempText = new StringBuilder(DateTime.Now.ToLongTimeString() + Environment.NewLine +DateTime.Now.ToLongTimeString());
+                Size = g.MeasureString(tempText.ToString(), FindMeasuredFont(g, tempText, new Size(ClockVariables.ClockSize, ClockVariables.ClockSize), f)).ToSize();
             }
-            readonly StringBuilder _digitalTime = new StringBuilder();
+            }
+            readonly StringBuilder _textForDigitalClock = new StringBuilder();
 
             private void DrawDigitalCountingUp(ref PaintEventArgs e)
             {
-                _digitalTime.Clear();
-                _digitalTime.Append(_beginExam.ToLongTimeString() + Environment.NewLine + new DateTime(DateTime.Now.Ticks - _beginExam.Ticks).ToLongTimeString());
-                e.Graphics.DrawString(_digitalTime.ToString(),
-                    FindMeasuredFont(e.Graphics, _digitalTime, this.Size, new Font("Arial", 10)), Brushes.Black,
+                _textForDigitalClock.Clear();
+                _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine + new DateTime(DateTime.Now.Ticks - _beginExam.Ticks).ToLongTimeString());
+                e.Graphics.DrawString(_textForDigitalClock.ToString(),
+                    FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));
             }
 
             private void DrawDigitalCountingDown(ref PaintEventArgs e)
             {
-                _digitalTime.Clear();
+                _textForDigitalClock.Clear();
                 try
                 {
-                    _digitalTime.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                    _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
                                         new DateTime(_endExam.Ticks - DateTime.Now.Ticks).ToLongTimeString());
-                    e.Graphics.DrawString(_digitalTime.ToString(),
-                        FindMeasuredFont(e.Graphics, _digitalTime, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    e.Graphics.DrawString(_textForDigitalClock.ToString(),
+                        FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                         new PointF(0, 0));
                 }
                 catch (ArgumentOutOfRangeException)
                 {
-                    _digitalTime.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                    _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
                                         new DateTime(0).ToLongTimeString());
-                    e.Graphics.DrawString(_digitalTime.ToString(),
-                        FindMeasuredFont(e.Graphics, _digitalTime, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    e.Graphics.DrawString(_textForDigitalClock.ToString(),
+                        FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                         new PointF(0, 0));
                 }
 
             }
 
-            private static Font FindMeasuredFont(System.Drawing.Graphics g, StringBuilder longString, Size room,
+            private static Font FindMeasuredFont(Graphics g, StringBuilder longString, Size room,
                 Font preferedFont)
             {
                 var realSize = g.MeasureString(longString.ToString(), preferedFont);
