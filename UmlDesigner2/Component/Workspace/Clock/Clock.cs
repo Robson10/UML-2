@@ -31,33 +31,35 @@ namespace UmlDesigner2.Component.Workspace.Clock
         }
         public void Start()
         {
-            if (ClockVariables.isRunnable)
+            if (ClockVariables.IsRunnable)
             {
                 _timer.Start();
                 _timer.Tick += Timer_Tick;
                 _beginExam = new DateTime(DateTime.Now.Ticks);
                 if (ClockVariables.TimeForExam.TotalSeconds!=0)
                     _endExam = _beginExam.Add(ClockVariables.TimeForExam);
-                ClockVariables.isRunning = true;
-                ClockVariables.isRunnable = false;
+                ClockVariables.IsRunning = true;
+                ClockVariables.IsRunnable = false;
                 _toolTip = new ToolTip {AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
+                //Wyczyścić workSpace przed rozpoczęciem egzaminu
             }
         }
 
         public void End()
         {
-            if (!ClockVariables.isRunnable)
+            if (!ClockVariables.IsRunnable)
             {
                 _timer.Stop();
-                ClockVariables.isRunning = false;
-                ClockVariables.isRunnable = true;
+                ClockVariables.IsRunning = false;
+                ClockVariables.IsRunnable = true;
                 MessageBox.Show(ClockVariables.MessageWhenTimeIsOver);
+                //Wysłać event do workspace by zablokować wszelkie zmiany na nim
             }
         }
 
         public void UpdateChanges() //metoda służąca do aktualizowania wrazie zmian.
         {
-            BackColor = ClockVariables.bgColor;
+            BackColor = ClockVariables.BgColor;
             Size = new Size(ClockVariables.ClockSize, ClockVariables.ClockSize);
             switch (ClockVariables.ChoosenClockType)
             {

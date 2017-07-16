@@ -9,9 +9,10 @@ namespace UmlDesigner2.Component.Workspace.Clock
 {
     public static class ClockVariables
     {
-        public static bool isRunnable = true;
-        public static bool isRunning = false;
-        public static Color bgColor = Color.Transparent;
+        public static bool IsRunnable { get; set; } = true;
+        public static bool IsRunning { get; set; } = false;
+        public static Color BgColor { get; set; } = Color.Transparent;
+
         public enum ClockType
         {
             Analog = 1,

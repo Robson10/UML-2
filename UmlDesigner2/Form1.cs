@@ -12,6 +12,7 @@ namespace UmlDesigner2
         {
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
+            //tabsConnector1.SizeMode = TabSizeMode.FillToRight;
             //AddStripMenuEvents();
         }
         //private void AddStripMenuEvents()
