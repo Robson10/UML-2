@@ -12,7 +12,7 @@ namespace UmlDesigner2.Component.Workspace
 {
     public partial class Workspace : UserControl
     {
-        ListCanvasObject CanvasObjects = new ListCanvasObject();
+        ListCanvasObjects CanvasObjects = new ListCanvasObjects();
         private BlockParameters.Shape _ShapeToDraw = BlockParameters.Shape.Nothing;
         public BlockParameters.Shape ShapeToDraw
         {
@@ -20,17 +20,10 @@ namespace UmlDesigner2.Component.Workspace
             set
             {
                 _ShapeToDraw = value;
-                if(value== BlockParameters.Shape.Nothing)
-                {
-                    Cursor = Cursors.Arrow;
-                }
-                else
-                {
-                    Cursor = Cursors.Cross;
-                }
+                Cursor = value== BlockParameters.Shape.Nothing ? Cursors.Arrow : Cursors.Cross;
             }
         }
-        private Label[] Rubbers = new Label[8] { new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label(), new Label() };
+        private UserControl[] Rubbers = new UserControl[8] { new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl() };
         #region Rubbers
         private void RubbersPresets()
         {
@@ -81,7 +74,7 @@ namespace UmlDesigner2.Component.Workspace
         /// <summary>
         /// Metoda aktualizująca położenie gumek wywoływana przez event OnResize();
         /// </summary>
-        protected void UpdateRubbers(MyCanvasObject canvasObject)
+        protected void UpdateRubbers(MyCanvasFigure canvasObject)
         {
             //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
@@ -186,7 +179,7 @@ namespace UmlDesigner2.Component.Workspace
             {
                 if (ShapeToDraw != BlockParameters.Shape.Nothing)
                 {
-                    CanvasObjects.Add(new MyCanvasObject(new Rectangle(e.Location.X - BlockParameters.defaultCanvasControlSize.Width / 2, e.Location.Y - BlockParameters.defaultCanvasControlSize.Height / 2, BlockParameters.defaultCanvasControlSize.Width, BlockParameters.defaultCanvasControlSize.Height),ShapeToDraw));
+                    CanvasObjects.Add(new MyCanvasFigure(new Rectangle(e.Location.X - BlockParameters.defaultCanvasControlSize.Width / 2, e.Location.Y - BlockParameters.defaultCanvasControlSize.Height / 2, BlockParameters.defaultCanvasControlSize.Width, BlockParameters.defaultCanvasControlSize.Height),ShapeToDraw));
                     ShapeToDraw = BlockParameters.Shape.Nothing;
                 }
                 else
@@ -243,8 +236,14 @@ namespace UmlDesigner2.Component.Workspace
             for (int i = CanvasObjects.Count-1; i >=0 ; i--)
                 CanvasObjects[i].Draw( e.Graphics);
         }
+        protected override void OnResize(EventArgs e)
+        {
+            base.OnResize(e);
+
+             clock.Size = clock.Size;
+        }
     }
-    public class ListCanvasObject : List<MyCanvasObject>
+    public class ListCanvasObjects : List<MyCanvasFigure>
     {
 
         public void SelectObjectContainingPoint(Point location)
@@ -366,9 +365,9 @@ namespace UmlDesigner2.Component.Workspace
         }
     }
 
-    public class MyCanvasObject
+    public class MyCanvasFigure
     {
-        public MyCanvasObject(Rectangle rect, BlockParameters.Shape shape)
+        public MyCanvasFigure(Rectangle rect, BlockParameters.Shape shape)
         {
             Rect = rect;
             Shape = shape;

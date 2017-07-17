@@ -15,6 +15,7 @@ namespace UmlDesigner2
             //tabsConnector1.SizeMode = TabSizeMode.FillToRight;
             //AddStripMenuEvents();
         }
+
         //private void AddStripMenuEvents()
         //{
         //    //myToolStrip.ContentPanel.Controls.Add(Canvas);

@@ -47,14 +47,21 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Component\SettingsWindow.cs" />
+    <Compile Include="Component\TabsArea\OAKListView.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Component\TabsArea\TabSchemats\SchematsTabPropertis.cs" />
     <Compile Include="Component\TabsArea\TabBlocks\BlocksTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\SchematsTab\SchematsTab.cs" />
+    <Compile Include="Component\TabsArea\TabSchemats\SchematsTab.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component\TabsArea\TabBlocks\BlocksTabPropertis.cs" />
     <Compile Include="Component\TabsArea\TabsConnector.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Component\Workspace\Canvas\Rubbers.cs" />
     <Compile Include="Component\Workspace\Clock\Analog.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -65,10 +72,10 @@
     <Compile Include="Component\Workspace\Clock\Digital.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\Workspace.cs">
+    <Compile Include="Component\Workspace\Canvas\Workspace.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\Workspace.Designer.cs">
+    <Compile Include="Component\Workspace\Canvas\Workspace.Designer.cs">
       <DependentUpon>Workspace.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\ToolStripArea\MyToolStripContainer.cs">
@@ -78,7 +85,7 @@
       <DependentUpon>MyToolStripContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\ToolStripArea\ToolStripButtonParameters.cs" />
-    <Compile Include="Component\Workspace\BlockParameters.cs" />
+    <Compile Include="Component\Workspace\Canvas\BlockParameters.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -87,7 +94,7 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Component\Workspace\Workspace.resx">
+    <EmbeddedResource Include="Component\Workspace\Canvas\Workspace.resx">
       <DependentUpon>Workspace.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
