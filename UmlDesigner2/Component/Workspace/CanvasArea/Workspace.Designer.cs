@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Component.Workspace
+﻿namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     partial class Workspace
     {

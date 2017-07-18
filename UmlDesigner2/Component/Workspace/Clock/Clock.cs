@@ -9,7 +9,7 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.Clock
 {
-    public sealed partial class Clock : Panel
+    public partial class Clock : Panel
     {
         readonly Timer _timer = new Timer() {Interval = 100};
         private DateTime _beginExam;
@@ -19,7 +19,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         public Clock()
         {
             DoubleBuffered = true;
-            UpdateChanges();
+            Update();
             Start(); //bedzie wywolywane z zewnątrz
             _contextMenu=new ContextMenuStrip();
             _contextMenu.Items.Add("Zegar Analogowy");
@@ -57,11 +57,12 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 //Wysłać event do workspace by zablokować wszelkie zmiany na nim
             }
         }
-
-        public void UpdateChanges() //metoda służąca do aktualizowania wrazie zmian.
+        public new void Update()//metoda służąca do aktualizowania wrazie zmian.
         {
+            base.Update();
             BackColor = ClockVariables.BgColor;
             Size = new Size(ClockVariables.ClockSize, ClockVariables.ClockSize);
+            OnResize(null);
             switch (ClockVariables.ChoosenClockType)
             {
                 case (ClockVariables.ClockType.Analog):
@@ -73,24 +74,25 @@ namespace UmlDesigner2.Component.Workspace.Clock
             }
 
         }
+
         private void _contextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
             if (e.ClickedItem.Text.Equals("Zegar Analogowy"))
             {
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.Analog;
-                UpdateChanges();
+                Update();
             }
-            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Odliczający"))
+            else if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Odliczający"))
             {
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingDown;
-                UpdateChanges();
+                Update();
             }
-            if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Naliczający"))
+            else if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Naliczający"))
             {
                 ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingUp;
-                UpdateChanges();
+                Update();
             }
-            if (e.ClickedItem.Text.Contains("Wyłącz"))
+            else if (e.ClickedItem.Text.Contains("Wyłącz"))
             {
                 this.Dispose();
             }

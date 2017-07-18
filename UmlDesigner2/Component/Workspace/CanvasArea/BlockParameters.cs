@@ -1,11 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
-namespace UmlDesigner2.Component.Workspace
+namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     public static class BlockParameters
     {

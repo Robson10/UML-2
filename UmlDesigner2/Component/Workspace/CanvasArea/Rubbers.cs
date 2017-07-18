@@ -1,16 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Component.Workspace.Canvas
+namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     class Rubbers : List<UserControl>
     {
         public Rubbers()
+        {
+            RubbersPresets();
+        }
+
+        private void RubbersPresets()
         {
             for (int i = 0; i < 8; i++)
             {
@@ -21,18 +23,7 @@ namespace UmlDesigner2.Component.Workspace.Canvas
                 this[i].TabIndex = i;
                 this[i].MouseDown += Rubbers_MouseDown;
                 this[i].MouseMove += Rubbers_MouseMove;
-                this[i].HandleCreated += Rubbers_HandleCreated;
             }
-            RubbersPresets();
-        }
-
-        private void Rubbers_HandleCreated(object sender, EventArgs e)
-        {
-            //Controls.Add(Rubbers[i]); dodanie do canvasu
-        }
-
-        private void RubbersPresets()
-        {
             this[0].Cursor = Cursors.SizeNWSE;
             this[1].Cursor = Cursors.SizeNS;
             this[2].Cursor = Cursors.SizeNESW;
@@ -67,36 +58,32 @@ namespace UmlDesigner2.Component.Workspace.Canvas
                 //Invalidate();
             }
         }
+
         /// <summary>
         /// Metoda aktualizująca położenie gumek wywoływana przez event OnResize();
         /// </summary>
-        private void UpdateRubbers(MyCanvasFigure canvasObject)
+        public void ShowRubbers(MyCanvasFigure canvasObject)
         {
             //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
-            int left, right, up, down;
-            int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 - BlockParameters.RubberSize.Width / 2;
-            int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 - BlockParameters.RubberSize.Height / 2;
-            if (canvasObject.Rect.Size.Width < 0)
-            {
-                left = canvasObject.Rect.Location.X;
-                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlockParameters.RubberSize.Width;
-            }
-            else
-            {
-                left = canvasObject.Rect.Location.X - BlockParameters.RubberSize.Width;
-                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-            }
-            if (canvasObject.Rect.Size.Height < 0)
-            {
-                up = canvasObject.Rect.Location.Y;
-                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlockParameters.RubberSize.Height;
-            }
-            else
-            {
-                up = canvasObject.Rect.Location.Y - BlockParameters.RubberSize.Height;
-                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
-            }
+            var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
+                          BlockParameters.RubberSize.Width / 2;
+            var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
+                          BlockParameters.RubberSize.Height / 2;
+
+            var left = (canvasObject.Rect.Size.Width < 0)
+                ? canvasObject.Rect.Location.X
+                : canvasObject.Rect.Location.X - BlockParameters.RubberSize.Width;
+            var right = (canvasObject.Rect.Size.Width < 0)
+                ? canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlockParameters.RubberSize.Width
+                : canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
+            var up = (canvasObject.Rect.Size.Height < 0)
+                ? canvasObject.Rect.Location.Y
+                : canvasObject.Rect.Location.Y - BlockParameters.RubberSize.Height;
+            var down = (canvasObject.Rect.Size.Height < 0)
+                ? canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlockParameters.RubberSize.Height
+                : canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+
             Point topLeft = new Point(left, up);
             Point topCenter = new Point(centerX, up);
             Point topRight = new Point(right, up);
@@ -117,6 +104,7 @@ namespace UmlDesigner2.Component.Workspace.Canvas
             UpdateRubberVisible(canvasObject.IsSelected);
 
         }
+
         /// <summary>
         /// Metoda aktualizująca widoczność gumek wywoływana w geterze IsSelected
         /// </summary>
@@ -124,6 +112,14 @@ namespace UmlDesigner2.Component.Workspace.Canvas
         {
             for (int i = 0; i < this.Count; i++)
                 this[i].Visible = isSelected;
+        }
+
+        public void AddRubbersToControl(Control control)
+        {
+            for (int i = 0; i < this.Count; i++)
+            {
+                control.Controls.Add(this[i]);
+            }
         }
     }
 }
