@@ -12,10 +12,10 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
     public class BlocksTab : TabPage
     {
         private readonly OAKListView _listViewOfBlocks = new OAKListView() { };
-
+        public string TabText = "Bloki";
         public BlocksTab()
         {
-            Text = BlocksTabPropertis.TabText;
+            Text = TabText;
             CreateList();
         }
 
@@ -33,29 +33,25 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             FillList();
             this.Controls.Add(_listViewOfBlocks);
         }
-
-
+        
         private void FillList()
         {
             _listViewOfBlocks.SmallImageList = LoadImageList();
-            _listViewOfBlocks.Items.Add(new ListViewItem(BlocksTabPropertis.ListItemTextForStart) {ImageIndex = 0});
-            _listViewOfBlocks.Items.Add(new ListViewItem(BlocksTabPropertis.ListItemTextForEnd) {ImageIndex = 1});
-            _listViewOfBlocks.Items.Add(new ListViewItem(BlocksTabPropertis.ListItemTextForDecision) {ImageIndex = 2});
-            _listViewOfBlocks.Items.Add(new ListViewItem(BlocksTabPropertis.ListItemTextForExecution) {ImageIndex = 3});
-            _listViewOfBlocks.Items.Add(new ListViewItem(BlocksTabPropertis.ListItemTextForInput) {ImageIndex = 4});
+            for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
+            {
+                _listViewOfBlocks.Items.Add(new ListViewItem(BlocksData.Text((BlocksData.Shape)i)) { ImageIndex = i-1 });
+            }
         }
-
-
+        
         private ImageList LoadImageList()
         {
             var imageList1 = new ImageList();
             imageList1.ImageSize = new Size(40, 40);
             imageList1.TransparentColor = Color.Transparent;
-            AddImageToImageListFromPath(BlocksTabPropertis.PathToImageStartBlock, ref imageList1);
-            AddImageToImageListFromPath(BlocksTabPropertis.PathToImageEndBlock, ref imageList1);
-            AddImageToImageListFromPath(BlocksTabPropertis.PathToImageDecisionBlock, ref imageList1);
-            AddImageToImageListFromPath(BlocksTabPropertis.PathToImageExecuteBlock, ref imageList1);
-            AddImageToImageListFromPath(BlocksTabPropertis.PathToImageInputBlock, ref imageList1);
+            for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
+            {
+                AddImageToImageListFromPath(BlocksData.ImagePath((BlocksData.Shape) i), ref imageList1);
+            }
             return imageList1;
         }
 

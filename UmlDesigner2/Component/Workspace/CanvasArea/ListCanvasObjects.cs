@@ -131,11 +131,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
     public class MyCanvasFigure
     {
-        public MyCanvasFigure(Rectangle rect, BlockParameters.Shape shape)
+        public MyCanvasFigure(Rectangle rect, BlocksData.Shape shape)
         {
             Rect = rect;
             Shape = shape;
-            Text = BlockParameters.CanvasObjectText(Shape);
+            Text = BlocksData.Text(Shape);
         }
 
         public int FontSize;
@@ -147,16 +147,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         #region Done
         public Rectangle Rect;//obszar dla figury - point , size
-        private BlockParameters.Shape _Shape;
-        public BlockParameters.Shape Shape//jaką kontrolke rysujemy
+        private BlocksData.Shape _Shape;
+        public BlocksData.Shape Shape//jaką kontrolke rysujemy
         {
             get { return _Shape; }
             set
             {
                 _Shape = value;
-                BackColor = BlockParameters.CanvasObjectBackColor(_Shape);
-                FontColor = BlockParameters.CanvasObjectFontColor(_Shape);
-                FontSize = BlockParameters.CanvasObjectFontSize(_Shape);
+                BackColor = BlocksData.BackColor(_Shape);
+                FontColor = BlocksData.FontColor(_Shape);
+                FontSize = BlocksData.FontSize(_Shape);
 
             }
         }
@@ -167,7 +167,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             //http://stackoverflow.com/questions/34582234/how-to-detect-if-mouse-has-clicked-inside-of-a-certain-shape-in-c-sharp-on-winfo
             var contains = false;
-            if (Shape == BlockParameters.Shape.Start)
+            if (Shape == BlocksData.Shape.Start)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -175,7 +175,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlockParameters.Shape.End)
+            else if (Shape == BlocksData.Shape.End)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -183,7 +183,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlockParameters.Shape.Execution)
+            else if (Shape == BlocksData.Shape.Execution)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -191,7 +191,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlockParameters.Shape.Input)
+            else if (Shape == BlocksData.Shape.Input)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -200,7 +200,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlockParameters.Shape.Decision)
+            else if (Shape == BlocksData.Shape.Decision)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -217,19 +217,19 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             switch (Shape)
             {
-                case (BlockParameters.Shape.Start):
+                case (BlocksData.Shape.Start):
                     DrawStart(g);
                     break;
-                case (BlockParameters.Shape.End):
+                case (BlocksData.Shape.End):
                     DrawEnd(g);
                     break;
-                case (BlockParameters.Shape.Input):
+                case (BlocksData.Shape.Input):
                     DrawInput(g);
                     break;
-                case (BlockParameters.Shape.Execution):
+                case (BlocksData.Shape.Execution):
                     DrawExecution(g);
                     break;
-                case (BlockParameters.Shape.Decision):
+                case (BlocksData.Shape.Decision):
                     DrawDecision(g);
                     break;
                 default:
@@ -284,7 +284,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             (
                 Text,
                 font,
-                new SolidBrush(BlockParameters.CanvasObjectFontColor(Shape)),
+                new SolidBrush(BlocksData.FontColor(Shape)),
                 Rect.Location.X + (Rect.Width - stringSize.Width) / 2,
                 Rect.Location.Y + Rect.Height / 2 - stringSize.Height / 2
             );

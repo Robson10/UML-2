@@ -19,6 +19,19 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _rubbers.AddRubbersToControl(this);
         }
 
+        public void AddObject(BlocksData.Shape shape)
+        {
+            CanvasObjects.Add(
+                new MyCanvasFigure(
+                    new Rectangle(Width*10/100, Height*10/100, BlocksData.defaultCanvasControlSize.Width, BlocksData.defaultCanvasControlSize.Height),
+                    shape));
+            Invalidate();
+        }
+
+        public void AddObjectAfterClick(BlocksData.Shape shape)
+        {
+            ShapeToDraw = shape;
+        }
 
         protected override void OnResize(EventArgs e)
         {
@@ -26,14 +39,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _clock.Update();
         }
 
-        private BlockParameters.Shape _shapeToDraw = CanvasVariables.defaultvalue;
-        public BlockParameters.Shape ShapeToDraw
+        private BlocksData.Shape _shapeToDraw = CanvasVariables.defaultvalue;
+        public BlocksData.Shape ShapeToDraw
         {
             get { return _shapeToDraw; }
             set
             {
                 _shapeToDraw = value;
-                Cursor = value == BlockParameters.Shape.Nothing ? Cursors.Arrow : Cursors.Cross;
+                Cursor = value == BlocksData.Shape.Nothing ? Cursors.Arrow : Cursors.Cross;
             }
         }
         ListCanvasObjects CanvasObjects = new ListCanvasObjects();
@@ -46,9 +59,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
             if (e.Button == MouseButtons.Left)
             {
-                if (ShapeToDraw != BlockParameters.Shape.Nothing)
+                if (ShapeToDraw != BlocksData.Shape.Nothing)
                 {
-                    CanvasObjects.Add(new MyCanvasFigure(new Rectangle(e.Location.X - BlockParameters.defaultCanvasControlSize.Width / 2, e.Location.Y - BlockParameters.defaultCanvasControlSize.Height / 2, BlockParameters.defaultCanvasControlSize.Width, BlockParameters.defaultCanvasControlSize.Height), ShapeToDraw));
+                    CanvasObjects.Add(new MyCanvasFigure(new Rectangle(e.Location.X - BlocksData.defaultCanvasControlSize.Width / 2, e.Location.Y - BlocksData.defaultCanvasControlSize.Height / 2, BlocksData.defaultCanvasControlSize.Width, BlocksData.defaultCanvasControlSize.Height), ShapeToDraw));
                     //ShapeToDraw = BlockParameters.Shape.Nothing;
                 }
                 else
@@ -64,7 +77,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 if (CanvasObjects.IsAnyObjectContainingPoint(e.Location))
                     MessageBox.Show("menu kontekstowe poszło i do tej pory nie wrociło");
-                ShapeToDraw = BlockParameters.Shape.Nothing;
+                ShapeToDraw = BlocksData.Shape.Nothing;
             }
             Invalidate();
         }
@@ -79,7 +92,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _activeKey = e.KeyCode;
             if (_activeKey == Keys.Escape)
             {
-                ShapeToDraw = BlockParameters.Shape.Nothing;
+                ShapeToDraw = BlocksData.Shape.Nothing;
                 CanvasObjects.IsSelectedSetValueForAll(false);
             }
             MessageBox.Show("e");
@@ -88,6 +101,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnKeyUp(KeyEventArgs e)
         {
             _activeKey = Keys.None;
+            MessageBox.Show("e");
         }
 
         private Point MouseDownLocation;
@@ -135,7 +149,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public static Color BgColor = Color.Salmon;
         public static Color SelectionBgColor= Color.DarkOrange;
         public static Color DefaultBgColor = Color.Gray;
-        public static BlockParameters.Shape defaultvalue = BlockParameters.Shape.Start;
+        public static BlocksData.Shape defaultvalue = BlocksData.Shape.Start;
         public static Keys MultiselectKey = Keys.ControlKey;
     }
 }

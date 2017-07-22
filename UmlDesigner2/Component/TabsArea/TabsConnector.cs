@@ -19,7 +19,7 @@ namespace UmlDesigner2.Component.TabsArea
             Alignment= TabAlignment.Left;
             TabPages.Add(_blocksTab);
             TabPages.Add(_schematsTab);
-            Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top);
+            Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top|AnchorStyles.Right);
         }
 
         public event EventHandler BlocksListItemClick

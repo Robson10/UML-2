@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BlocksData.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
     <Compile Include="Component\TabsArea\OAKListView.cs">
       <SubType>Component</SubType>
@@ -57,7 +58,6 @@
     <Compile Include="Component\TabsArea\TabSchemats\SchematsTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabBlocks\BlocksTabPropertis.cs" />
     <Compile Include="Component\TabsArea\TabsConnector.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -89,12 +89,17 @@
       <DependentUpon>MyToolStripContainer.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\ToolStripArea\ToolStripButtonParameters.cs" />
-    <Compile Include="Component\Workspace\CanvasArea\BlockParameters.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Form1Partials\Form1Toolstrip.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Form1Partials\Form1Tabs.cs">
+      <SubType>Form</SubType>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

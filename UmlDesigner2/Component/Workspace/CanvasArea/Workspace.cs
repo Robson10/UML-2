@@ -8,14 +8,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     public partial class Workspace : UserControl
     {
         ListCanvasObjects CanvasObjects = new ListCanvasObjects();
-        private BlockParameters.Shape _ShapeToDraw = BlockParameters.Shape.Nothing;
-        public BlockParameters.Shape ShapeToDraw
+        private BlocksData.Shape _ShapeToDraw = BlocksData.Shape.Nothing;
+        public BlocksData.Shape ShapeToDraw
         {
             get {return _ShapeToDraw; }
             set
             {
                 _ShapeToDraw = value;
-                Cursor = value== BlockParameters.Shape.Nothing ? Cursors.Arrow : Cursors.Cross;
+                Cursor = value== BlocksData.Shape.Nothing ? Cursors.Arrow : Cursors.Cross;
             }
         }
         private UserControl[] Rubbers = new UserControl[8] { new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl(), new UserControl() };
@@ -27,7 +27,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 Rubbers[i].BackColor = Color.Silver;
                 Controls.Add(Rubbers[i]);
                 Rubbers[i].Visible = false;
-                Rubbers[i].Size = BlockParameters.RubberSize;
+                Rubbers[i].Size = BlocksData.RubberSize;
                 Rubbers[i].TabIndex = i;
                 Rubbers[i].MouseDown += Rubbers_MouseDown;
                 Rubbers[i].MouseMove += Rubbers_MouseMove;
@@ -74,26 +74,26 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
             int left, right, up, down;
-            int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 - BlockParameters.RubberSize.Width / 2;
-            int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 - BlockParameters.RubberSize.Height / 2;
+            int centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 - BlocksData.RubberSize.Width / 2;
+            int centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 - BlocksData.RubberSize.Height / 2;
             if (canvasObject.Rect.Size.Width < 0)
             {
                 left = canvasObject.Rect.Location.X;
-                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlockParameters.RubberSize.Width;
+                right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlocksData.RubberSize.Width;
             }
             else
             {
-                left = canvasObject.Rect.Location.X - BlockParameters.RubberSize.Width;
+                left = canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
                 right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
             }
             if (canvasObject.Rect.Size.Height < 0)
             {
                 up = canvasObject.Rect.Location.Y;
-                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlockParameters.RubberSize.Height;
+                down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlocksData.RubberSize.Height;
             }
             else
             {
-                up = canvasObject.Rect.Location.Y - BlockParameters.RubberSize.Height;
+                up = canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
                 down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
             }
             Point topLeft = new Point(left, up);
@@ -150,7 +150,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 _IsMultiSelect = value;
                 if (value == Keys.Escape)
                 {
-                    ShapeToDraw = BlockParameters.Shape.Nothing;
+                    ShapeToDraw = BlocksData.Shape.Nothing;
                     CanvasObjects.IsSelectedSetValueForAll(false);
                 }
 
@@ -168,14 +168,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         bool ppm = true;//czy teraz resize czu moze menu kontekstowe
         protected override void OnMouseClick(MouseEventArgs e)
         {
-            if (IsMultiSelect != BlockParameters.MultiselectKey )CanvasObjects.IsSelectedSetValueForAll(false);
+            if (IsMultiSelect != BlocksData.MultiselectKey )CanvasObjects.IsSelectedSetValueForAll(false);
 
             if (e.Button == MouseButtons.Left)
             {
-                if (ShapeToDraw != BlockParameters.Shape.Nothing)
+                if (ShapeToDraw != BlocksData.Shape.Nothing)
                 {
-                    CanvasObjects.Add(new MyCanvasFigure(new Rectangle(e.Location.X - BlockParameters.defaultCanvasControlSize.Width / 2, e.Location.Y - BlockParameters.defaultCanvasControlSize.Height / 2, BlockParameters.defaultCanvasControlSize.Width, BlockParameters.defaultCanvasControlSize.Height),ShapeToDraw));
-                    ShapeToDraw = BlockParameters.Shape.Nothing;
+                    CanvasObjects.Add(new MyCanvasFigure(new Rectangle(e.Location.X - BlocksData.defaultCanvasControlSize.Width / 2, e.Location.Y - BlocksData.defaultCanvasControlSize.Height / 2, BlocksData.defaultCanvasControlSize.Width, BlocksData.defaultCanvasControlSize.Height),ShapeToDraw));
+                    ShapeToDraw = BlocksData.Shape.Nothing;
                 }
                 else
                 {

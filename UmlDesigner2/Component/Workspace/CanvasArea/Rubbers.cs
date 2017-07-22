@@ -19,7 +19,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 this.Add(new UserControl());
                 this[i].BackColor = System.Drawing.Color.Silver;
                 this[i].Visible = false;
-                this[i].Size = BlockParameters.RubberSize;
+                this[i].Size = BlocksData.RubberSize;
                 this[i].TabIndex = i;
                 this[i].MouseDown += Rubbers_MouseDown;
                 this[i].MouseMove += Rubbers_MouseMove;
@@ -67,21 +67,21 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
             var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
-                          BlockParameters.RubberSize.Width / 2;
+                          BlocksData.RubberSize.Width / 2;
             var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
-                          BlockParameters.RubberSize.Height / 2;
+                          BlocksData.RubberSize.Height / 2;
 
             var left = (canvasObject.Rect.Size.Width < 0)
                 ? canvasObject.Rect.Location.X
-                : canvasObject.Rect.Location.X - BlockParameters.RubberSize.Width;
+                : canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
             var right = (canvasObject.Rect.Size.Width < 0)
-                ? canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlockParameters.RubberSize.Width
+                ? canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlocksData.RubberSize.Width
                 : canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
             var up = (canvasObject.Rect.Size.Height < 0)
                 ? canvasObject.Rect.Location.Y
-                : canvasObject.Rect.Location.Y - BlockParameters.RubberSize.Height;
+                : canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
             var down = (canvasObject.Rect.Size.Height < 0)
-                ? canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlockParameters.RubberSize.Height
+                ? canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlocksData.RubberSize.Height
                 : canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
 
             Point topLeft = new Point(left, up);
