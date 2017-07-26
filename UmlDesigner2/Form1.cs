@@ -14,12 +14,39 @@ namespace UmlDesigner2
             KeyPreview = true;
             ToolStripPresets();
             TabsPresets();
+            this.KeyDown += Form1_KeyDown;
+            this.KeyUp += Form1_KeyUp;
 
             //tabsConnector1.SizeMode = TabSizeMode.FillToRight;
             //AddStripMenuEvents();
         }
 
-      
+        private void Form1_KeyUp(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.ControlKey:
+                    canvas1.IsMultiSelect = false;
+                    break;
+
+            }
+        }
+
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.KeyCode)
+            {
+                case Keys.Escape:
+                    canvas1.AbortAddingObject();
+                    break;
+                case Keys.ControlKey:
+                    canvas1.IsMultiSelect = true;
+                    break;
+
+            }
+        }
+
+
 
         //protected override void OnResize(EventArgs e)
         //{

@@ -32,20 +32,27 @@ namespace UmlDesigner2
             var text = (sender as ListView).SelectedItems[0].Text;
             for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
             {
-                var x = BlocksData.Text((BlocksData.Shape) i);
-                if (text.Equals(x))
+                var blockText = BlocksData.Text((BlocksData.Shape) i);
+                if (text.Equals(blockText))
                 {
-                    canvas1.AddObject((BlocksData.Shape) i);
+                    canvas1.AddObjectInstant((BlocksData.Shape) i);
                     break;
                 }
-
             }
-           // canvas1.AddObject();
         }
 
         private void TabsConnector2_BlocksListItemClick(object sender, EventArgs e)
         {
-            //canvas1.AddObjectAfterClick();
+            var text = (sender as ListView).SelectedItems[0].Text;
+            for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
+            {
+                var blockText = BlocksData.Text((BlocksData.Shape)i);
+                if (text.Equals(blockText))
+                {
+                    canvas1.AddObjectAfterClick((BlocksData.Shape)i);
+                    break;
+                }
+            }
         }
         //myToolStrip.Start_Click += MyToolStripContainer_Start_Click;
         //myToolStrip.End_Click += MyToolStripContainer_End_Click;

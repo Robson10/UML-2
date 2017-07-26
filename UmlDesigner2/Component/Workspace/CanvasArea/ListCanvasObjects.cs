@@ -16,12 +16,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base[i].IsContain(location))
                 {
                     base[i].IsSelected = true;
-                    base[i].BackColor = (base[i].IsSelected) ? new SolidBrush(CanvasVariables.SelectionBgColor) : new SolidBrush(CanvasVariables.DefaultBgColor);
+                    base[i].BackColor = (base[i].IsSelected)
+                        ? new SolidBrush(CanvasVariables.SelectionBgColor)
+                        : new SolidBrush(CanvasVariables.DefaultBgColor);
                     base.Insert(0, base[i]);
                     base.RemoveAt(i + 1);
                     break;
                 }
         }
+
         public bool IsAnyObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
@@ -29,14 +32,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     return true;
             return false;
         }
+
         public void MoveSelectedObjects(ref Point MouseDownLocation, Point e)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsSelected && !base[i].IsLocked)
                 {
-                    base[i].Rect.Location = new Point((e.X - MouseDownLocation.X) + base[i].Rect.Left, (e.Y - MouseDownLocation.Y) + base[i].Rect.Top);
+                    base[i].Rect.Location = new Point((e.X - MouseDownLocation.X) + base[i].Rect.Left,
+                        (e.Y - MouseDownLocation.Y) + base[i].Rect.Top);
                 }
         }
+
         public void ResizeSelectedObjects(ref Point MouseDownLocation, Point e)
         {
             for (int i = 0; i < base.Count; i++)
@@ -45,85 +51,90 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     int NewWidth = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
                     int NewHeight = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
-                    base[i].Rect.Width = NewWidth;
-                    base[i].Rect.Height = NewHeight;
+                    if (NewWidth >= BlocksData.MinimumBlockSize.Width)
+                        base[i].Rect.Width = NewWidth;
+                    if (NewHeight >= BlocksData.MinimumBlockSize.Height)
+                        base[i].Rect.Height = NewHeight;
                 }
             }
         }
+
         public void ResizeSelectedObjectsByRubbers(ref Point MouseDownLocation, Point e, int RubberID)
         {
-            //zaradzenie na obroconą kontrolkę
-            switch (RubberID)
-            {
-                case 0:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Location = new Point(e.X + base[i].Rect.Location.X - MouseDownLocation.X, e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
-                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
-                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
-                        }
-                    break;
-                case 1:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Location = new Point(base[i].Rect.Location.X, e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
-                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
-                        }
-                    break;
-                case 2:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Location = new Point(base[i].Rect.Location.X, e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y);
-                            base[i].Rect.Height -= e.Y - MouseDownLocation.Y;
-                            base[i].Rect.Width += e.X;
-                        }
-                    break;
-                case 3:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                            base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
-                    break;
-                case 4:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Width = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
-                            base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
-                        }
-                    break;
-                case 5:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                            base[i].Rect.Height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
-                    break;
-                case 6:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Location = new Point(e.X + base[i].Rect.Location.X - MouseDownLocation.X, base[i].Rect.Location.Y);
-                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
-                            base[i].Rect.Height += e.Y;
-                        }
-                    break;
-                case 7:
-                    for (int i = 0; i < base.Count; i++)
-                        if (base[i].IsSelected && !base[i].IsLocked)
-                        {
-                            base[i].Rect.Location = new Point(e.X + base[i].Rect.Location.X - MouseDownLocation.X, base[i].Rect.Location.Y);
-                            base[i].Rect.Width -= e.X - MouseDownLocation.X;
-                        }
-                    break;
-            }
+            for (int i = 0; i < base.Count; i++)
+                if (base[i].IsSelected && !base[i].IsLocked)
+                {
+                    int x = base[i].Rect.Location.X,
+                        y = base[i].Rect.Location.Y,
+                        width = base[i].Rect.Width,
+                        height = base[i].Rect.Height;
+
+                    switch (RubberID)
+                    {
+                        case 0:
+                            x = e.X + base[i].Rect.Location.X - MouseDownLocation.X;
+                            y = e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y;
+                            width -= e.X - MouseDownLocation.X;
+                            height -= e.Y - MouseDownLocation.Y;
+                            break;
+
+                        case 1:
+                            y = e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y;
+                            height -= e.Y - MouseDownLocation.Y;
+                            break;
+
+                        case 2:
+                            y = e.Y + base[i].Rect.Location.Y - MouseDownLocation.Y;
+                            height -= e.Y - MouseDownLocation.Y;
+                            width += e.X;
+                            break;
+
+                        case 3:
+                            width = e.X - base[i].Rect.X + (base[i].Rect.X + width - MouseDownLocation.X);
+                            break;
+
+                        case 4:
+                            width = e.X - base[i].Rect.X + (base[i].Rect.X + width - MouseDownLocation.X);
+                            height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + height - MouseDownLocation.Y);
+                            break;
+
+                        case 5:
+                            height = e.Y - base[i].Rect.Y + (base[i].Rect.Y + height - MouseDownLocation.Y);
+                            break;
+
+                        case 6:
+                            x = e.X + base[i].Rect.Location.X - MouseDownLocation.X;
+                            width -= e.X - MouseDownLocation.X;
+                            height += e.Y;
+                            break;
+
+                        case 7:
+                            x = e.X + base[i].Rect.Location.X - MouseDownLocation.X;
+                            width -= e.X - MouseDownLocation.X;
+                            break;
+                    }
+                    if (width > BlocksData.MinimumBlockSize.Width)
+                    {
+                        base[i].Rect.Width = width;
+                        base[i].Rect.Location = new Point(x, base[i].Rect.Location.Y);
+                    }
+                    if (height > BlocksData.MinimumBlockSize.Height)
+                    {
+                        base[i].Rect.Height = height;
+                        base[i].Rect.Location = new Point(base[i].Rect.Location.X, y);
+                    }
+
+                }
         }
 
-        public void IsSelectedSetValueForAll(bool isSelected)
+        public void IsSelectedSetForAll(bool isSelected)
         {
             for (int i = 0; i < base.Count; i++)
             {
-                base[i].BackColor = (isSelected) ? new SolidBrush(Color.Yellow) : new SolidBrush(Color.Gray);//-----------------------------------
+                base[i].BackColor =
+                    (isSelected)
+                        ? new SolidBrush(CanvasVariables.SelectionBgColor)
+                        : new SolidBrush(CanvasVariables.DefaultBgColor);
                 base[i].IsSelected = isSelected;
             }
         }
@@ -140,15 +151,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public int FontSize;
         public string Text; //zawartosc tekstowa kontrolki
-        public bool IsSelected = false;//czy jest zaznaczona
+        public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
         public uint ID;
         public int In, Out, Out2;
 
         #region Done
-        public Rectangle Rect;//obszar dla figury - point , size
+
+        public Rectangle Rect; //obszar dla figury - point , size
         private BlocksData.Shape _Shape;
-        public BlocksData.Shape Shape//jaką kontrolke rysujemy
+
+        public BlocksData.Shape Shape //jaką kontrolke rysujemy
         {
             get { return _Shape; }
             set
@@ -160,6 +173,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
             }
         }
+
         public SolidBrush BackColor;
         public Color FontColor;
 
@@ -195,8 +209,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
-                    gp.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height), new Point(Rect.Location.X + 10, Rect.Location.Y));
-                    gp.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y), new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
+                    gp.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height),
+                        new Point(Rect.Location.X + 10, Rect.Location.Y));
+                    gp.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y),
+                        new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
                     contains = gp.IsVisible(location);
                 }
             }
@@ -204,8 +220,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
-                    gp.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height / 2), new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
-                    gp.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2), new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
+                    gp.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height / 2),
+                        new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
+                    gp.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2),
+                        new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
                     contains = gp.IsVisible(location);
                 }
             }
@@ -213,6 +231,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         }
 
         #region DrawBlock with text
+
         public void Draw(Graphics g)
         {
             switch (Shape)
@@ -237,33 +256,42 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     break;
             }
         }
+
         private void DrawStart(Graphics g)
         {
             g.FillEllipse(BackColor, Rect);
             DrawText(g);
         }
+
         private void DrawEnd(Graphics g)
         {
             g.FillEllipse(BackColor, Rect);
             DrawText(g);
         }
+
         private void DrawInput(Graphics g)
         {
             var x = new System.Drawing.Drawing2D.GraphicsPath();
-            x.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height), new Point(Rect.Location.X + 10, Rect.Location.Y));
-            x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y), new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
+            x.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height),
+                new Point(Rect.Location.X + 10, Rect.Location.Y));
+            x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y),
+                new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
             g.FillPath(BackColor, x);
         }
+
         private void DrawExecution(Graphics g)
         {
             g.FillRectangle(BackColor, Rect);
         }
+
         private void DrawDecision(Graphics g)
         {
 
             var x = new System.Drawing.Drawing2D.GraphicsPath();
-            x.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height / 2), new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
-            x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2), new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
+            x.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height / 2),
+                new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
+            x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2),
+                new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
             g.FillPath(BackColor, x);
         }
 
@@ -272,7 +300,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Font font;
             Size stringSize;
-            int fontSize = (int)Math.Ceiling(Math.Abs(Rect.Height) / 3.0) + 2;
+            int fontSize = (int) Math.Ceiling(Math.Abs(Rect.Height) / 3.0) + 2;
             do
             {
                 font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
@@ -291,6 +319,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         }
 
         #endregion
+
         #endregion
     }
 }

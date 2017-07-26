@@ -12,9 +12,10 @@ namespace UmlDesigner2
     {
         public static Size defaultCanvasControlSize = new Size(100, 50);
         public static Size RubberSize = new Size(10, 10);
+        public static Color RubberColor = Color.Silver;
         public static Size MinSizeForControl = new Size(50, 50);
         public static System.Windows.Forms.Keys MultiselectKey = System.Windows.Forms.Keys.ControlKey;
-
+        public static Size MinimumBlockSize = new Size(10, 10);
         public enum Shape
         {
             Nothing = 0,

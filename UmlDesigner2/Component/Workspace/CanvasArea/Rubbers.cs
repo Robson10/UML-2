@@ -7,17 +7,23 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     class Rubbers : List<UserControl>
     {
-        public Rubbers()
+        private ListCanvasObjects CanvasObjects;
+        private Point MouseDownLocation_Rubbers;
+
+        public Rubbers(ref ListCanvasObjects _listCanvasItems)
         {
+            CanvasObjects = _listCanvasItems;
             RubbersPresets();
         }
-
+        /// <summary>
+        /// Metoda ustawiająca gumki.Wywoływana w konstruktorze.
+        /// </summary>
         private void RubbersPresets()
         {
             for (int i = 0; i < 8; i++)
             {
-                this.Add(new UserControl());
-                this[i].BackColor = System.Drawing.Color.Silver;
+                Add(new UserControl());
+                this[i].BackColor = BlocksData.RubberColor;
                 this[i].Visible = false;
                 this[i].Size = BlocksData.RubberSize;
                 this[i].TabIndex = i;
@@ -33,7 +39,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             this[6].Cursor = Cursors.SizeNESW;
             this[7].Cursor = Cursors.SizeWE;
         }
-        private Point MouseDownLocation_Rubbers;
+
         /// <summary>
         /// Metoda służąca do zapisania miejsca wcisniecia LPM na 1z8 gumek
         /// </summary>
@@ -44,6 +50,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (e.Button == MouseButtons.Left)
                 MouseDownLocation_Rubbers = e.Location;
         }
+
         /// <summary>
         /// Metoda służąca do zmiany rozmiaru kontrolki w wyniku ciągnięcia jednej z gumek
         /// </summary>
@@ -53,45 +60,37 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (e.Button == MouseButtons.Left)
             {
-                //CanvasObjects.ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location, (sender as Label).TabIndex);
-                //if (CanvasObjects.Count > 0) UpdateRubbers(CanvasObjects[0]);
-                //Invalidate();
+                CanvasObjects.ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
+                    (sender as UserControl).TabIndex);
+                if (CanvasObjects.Count > 0) ShowRubbers(CanvasObjects[0]);
+                this[0].Parent.Invalidate();
             }
         }
 
         /// <summary>
-        /// Metoda aktualizująca położenie gumek wywoływana przez event OnResize();
+        /// Metoda aktualizująca(wyliczająca) położenie gumek po kliknięciu na blok oraz po zmianie jego rozmiaru. Dodatkowo wywołuje metodę odpowiedzialną za widoczność gumek.
         /// </summary>
         public void ShowRubbers(MyCanvasFigure canvasObject)
         {
-            //po "obróceniu" sie figury wyznaczamy inne XY dla gumek
 
             var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
                           BlocksData.RubberSize.Width / 2;
             var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
                           BlocksData.RubberSize.Height / 2;
 
-            var left = (canvasObject.Rect.Size.Width < 0)
-                ? canvasObject.Rect.Location.X
-                : canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
-            var right = (canvasObject.Rect.Size.Width < 0)
-                ? canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width - BlocksData.RubberSize.Width
-                : canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-            var up = (canvasObject.Rect.Size.Height < 0)
-                ? canvasObject.Rect.Location.Y
-                : canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
-            var down = (canvasObject.Rect.Size.Height < 0)
-                ? canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height - BlocksData.RubberSize.Height
-                : canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+            var left = canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
+            var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
+            var up = canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
+            var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
 
-            Point topLeft = new Point(left, up);
-            Point topCenter = new Point(centerX, up);
-            Point topRight = new Point(right, up);
-            Point centerLeft = new Point(left, centerY);
-            Point centerRight = new Point(right, centerY);
-            Point bottomLeft = new Point(left, down);
-            Point bottomCenter = new Point(centerX, down);
-            Point bottomRight = new Point(right, down);
+            var topLeft = new Point(left, up);
+            var topCenter = new Point(centerX, up);
+            var topRight = new Point(right, up);
+            var centerLeft = new Point(left, centerY);
+            var centerRight = new Point(right, centerY);
+            var bottomLeft = new Point(left, down);
+            var bottomCenter = new Point(centerX, down);
+            var bottomRight = new Point(right, down);
 
             this[0].Location = topLeft;
             this[1].Location = topCenter;
@@ -102,11 +101,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             this[6].Location = bottomLeft;
             this[7].Location = centerLeft;
             UpdateRubberVisible(canvasObject.IsSelected);
-
         }
 
         /// <summary>
-        /// Metoda aktualizująca widoczność gumek wywoływana w geterze IsSelected
+        /// Metoda aktualizująca widoczność gumek zgodnie z parametrem isSelected
         /// </summary>
         private void UpdateRubberVisible(bool isSelected)
         {
@@ -114,6 +112,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 this[i].Visible = isSelected;
         }
 
+        /// <summary>
+        /// Metoda służąca do dodania gumek do Kontrolki (zastępuje komędę typu Controls.Add(Rubbers[i])
+        /// </summary>
+        /// <param name="control"></param>
         public void AddRubbersToControl(Control control)
         {
             for (int i = 0; i < this.Count; i++)
