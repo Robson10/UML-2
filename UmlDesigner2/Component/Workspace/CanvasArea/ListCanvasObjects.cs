@@ -51,9 +51,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     int NewWidth = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - MouseDownLocation.X);
                     int NewHeight = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - MouseDownLocation.Y);
-                    if (NewWidth >= BlocksData.MinimumBlockSize.Width)
+                    if (NewWidth >= BlocksData.MinSize.Width)
                         base[i].Rect.Width = NewWidth;
-                    if (NewHeight >= BlocksData.MinimumBlockSize.Height)
+                    if (NewHeight >= BlocksData.MinSize.Height)
                         base[i].Rect.Height = NewHeight;
                 }
             }
@@ -113,12 +113,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             width -= e.X - MouseDownLocation.X;
                             break;
                     }
-                    if (width > BlocksData.MinimumBlockSize.Width)
+                    if (width > BlocksData.MinSize.Width)
                     {
                         base[i].Rect.Width = width;
                         base[i].Rect.Location = new Point(x, base[i].Rect.Location.Y);
                     }
-                    if (height > BlocksData.MinimumBlockSize.Height)
+                    if (height > BlocksData.MinSize.Height)
                     {
                         base[i].Rect.Height = height;
                         base[i].Rect.Location = new Point(base[i].Rect.Location.X, y);
@@ -149,7 +149,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Text = BlocksData.Text(Shape);
         }
 
-        public int FontSize;
+
         public string Text; //zawartosc tekstowa kontrolki
         public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
@@ -158,28 +158,27 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         #region Done
 
-        public Rectangle Rect; //obszar dla figury - point , size
-        private BlocksData.Shape _Shape;
-
-        public BlocksData.Shape Shape //jaką kontrolke rysujemy
-        {
-            get { return _Shape; }
-            set
-            {
-                _Shape = value;
-                BackColor = BlocksData.BackColor(_Shape);
-                FontColor = BlocksData.FontColor(_Shape);
-                FontSize = BlocksData.FontSize(_Shape);
-
-            }
-        }
+        public Rectangle Rect; //obszar dla figury - point , size - dodatkowo wyliczane są punkty dla linii
 
         public SolidBrush BackColor;
         public Color FontColor;
+        public int FontSize;
+        private BlocksData.Shape _shape;
+        public BlocksData.Shape Shape //jaką kontrolke rysujemy
+        {
+            get => _shape;
+            set
+            {
+                _shape = value;
+                BackColor = BlocksData.BackColor(_shape);
+                FontColor = BlocksData.FontColor(_shape);
+                FontSize = BlocksData.FontSize(_shape);
+            }
+        }
+
 
         public bool IsContain(Point location)
         {
-            //http://stackoverflow.com/questions/34582234/how-to-detect-if-mouse-has-clicked-inside-of-a-certain-shape-in-c-sharp-on-winfo
             var contains = false;
             if (Shape == BlocksData.Shape.Start)
             {
@@ -251,11 +250,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 case (BlocksData.Shape.Decision):
                     DrawDecision(g);
                     break;
+                case (BlocksData.Shape.ConnectionLine):
+                    DrawConnectionLine(g);
+                    break;
                 default:
                     MessageBox.Show("nie znalazłem odpowiedniego kształtu i nwm co teraz mam narysować ;(");
                     break;
             }
         }
+
 
         private void DrawStart(Graphics g)
         {
@@ -293,6 +296,50 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2),
                 new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
             g.FillPath(BackColor, x);
+        }
+
+        public void DrawConnectionLine( Graphics g)
+        {
+            if (Rect.Width != 0)
+            {
+                var YBreak = Math.Abs(Rect.Y - Rect.Height) * 50 / 100;
+                var XBreak = Math.Abs(Rect.X - Rect.Width) * 50 / 100;
+                if (Rect.Location.Y > Rect.Height)
+                    if (Rect.Location.X>Rect.Width)
+                    g.DrawLines(
+                        new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
+                        new Point[]
+                        {
+                            Rect.Location,
+                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+                            new Point(Rect.Location.X-XBreak,Rect.Location.Y+YBreak),
+                            new Point(Rect.Width+XBreak,Rect.Height-YBreak),
+                            new Point(Rect.Width, Rect.Height-YBreak),
+                            new Point(Rect.Width, Rect.Height)
+                        });
+                    else
+                        g.DrawLines(
+                            new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
+                            new Point[]
+                            {
+                                Rect.Location,
+                                new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+                                new Point(Rect.Location.X+XBreak,Rect.Location.Y+YBreak),
+                                new Point(Rect.Width-XBreak,Rect.Height-YBreak),
+                                new Point(Rect.Width, Rect.Height-YBreak),
+                                new Point(Rect.Width, Rect.Height)
+                            });
+                else
+                    g.DrawLines(
+                    new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
+                    new Point[]
+                    {
+                        Rect.Location,
+                        new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+                        new Point(Rect.Width, Rect.Height-YBreak),
+                        new Point(Rect.Width, Rect.Height)
+                    });
+            }
         }
 
         //for start/end

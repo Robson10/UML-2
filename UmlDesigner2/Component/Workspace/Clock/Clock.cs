@@ -27,10 +27,9 @@ namespace UmlDesigner2.Component.Workspace.Clock
             _contextMenu.Items.Add("Zegar Cyfrowy #2");
             _contextMenu.Items.Add("Wyłącz zegar");
             _contextMenu.ItemClicked += _contextMenu_ItemClicked;
-            //this.Anchor = (AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right);
             this.ContextMenuStrip = _contextMenu;
         }
-        public void Start()
+        public void Start()//bedzie wywolywane z zewnątrz
         {
             if (ClockVariables.IsRunnable)
             {

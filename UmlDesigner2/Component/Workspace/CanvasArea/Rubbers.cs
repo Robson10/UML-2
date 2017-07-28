@@ -100,13 +100,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             this[5].Location = bottomCenter;
             this[6].Location = bottomLeft;
             this[7].Location = centerLeft;
-            UpdateRubberVisible(canvasObject.IsSelected);
+            SetRubberVisible(canvasObject.IsSelected);
         }
 
         /// <summary>
         /// Metoda aktualizująca widoczność gumek zgodnie z parametrem isSelected
         /// </summary>
-        private void UpdateRubberVisible(bool isSelected)
+        public void SetRubberVisible(bool isSelected)
         {
             for (int i = 0; i < this.Count; i++)
                 this[i].Visible = isSelected;

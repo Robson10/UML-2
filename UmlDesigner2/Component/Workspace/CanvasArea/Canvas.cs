@@ -4,24 +4,28 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    class Canvas : UserControl
+    sealed partial class Canvas : UserControl
     {
         private readonly Clock.Clock _clock = new Clock.Clock();
-        private static ListCanvasObjects CanvasObjects = new ListCanvasObjects();//lista blokow wyrysowanych na ekranie
-        private readonly Rubbers _rubbers = new Rubbers(ref CanvasObjects);
+        private static ListCanvasObjects _canvObj = new ListCanvasObjects(); //lista blokow wyrysowanych na ekranie
+        private readonly Rubbers _rubbers = new Rubbers(ref _canvObj);
 
         public bool IsMultiSelect { get; set; }
         private BlocksData.Shape _shapeToDraw = CanvasVariables.defaultvalue;
+
         private BlocksData.Shape ShapeToDraw
         {
-            get { return _shapeToDraw; }
+            get => _shapeToDraw;
             set
             {
                 _shapeToDraw = value;
                 Cursor = (value == BlocksData.Shape.Nothing) ? Cursors.Default : Cursors.Cross;
             }
         }
-        bool ppm = true;//czy teraz resize czu moze menu kontekstowe
+
+        bool ppm = true; //czy teraz resize czu moze menu kontekstowe
+
+        private Point MouseDownLocation;
 
         public Canvas()
         {
@@ -29,14 +33,25 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             BackColor = CanvasVariables.BgColor;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             Controls.Add(_clock);
+            ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
         }
 
+
         public void AddObjectInstant(BlocksData.Shape shape)
         {
-            CanvasObjects.Insert(0,(new MyCanvasFigure(new Rectangle(Width*10/100, Height*10/100, BlocksData.defaultCanvasControlSize.Width, BlocksData.defaultCanvasControlSize.Height),shape)));
-            ShapeToDraw = BlocksData.Shape.Nothing;
-            Invalidate();
+            if (shape != BlocksData.Shape.ConnectionLine)
+            {
+                _canvObj.Insert(0,
+                    (new MyCanvasFigure(
+                        new Rectangle(Width * 10 / 100, Height * 10 / 100, BlocksData.DefaultSize.Width,
+                            BlocksData.DefaultSize.Height), shape)));
+                ShapeToDraw = BlocksData.Shape.Nothing;
+                Invalidate();
+            }
+            else
+                MessageBox.Show(
+                    "Niestety linia nie może zostać dodana poprzez 2xLPM. Należy wybrać linie a następnie wskazać blok początkowy oraz blok końcowy dla lini");
         }
 
         public void AddObjectAfterClick(BlocksData.Shape shape)
@@ -46,6 +61,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void AbortAddingObject()
         {
+            if (_canvObj[0].Rect.Size.Width == 0) _canvObj.RemoveAt(0);
             ShapeToDraw = BlocksData.Shape.Nothing;
         }
 
@@ -55,46 +71,58 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             //po kliknięciu ppm bez przesówania pojawia się menu kontekstowe a także przerywane jest dodawanie elementów do canvasa
             if (e.Button == MouseButtons.Right && ppm == true)
             {
-                if (CanvasObjects.IsAnyObjectContainingPoint(e.Location))
-                    ShowContextMenu();
-                AbortAddingObject();
-                Invalidate();
+                if (ShapeToDraw != BlocksData.Shape.Nothing)
+                {
+                    AbortAddingObject();
+                }
+                if (_canvObj.IsAnyObjectContainingPoint(e.Location))
+                {
+                    ShowContextMenu(e);
+                    _rubbers.ShowRubbers(_canvObj[0]);
+                }
             }
         }
 
-        private void ShowContextMenu()
-        {
-            MessageBox.Show("MenuKontekstowe");
-        }
-
-
-
-        private Point MouseDownLocation;
         protected override void OnMouseDown(MouseEventArgs e)
         {
             //metoda dodająca obiekt do canvasu po LPM, zaznaczająca element jeżeli nie dodajemy obiektu. W przypadku PPM Zmienia cursor Na resize i sprawdza który obiekt bedzie resizowany.
-            if (!IsMultiSelect) CanvasObjects.IsSelectedSetForAll(false);
+            if (!IsMultiSelect) _canvObj.IsSelectedSetForAll(false);
 
             if (e.Button == MouseButtons.Left)
             {
                 if (ShapeToDraw != BlocksData.Shape.Nothing)
                 {
-                    CanvasObjects.Insert(0,(new MyCanvasFigure(new Rectangle(e.Location.X - BlocksData.defaultCanvasControlSize.Width / 2, e.Location.Y - BlocksData.defaultCanvasControlSize.Height / 2, BlocksData.defaultCanvasControlSize.Width, BlocksData.defaultCanvasControlSize.Height), ShapeToDraw)));
-                    ShapeToDraw = BlocksData.Shape.Nothing;
+                    if (ShapeToDraw == BlocksData.Shape.ConnectionLine)
+                    {
+                        if (_canvObj[0].Shape == BlocksData.Shape.ConnectionLine &&
+                            _canvObj[0].Rect.Size.Width == 0)
+                        {
+                            _canvObj[0].Rect.Size = new Size(e.Location);
+                            ShapeToDraw = BlocksData.Shape.Nothing;
+                        }
+                        else
+                            _canvObj.Insert(0,new MyCanvasFigure(new Rectangle(e.Location, new Size(0, 0)), ShapeToDraw));
+                    }
+                    else
+                    {
+                        _canvObj.Insert(0,(new MyCanvasFigure(new Rectangle(e.Location.X - BlocksData.DefaultSize.Width / 2,
+                                    e.Location.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width,BlocksData.DefaultSize.Height), ShapeToDraw)));
+                        ShapeToDraw = BlocksData.Shape.Nothing;
+                    }
                 }
                 else
                 {
-                    if (CanvasObjects.Count > 0)
+                    if (_canvObj.Count > 0)
                     {
-                        CanvasObjects.SelectObjectContainingPoint(e.Location);
-                        _rubbers.ShowRubbers(CanvasObjects[0]);
+                        _canvObj.SelectObjectContainingPoint(e.Location);
+                        _rubbers.ShowRubbers(_canvObj[0]);
                     }
                 }
             }
-            else if (e.Button==MouseButtons.Right)
+            else if (e.Button == MouseButtons.Right)
             {
                 Cursor = Cursors.SizeAll;
-                CanvasObjects.SelectObjectContainingPoint(e.Location);
+                _canvObj.SelectObjectContainingPoint(e.Location);
                 ppm = true;
             }
             MouseDownLocation = e.Location;
@@ -106,29 +134,34 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             //metoda przemieszczająca obiekt dla LPM i zmieniająca jego rozmiar dla PPM
             if (e.Button == MouseButtons.Left)
             {
-                CanvasObjects.MoveSelectedObjects(ref MouseDownLocation, e.Location);
-                if (CanvasObjects.Count > 0) _rubbers.ShowRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
+                _canvObj.MoveSelectedObjects(ref MouseDownLocation, e.Location);
+                if (_canvObj.Count > 0)
+                    _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
             else if (e.Button == MouseButtons.Right)
             {
                 ppm = false;
-                CanvasObjects.ResizeSelectedObjects(ref MouseDownLocation, e.Location);
-                if (CanvasObjects.Count > 0) _rubbers.ShowRubbers(CanvasObjects[0]);//zawsze index 0 to to ostatni zaznaczony objekt
+                _canvObj.ResizeSelectedObjects(ref MouseDownLocation, e.Location);
+                if (_canvObj.Count > 0)
+                    _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
                 MouseDownLocation = e.Location;
                 Invalidate();
             }
         }
+
         protected override void OnMouseUp(MouseEventArgs e)
         {
+            if(ShapeToDraw!=BlocksData.Shape.ConnectionLine)
             Cursor = Cursors.Default;
         }
+
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            for (int i = CanvasObjects.Count - 1; i >= 0; i--)
-                CanvasObjects[i].Draw(e.Graphics);
+            for (int i = _canvObj.Count - 1; i >= 0; i--)
+                _canvObj[i].Draw(e.Graphics);
         }
 
 

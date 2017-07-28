@@ -10,12 +10,13 @@ namespace UmlDesigner2
 {
     public class BlocksData
     {
-        public static Size defaultCanvasControlSize = new Size(100, 50);
         public static Size RubberSize = new Size(10, 10);
         public static Color RubberColor = Color.Silver;
-        public static Size MinSizeForControl = new Size(50, 50);
         public static System.Windows.Forms.Keys MultiselectKey = System.Windows.Forms.Keys.ControlKey;
-        public static Size MinimumBlockSize = new Size(10, 10);
+
+        public static Size DefaultSize = new Size(100, 50);
+        public static Size MinSize = new Size(10, 10);
+
         public enum Shape
         {
             Nothing = 0,
@@ -23,7 +24,8 @@ namespace UmlDesigner2
             Input = 2,
             Execution = 3,
             Decision = 4,
-            End = 5
+            End = 5,
+            ConnectionLine = 6
         };
 
         public static SolidBrush BackColor(Shape shape)
@@ -40,6 +42,8 @@ namespace UmlDesigner2
                     return new SolidBrush(Color.FromArgb(255, 110, 110, 110));
                 case Shape.Decision:
                     return new SolidBrush(Color.FromArgb(255, 130, 130, 130));
+                case Shape.ConnectionLine:
+                    return new SolidBrush(Color.FromArgb(255, 0, 0, 0));
             }
             return new SolidBrush(Color.FromArgb(0, 250, 0, 0));
         }
@@ -96,6 +100,8 @@ namespace UmlDesigner2
                     return "End";
                 case Shape.Decision:
                     return "Decision";
+                case Shape.ConnectionLine:
+                    return "ConnectionLine";
                 default:
                     return "Error";
             }
@@ -115,12 +121,14 @@ namespace UmlDesigner2
                     return "Blok Końca";
                 case Shape.Decision:
                     return "Blok Decyzyjny";
+                case Shape.ConnectionLine:
+                    return "Linia łącząca";
                 default:
                     return "Error";
             }
         }
 
-        public static string ImagePath(Shape shape)
+        public static string ImgPath(Shape shape)
         {
             switch (shape)
             {
@@ -134,6 +142,8 @@ namespace UmlDesigner2
                     return "UmlDesigner2.Icons.End.jpg";
                 case Shape.Decision:
                     return "UmlDesigner2.Icons.Decision.jpg";
+                case Shape.ConnectionLine:
+                    return "UmlDesigner2.Icons.ConnectionLine.jpg";
                 default:
                     return "Error";
             }

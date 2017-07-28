@@ -50,7 +50,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             imageList1.TransparentColor = Color.Transparent;
             for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
             {
-                AddImageToImageListFromPath(BlocksData.ImagePath((BlocksData.Shape) i), ref imageList1);
+                AddImageToImageListFromPath(BlocksData.ImgPath((BlocksData.Shape) i), ref imageList1);
             }
             return imageList1;
         }

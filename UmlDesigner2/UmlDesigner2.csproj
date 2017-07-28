@@ -64,6 +64,9 @@
     <Compile Include="Component\Workspace\CanvasArea\Canvas.cs">
       <SubType>UserControl</SubType>
     </Compile>
+    <Compile Include="Component\Workspace\CanvasArea\CanvasContextMenu.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
     <Compile Include="Component\Workspace\CanvasArea\ListCanvasObjects.cs" />
     <Compile Include="Component\Workspace\CanvasArea\Rubbers.cs" />
     <Compile Include="Component\Workspace\Clock\Analog.cs">
@@ -75,12 +78,6 @@
     <Compile Include="Component\Workspace\Clock\ClockVariables.cs" />
     <Compile Include="Component\Workspace\Clock\Digital.cs">
       <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\Workspace.cs">
-      <SubType>UserControl</SubType>
-    </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\Workspace.Designer.cs">
-      <DependentUpon>Workspace.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\ToolStripArea\MyToolStripContainer.cs">
       <SubType>Component</SubType>
@@ -103,9 +100,6 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Component\Workspace\CanvasArea\Workspace.resx">
-      <DependentUpon>Workspace.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -194,6 +188,9 @@
     <Folder Include="Component\MenuStrip\" />
     <Folder Include="Component\TabsArea\BlockPropertis\" />
     <Folder Include="Component\Workspace\ResultComponent\" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Icons\ConnectionLine.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
