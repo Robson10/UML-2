@@ -61,7 +61,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void AbortAddingObject()
         {
-            if (_canvObj[0].Rect.Size.Width == 0) _canvObj.RemoveAt(0);
+            if (_canvObj[0].Rect.Size.Width == 0)
+                _canvObj.RemoveAt(0);
             ShapeToDraw = BlocksData.Shape.Nothing;
         }
 

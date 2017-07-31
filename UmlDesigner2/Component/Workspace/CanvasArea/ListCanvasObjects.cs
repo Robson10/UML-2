@@ -226,6 +226,51 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
+            else if (Shape == BlocksData.Shape.ConnectionLine)
+            {
+            //    using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
+            //    {
+            //        if (Rect.Width != 0)
+            //        {
+            //            var YBreak = Math.Abs(Rect.Y - Rect.Height) * 50 / 100;
+            //            var XBreak = Math.Abs(Rect.X - Rect.Width) * 50 / 100;
+            //            if (Rect.Location.Y > Rect.Height)
+            //                if (Rect.Location.X > Rect.Width)
+            //                    gp.AddLines(
+                                    
+            //                        new Point[]
+            //                        {
+            //                            Rect.Location,
+            //                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+            //                            new Point(Rect.Location.X-XBreak,Rect.Location.Y+YBreak),
+            //                            new Point(Rect.Width+XBreak,Rect.Height-YBreak),
+            //                            new Point(Rect.Width, Rect.Height-YBreak),
+            //                            new Point(Rect.Width, Rect.Height)
+            //                        });
+            //                else
+            //                    gp.AddLines(
+            //                        new Point[]
+            //                        {
+            //                            Rect.Location,
+            //                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+            //                            new Point(Rect.Location.X+XBreak,Rect.Location.Y+YBreak),
+            //                            new Point(Rect.Width-XBreak,Rect.Height-YBreak),
+            //                            new Point(Rect.Width, Rect.Height-YBreak),
+            //                            new Point(Rect.Width, Rect.Height)
+            //                        });
+            //            else
+            //                gp.AddLines(
+            //                    new Point[]
+            //                    {
+            //                        Rect.Location,
+            //                        new Point(Rect.Location.X, Rect.Location.Y+YBreak),
+            //                        new Point(Rect.Width, Rect.Height-YBreak),
+            //                        new Point(Rect.Width, Rect.Height)
+            //                    });
+            //        }
+            //        contains = gp.IsVisible(location);
+            //    }
+            }
             return contains;
         }
 
@@ -298,7 +343,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             g.FillPath(BackColor, x);
         }
 
-        public void DrawConnectionLine( Graphics g)
+        public void DrawConnectionLine(Graphics g)
         {
             if (Rect.Width != 0)
             {
