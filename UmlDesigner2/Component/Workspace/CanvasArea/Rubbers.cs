@@ -60,7 +60,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (e.Button == MouseButtons.Left)
             {
-                CanvasObjects.ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
+                CanvasObjects.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
                     (sender as UserControl).TabIndex);
                 if (CanvasObjects.Count > 0) ShowRubbers(CanvasObjects[0]);
                 this[0].Parent.Invalidate();
@@ -70,7 +70,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <summary>
         /// Metoda aktualizująca(wyliczająca) położenie gumek po kliknięciu na blok oraz po zmianie jego rozmiaru. Dodatkowo wywołuje metodę odpowiedzialną za widoczność gumek.
         /// </summary>
-        public void ShowRubbers(MyCanvasFigure canvasObject)
+        public void ShowRubbers(MyCanvasElements canvasObject)
         {
 
             var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -

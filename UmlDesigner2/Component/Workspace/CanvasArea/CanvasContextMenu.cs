@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,10 +23,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
 
         }
-        private void ShowContextMenu(MouseEventArgs e)
+        private void ShowContextMenu(Point e)
         {
             _contextMenu.Visible = true;
-            _contextMenu.Show(this, e.Location.X, e.Location.Y);
+            _contextMenu.Show(this, e.X, e.Y);
         }
     }
 }

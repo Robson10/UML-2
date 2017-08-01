@@ -8,9 +8,9 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    public class ListCanvasObjects : List<MyCanvasFigure>
+    public class ListCanvasObjects : List<MyCanvasElements>
     {
-        public void SelectObjectContainingPoint(Point location)
+        public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsContain(location))
@@ -25,7 +25,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
         }
 
-        public bool IsAnyObjectContainingPoint(Point location)
+        public bool My_IsAnyObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsContain(location))
@@ -33,7 +33,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             return false;
         }
 
-        public void MoveSelectedObjects(ref Point MouseDownLocation, Point e)
+        public void My_MoveSelectedObjects(ref Point MouseDownLocation, Point e)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsSelected && !base[i].IsLocked)
@@ -43,7 +43,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
         }
 
-        public void ResizeSelectedObjects(ref Point MouseDownLocation, Point e)
+        public void My_ResizeSelectedObjects(ref Point MouseDownLocation, Point e)
         {
             for (int i = 0; i < base.Count; i++)
             {
@@ -59,7 +59,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        public void ResizeSelectedObjectsByRubbers(ref Point MouseDownLocation, Point e, int RubberID)
+        public void My_ResizeSelectedObjectsByRubbers(ref Point MouseDownLocation, Point e, int RubberID)
         {
             for (int i = 0; i < base.Count; i++)
                 if (base[i].IsSelected && !base[i].IsLocked)
@@ -127,7 +127,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
         }
 
-        public void IsSelectedSetForAll(bool isSelected)
+        public void My_IsSelectedSetForAll(bool isSelected)
         {
             for (int i = 0; i < base.Count; i++)
             {
@@ -138,11 +138,48 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 base[i].IsSelected = isSelected;
             }
         }
+
+        public void My_AddObj(Point e,ref BlocksData.Shape shapeToDraw)
+        {
+            this.Insert(0, (new MyCanvasElements(new Rectangle(e.X - BlocksData.DefaultSize.Width / 2,
+                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw)));
+            shapeToDraw = BlocksData.Shape.Nothing;
+        }
+
+        public void My_AddLine(Point e, ref BlocksData.Shape shapeToDraw)
+        {
+            if (this.My_IsAnyObjectContainingPoint(e))
+            {
+                if (this[0].Shape == BlocksData.Shape.ConnectionLine && this[0].Rect.Size.Width == 0)
+                {
+                    this[0].Rect.Size = new Size(e);
+                    shapeToDraw = BlocksData.Shape.Nothing;
+                }
+                else
+                    this.Insert(0, new MyCanvasElements(new Rectangle(e, new Size(0, 0)), shapeToDraw));
+            }
+        }
+
+        public void My_AbortAddingObj(ref BlocksData.Shape shapeToDraw)
+        {
+            if (this.Count>0 && this[0].Rect.Size.Width == 0)
+                this.RemoveAt(0);
+            shapeToDraw = BlocksData.Shape.Nothing;
+        }
     }
 
-    public class MyCanvasFigure
+    //public class MyCanvasLine : MyCanvasElements
+    //{
+    //    public MyCanvasLine(Rectangle rect, BlocksData.Shape shape) : base(rect, shape)
+    //    {
+
+    //    }
+    //}
+
+
+    public class MyCanvasElements
     {
-        public MyCanvasFigure(Rectangle rect, BlocksData.Shape shape)
+        public MyCanvasElements(Rectangle rect, BlocksData.Shape shape)
         {
             Rect = rect;
             Shape = shape;
