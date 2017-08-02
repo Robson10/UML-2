@@ -7,12 +7,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     class Rubbers : List<UserControl>
     {
-        private ListCanvasObjects CanvasObjects;
+        private ListCanvasBlocks _canvasBlocks;
         private Point MouseDownLocation_Rubbers;
 
-        public Rubbers(ref ListCanvasObjects _listCanvasItems)
+        public Rubbers(ref ListCanvasBlocks _listCanvasItems)
         {
-            CanvasObjects = _listCanvasItems;
+            _canvasBlocks = _listCanvasItems;
             RubbersPresets();
         }
         /// <summary>
@@ -60,9 +60,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (e.Button == MouseButtons.Left)
             {
-                CanvasObjects.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
+                _canvasBlocks.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
                     (sender as UserControl).TabIndex);
-                if (CanvasObjects.Count > 0) ShowRubbers(CanvasObjects[0]);
+                if (_canvasBlocks.Count > 0) ShowRubbers(_canvasBlocks[0]);
                 this[0].Parent.Invalidate();
             }
         }
@@ -70,7 +70,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <summary>
         /// Metoda aktualizująca(wyliczająca) położenie gumek po kliknięciu na blok oraz po zmianie jego rozmiaru. Dodatkowo wywołuje metodę odpowiedzialną za widoczność gumek.
         /// </summary>
-        public void ShowRubbers(MyCanvasElements canvasObject)
+        public void ShowRubbers(MyBlock canvasObject)
         {
 
             var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -

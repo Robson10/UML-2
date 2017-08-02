@@ -12,6 +12,9 @@ namespace UmlDesigner2
     {
         public static Size RubberSize = new Size(10, 10);
         public static Color RubberColor = Color.Silver;
+        public static SolidBrush TrueLineBackColor = new SolidBrush(Color.Green);
+        public static SolidBrush FalseLineBackColor = new SolidBrush(Color.Red);
+
         public static System.Windows.Forms.Keys MultiselectKey = System.Windows.Forms.Keys.ControlKey;
 
         public static Size DefaultSize = new Size(100, 50);

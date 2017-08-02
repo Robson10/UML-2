@@ -7,7 +7,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     sealed partial class Canvas : UserControl
     {
         private readonly Clock.Clock _clock = new Clock.Clock();
-        private static ListCanvasObjects _canvObj = new ListCanvasObjects(); //lista blokow wyrysowanych na ekranie
+        private static ListCanvasBlocks _canvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
+        private static ListCanvasLines _canvLines = new ListCanvasLines(); //lista blokow wyrysowanych na ekranie
         private readonly Rubbers _rubbers = new Rubbers(ref _canvObj);
 
         public bool IsMultiSelect { get; set; }
@@ -71,6 +72,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnMouseMove(MouseEventArgs e)
         {
             //metoda przemieszczająca obiekt dla LPM i zmieniająca jego rozmiar dla PPM
+            if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
             if (e.Button == MouseButtons.Left)
             {
                 LPM_MoveObject(e.Location);
@@ -90,6 +92,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
+            for (int i = 0; i < _canvLines.Count; i++)
+                _canvLines[i].My_DrawConnectionLine(e.Graphics);
+                
             for (int i = _canvObj.Count - 1; i >= 0; i--)
                 _canvObj[i].Draw(e.Graphics);
         }

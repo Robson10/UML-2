@@ -70,7 +70,8 @@
     <Compile Include="Component\Workspace\CanvasArea\Canvas_Methoods.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\ListCanvasObjects.cs" />
+    <Compile Include="Component\Workspace\CanvasArea\ListCanvasBlocks.cs" />
+    <Compile Include="Component\Workspace\CanvasArea\ListCanvasLines.cs" />
     <Compile Include="Component\Workspace\CanvasArea\Rubbers.cs" />
     <Compile Include="Component\Workspace\Clock\Analog.cs">
       <SubType>Component</SubType>

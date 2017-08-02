@@ -8,8 +8,9 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    public class ListCanvasObjects : List<MyCanvasElements>
+    public class ListCanvasBlocks : List<MyBlock>
     {
+        public static uint id = 0;
         public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
@@ -33,6 +34,20 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             return false;
         }
 
+        public MyBlock TryGetElementContainingPoint(Point location)
+        {
+            for (int i = 0; i < base.Count; i++)
+                if (base[i].IsContain(location))
+                    return base[i];
+            return null;
+        }
+        public MyBlock TryGetElementWithId(int id)
+        {
+            for (int i = 0; i < base.Count; i++)
+                if (base[i].ID==id)
+                    return base[i];
+            return null;
+        }
         public void My_MoveSelectedObjects(ref Point MouseDownLocation, Point e)
         {
             for (int i = 0; i < base.Count; i++)
@@ -141,60 +156,45 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void My_AddObj(Point e,ref BlocksData.Shape shapeToDraw)
         {
-            this.Insert(0, (new MyCanvasElements(new Rectangle(e.X - BlocksData.DefaultSize.Width / 2,
-                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw)));
+            this.Insert(0, (new MyBlock(new Rectangle(e.X - BlocksData.DefaultSize.Width / 2,
+                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw,this.Count)));
             shapeToDraw = BlocksData.Shape.Nothing;
-        }
-
-        public void My_AddLine(Point e, ref BlocksData.Shape shapeToDraw)
-        {
-            if (this.My_IsAnyObjectContainingPoint(e))
-            {
-                if (this[0].Shape == BlocksData.Shape.ConnectionLine && this[0].Rect.Size.Width == 0)
-                {
-                    this[0].Rect.Size = new Size(e);
-                    shapeToDraw = BlocksData.Shape.Nothing;
-                }
-                else
-                    this.Insert(0, new MyCanvasElements(new Rectangle(e, new Size(0, 0)), shapeToDraw));
-            }
         }
 
         public void My_AbortAddingObj(ref BlocksData.Shape shapeToDraw)
         {
-            if (this.Count>0 && this[0].Rect.Size.Width == 0)
+            if (this.Count>0)
                 this.RemoveAt(0);
             shapeToDraw = BlocksData.Shape.Nothing;
         }
+
+        public void DeleteObj()
+        {
+            //podczas usuwania musze zaktualizować nie tylko ID kazdego elementu ale także każdej linii do nich przyłączonej
+            //usuwanie zwraca id bloku w wyniku czego można usunąć linię ktora zawiera to id
+        }
     }
 
-    //public class MyCanvasLine : MyCanvasElements
-    //{
-    //    public MyCanvasLine(Rectangle rect, BlocksData.Shape shape) : base(rect, shape)
-    //    {
-
-    //    }
-    //}
 
 
-    public class MyCanvasElements
+
+    public class MyBlock
     {
-        public MyCanvasElements(Rectangle rect, BlocksData.Shape shape)
+        public MyBlock(Rectangle rect, BlocksData.Shape shape,int id)
         {
             Rect = rect;
             Shape = shape;
             Text = BlocksData.Text(Shape);
+            ID = id;
         }
-
-
         public string Text; //zawartosc tekstowa kontrolki
         public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
-        public uint ID;
-        public int In, Out, Out2;
-
+        public int ID;
         #region Done
 
+        public Point PointInput;
+        public Point PointOutput1, PointOutput2;
         public Rectangle Rect; //obszar dla figury - point , size - dodatkowo wyliczane są punkty dla linii
 
         public SolidBrush BackColor;
@@ -263,51 +263,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlocksData.Shape.ConnectionLine)
-            {
-            //    using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
-            //    {
-            //        if (Rect.Width != 0)
-            //        {
-            //            var YBreak = Math.Abs(Rect.Y - Rect.Height) * 50 / 100;
-            //            var XBreak = Math.Abs(Rect.X - Rect.Width) * 50 / 100;
-            //            if (Rect.Location.Y > Rect.Height)
-            //                if (Rect.Location.X > Rect.Width)
-            //                    gp.AddLines(
-                                    
-            //                        new Point[]
-            //                        {
-            //                            Rect.Location,
-            //                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-            //                            new Point(Rect.Location.X-XBreak,Rect.Location.Y+YBreak),
-            //                            new Point(Rect.Width+XBreak,Rect.Height-YBreak),
-            //                            new Point(Rect.Width, Rect.Height-YBreak),
-            //                            new Point(Rect.Width, Rect.Height)
-            //                        });
-            //                else
-            //                    gp.AddLines(
-            //                        new Point[]
-            //                        {
-            //                            Rect.Location,
-            //                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-            //                            new Point(Rect.Location.X+XBreak,Rect.Location.Y+YBreak),
-            //                            new Point(Rect.Width-XBreak,Rect.Height-YBreak),
-            //                            new Point(Rect.Width, Rect.Height-YBreak),
-            //                            new Point(Rect.Width, Rect.Height)
-            //                        });
-            //            else
-            //                gp.AddLines(
-            //                    new Point[]
-            //                    {
-            //                        Rect.Location,
-            //                        new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-            //                        new Point(Rect.Width, Rect.Height-YBreak),
-            //                        new Point(Rect.Width, Rect.Height)
-            //                    });
-            //        }
-            //        contains = gp.IsVisible(location);
-            //    }
-            }
             return contains;
         }
 
@@ -332,9 +287,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 case (BlocksData.Shape.Decision):
                     DrawDecision(g);
                     break;
-                case (BlocksData.Shape.ConnectionLine):
-                    DrawConnectionLine(g);
-                    break;
                 default:
                     MessageBox.Show("nie znalazłem odpowiedniego kształtu i nwm co teraz mam narysować ;(");
                     break;
@@ -345,12 +297,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void DrawStart(Graphics g)
         {
             g.FillEllipse(BackColor, Rect);
+            PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
             DrawText(g);
         }
 
         private void DrawEnd(Graphics g)
         {
             g.FillEllipse(BackColor, Rect);
+            PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             DrawText(g);
         }
 
@@ -361,11 +315,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 new Point(Rect.Location.X + 10, Rect.Location.Y));
             x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y),
                 new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
+
+            PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
+            PointInput= new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillPath(BackColor, x);
         }
 
         private void DrawExecution(Graphics g)
         {
+            PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
+            PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillRectangle(BackColor, Rect);
         }
 
@@ -377,51 +336,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
             x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2),
                 new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
-            g.FillPath(BackColor, x);
-        }
 
-        public void DrawConnectionLine(Graphics g)
-        {
-            if (Rect.Width != 0)
-            {
-                var YBreak = Math.Abs(Rect.Y - Rect.Height) * 50 / 100;
-                var XBreak = Math.Abs(Rect.X - Rect.Width) * 50 / 100;
-                if (Rect.Location.Y > Rect.Height)
-                    if (Rect.Location.X>Rect.Width)
-                    g.DrawLines(
-                        new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
-                        new Point[]
-                        {
-                            Rect.Location,
-                            new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-                            new Point(Rect.Location.X-XBreak,Rect.Location.Y+YBreak),
-                            new Point(Rect.Width+XBreak,Rect.Height-YBreak),
-                            new Point(Rect.Width, Rect.Height-YBreak),
-                            new Point(Rect.Width, Rect.Height)
-                        });
-                    else
-                        g.DrawLines(
-                            new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
-                            new Point[]
-                            {
-                                Rect.Location,
-                                new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-                                new Point(Rect.Location.X+XBreak,Rect.Location.Y+YBreak),
-                                new Point(Rect.Width-XBreak,Rect.Height-YBreak),
-                                new Point(Rect.Width, Rect.Height-YBreak),
-                                new Point(Rect.Width, Rect.Height)
-                            });
-                else
-                    g.DrawLines(
-                    new Pen(BlocksData.BackColor(BlocksData.Shape.ConnectionLine), 4),
-                    new Point[]
-                    {
-                        Rect.Location,
-                        new Point(Rect.Location.X, Rect.Location.Y+YBreak),
-                        new Point(Rect.Width, Rect.Height-YBreak),
-                        new Point(Rect.Width, Rect.Height)
-                    });
-            }
+            PointOutput1 = new Point(Rect.Left, Rect.Top + Rect.Height/2);
+            PointOutput2 = new Point(Rect.Right, Rect.Top + Rect.Height / 2);
+            PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
+            g.FillPath(BackColor, x);
         }
 
         //for start/end
