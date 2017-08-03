@@ -67,7 +67,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void SetIsLockedForObject()
         {
-            _canvObj[0].IsLocked = !_canvObj[0].IsLocked;
+            _canvObj.MySetIsLockedForSelectedObj();
+            IsMultiSelect = false;
         }
 
         #region ShortcutsMethods

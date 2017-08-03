@@ -169,9 +169,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             shapeToDraw = BlocksData.Shape.Nothing;
         }
 
+        public void MySetIsLockedForSelectedObj()
+        {
+            for (int i = 0; i < Count; i++)
+                if (this[i].IsSelected)
+                    this[i].IsLocked = !this[i].IsLocked;
+        }
         public void DeleteObj(int i)
         {
-                this.RemoveAt(0);
+                this.RemoveAt(i);
             //podczas usuwania musze zaktualizować nie tylko ID kazdego elementu ale także każdej linii do nich przyłączonej
             //usuwanie zwraca id bloku w wyniku czego można usunąć linię ktora zawiera to id
         }
