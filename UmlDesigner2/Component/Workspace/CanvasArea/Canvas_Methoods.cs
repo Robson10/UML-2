@@ -18,7 +18,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 if (ShapeToDraw == BlocksData.Shape.Start)
                 {
-                    if (!checkIsStartExist())
+                    if (!CheckIsStartExist())
                         _canvObj.My_AddObj(new Point(Width * 10 / 100, Height * 10 / 100), ref _shapeToDraw);
                 }
                 else
@@ -36,14 +36,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (shape == BlocksData.Shape.Start)
             {
-                if (!checkIsStartExist())
+                if (!CheckIsStartExist())
                     ShapeToDraw = shape;
             }
             else
             ShapeToDraw = shape;
         }
 
-        private bool checkIsStartExist()
+        private bool CheckIsStartExist()
         {
             for (int i = 0; i < _canvObj.Count; i++)
                 if (_canvObj[i].Shape == BlocksData.Shape.Start)
@@ -65,9 +65,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
+        public void SetIsLockedForObject()
+        {
+            _canvObj[0].IsLocked = !_canvObj[0].IsLocked;
+        }
+
+        #region ShortcutsMethods
         public void Delete()
         {
-            for (int i = 0; i < _canvObj.Count; i++)
+            for (int i = _canvObj.Count - 1; i >= 0; i--)
             {
                 if (_canvObj[i].IsSelected && !_canvObj[i].IsLocked)
                 {
@@ -79,10 +85,28 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Invalidate();
         }
 
-        public void SetIsLockedForObject()
+        public void Copy()
         {
-            _canvObj[0].IsLocked = !_canvObj[0].IsLocked;
+            
         }
+        public void Cut()
+        {
+
+        }
+        public void Paste()
+        {
+
+        }
+        public void Undo()
+        {
+
+        }
+        public void Redo()
+        {
+
+        }
+#endregion
+
         private void LPM_TryAddObject(Point e)
         {
             if (ShapeToDraw != BlocksData.Shape.Nothing)

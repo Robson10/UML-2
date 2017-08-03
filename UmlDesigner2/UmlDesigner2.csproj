@@ -102,6 +102,7 @@
     <Compile Include="Form1Partials\Form1Tabs.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Form1.resx">
