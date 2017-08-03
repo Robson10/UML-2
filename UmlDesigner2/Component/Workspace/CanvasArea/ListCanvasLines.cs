@@ -10,8 +10,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     class ListCanvasLines:List<MyLine>
     {
-        //jak sprawdzić czy juz mogę przyłączyć?
-        public void My_AddLine(Point e, ref BlocksData.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
+        /// <summary>
+        /// Metoda dodająca linię do listy
+        /// </summary>
+        /// <param name="e"></param>
+        /// <param name="shapeToDraw"></param>
+        /// <param name="listBlocks"></param>
+        public void MyAddLine(Point e, ref BlocksData.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
         {
             var temp = listBlocks.TryGetElementContainingPoint(e);
             if (temp!=null)
@@ -19,13 +24,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base.Count > 0 && base[0].EndPoint == Point.Empty) //input
                 {
                     if (temp.Shape == BlocksData.Shape.Start)//start nie może mieć wejscia
-                    {
                         MessageBox.Show("Blok startu nie może mieć linii wejścia");
-                    }
                     else if (this[0].BeginId == temp.ID) //wyjscie na wejscie - zapetlenie
-                    {
                         MessageBox.Show("Nie możesz połączyć wyjścia bloku z jego wejściem - Zapętlenie");
-                    }
                     else
                     {
                         this[0].EndPoint = temp.PointInput;
@@ -35,7 +36,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
                 else //output
                 {
-                    if (temp.Shape == BlocksData.Shape.Decision)
+                    if (temp.Shape == BlocksData.Shape.End)//start nie może mieć wejscia
+                        MessageBox.Show("Blok Końca nie może mieć linii wyjścia");
+                    else if (temp.Shape == BlocksData.Shape.Decision)
                     {
                         DialogResult dialogResult =
                             MessageBox.Show("Czy ma być to linia dla prawdy (true)", "", MessageBoxButtons.YesNo);
@@ -44,11 +47,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             for (int i = 0; i < Count; i++)
                             {
                                 if (this[i].BeginId == temp.ID && this[i].IsTrue) //już istnieje taka linia
-                                {
-                                    //MessageBox.Show("Ten blok nie może mieć więcej niż 1 wyjście Prawdy");
-                                    this.RemoveAt(i);
-                                    //return;
-                                }
+                                    RemoveAt(i);
                             }
                             Insert(0, new MyLine(temp.PointOutput1, temp.ID, true));
                         }
@@ -57,11 +56,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             for (int i = 0; i < Count; i++)
                             {
                                 if (this[i].BeginId == temp.ID && !this[i].IsTrue) //już istnieje taka linia
-                                {
-                                    //MessageBox.Show("Ten blok nie może mieć więcej niż 1 wyjście Fałszu");
-                                    this.RemoveAt(i);
-                                    //return;
-                                }
+                                    RemoveAt(i);
                             }
                             Insert(0, new MyLine(temp.PointOutput2, temp.ID, false));
                         }
@@ -71,11 +66,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         for (int i = 0; i < Count; i++)
                         {
                             if (this[i].BeginId == temp.ID) //już istnieje taka linia
-                            {
-                                //MessageBox.Show("ten blok nie może mieć więcej niż 1 wyjście");
-                                this.RemoveAt(i);
-                                //return;
-                            }
+                                RemoveAt(i);
                         }
                         Insert(0, new MyLine(temp.PointOutput1, temp.ID));
                     }
@@ -83,7 +74,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        public void UpdateConnectionsPoints(ref ListCanvasBlocks listBlocks)
+        /// <summary>
+        /// Metoda aktualizująca rozmieszczenie każdej z linii po przemieszczeniu bloku
+        /// </summary>
+        /// <param name="listBlocks"></param>
+        public void MyUpdateConnectionsPoints(ref ListCanvasBlocks listBlocks)
         {
             if (listBlocks.Count > 0)
             {
@@ -107,7 +102,25 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        public void My_AbortAddingLine(ref BlocksData.Shape shapeToDraw)
+        /// <summary>
+        /// Metoda usuwająca wszystkie linie wchodzące i wychodzące z bloku o konkretnym ID
+        /// </summary>
+        /// <param name="id"></param>
+        public void MyDeleteLine(int id)
+        {
+            for (int i = this.Count - 1; i >= 0; i--)
+            {
+                if (this[i].BeginId == id || this[i].EndId == id)
+                {
+                    this.RemoveAt(i);
+                }
+            }
+        }
+        /// <summary>
+        /// Metoda przerywająca dodawanie linii
+        /// </summary>
+        /// <param name="shapeToDraw"></param>
+        public void MyAbortAddingLine(ref BlocksData.Shape shapeToDraw)
         {
             if (this.Count > 0 && this[0].EndPoint == Point.Empty)
                 base.RemoveAt(0);
@@ -123,6 +136,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public bool IsSelected = false; //czy jest zaznaczona
         public SolidBrush BackColor;
         public bool IsTrue = true;
+
+        /// <summary>
+        /// Konstruktor dla wszystkich lini z wyjątkiem lini wychodzących z bloku decyzyjnego
+        /// </summary>
+        /// <param name="beginPoint"></param>
+        /// <param name="beginId"></param>
         public MyLine(Point beginPoint,int beginId)
         {
             BeginPoint = beginPoint;
@@ -130,6 +149,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             BeginId = beginId;
         }
 
+        /// <summary>
+        /// Kostruktor dla linii wychodzących z bloku decyzyjnego - True false
+        /// </summary>
+        /// <param name="beginPoint"></param>
+        /// <param name="beginId"></param>
+        /// <param name="isTrue"></param>
         public MyLine(Point beginPoint, int beginId, bool isTrue)
         {
             BeginPoint = beginPoint;
@@ -138,6 +163,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             IsTrue = isTrue;
         }
 
+        /// <summary>
+        /// Metoda sprawdzająca czy została wybrana linia.
+        /// </summary>
+        /// <returns></returns>
         public bool My_IsContain()
         {
             var contains = false;
@@ -187,6 +216,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
            
             return contains;
         }
+
+        /// <summary>
+        /// Metoda wyrysowująca połączenia między blokami w postaci linii.
+        /// </summary>
+        /// <param name="g"></param>
         public void My_DrawConnectionLine(Graphics g)
         {
             if (EndPoint != Point.Empty)

@@ -10,7 +10,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     public class ListCanvasBlocks : List<MyBlock>
     {
-        public static uint id = 0;
+        public static int id = 0;
         public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < base.Count; i++)
@@ -157,7 +157,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void My_AddObj(Point e,ref BlocksData.Shape shapeToDraw)
         {
             this.Insert(0, (new MyBlock(new Rectangle(e.X - BlocksData.DefaultSize.Width / 2,
-                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw,this.Count)));
+                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw,id)));
+            id++;
             shapeToDraw = BlocksData.Shape.Nothing;
         }
 
@@ -168,8 +169,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             shapeToDraw = BlocksData.Shape.Nothing;
         }
 
-        public void DeleteObj()
+        public void DeleteObj(int i)
         {
+                this.RemoveAt(0);
             //podczas usuwania musze zaktualizować nie tylko ID kazdego elementu ale także każdej linii do nich przyłączonej
             //usuwanie zwraca id bloku w wyniku czego można usunąć linię ktora zawiera to id
         }
@@ -190,7 +192,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public string Text; //zawartosc tekstowa kontrolki
         public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
-        public int ID;
+        public int ID{ get; set; }
         #region Done
 
         public Point PointInput;

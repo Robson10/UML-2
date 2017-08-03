@@ -72,7 +72,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// </summary>
         public void ShowRubbers(MyBlock canvasObject)
         {
-
             var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
                           BlocksData.RubberSize.Width / 2;
             var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -

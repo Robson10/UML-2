@@ -60,17 +60,35 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (ShapeToDraw != BlocksData.Shape.Nothing)
             {
                 ShapeToDraw = BlocksData.Shape.Nothing;
-                _canvLines.My_AbortAddingLine(ref _shapeToDraw);
-                _rubbers.ShowRubbers(_canvObj[0]); //odznaczenie figury ktora była zaznaczona przed próbą(ktora została przerwana) dodania bloku-w przeciwnym razie zostawały gumki
+                _canvLines.MyAbortAddingLine(ref _shapeToDraw);
+                _rubbers.SetRubberVisible(false); //odznaczenie figury ktora była zaznaczona przed próbą(ktora została przerwana) dodania bloku-w przeciwnym razie zostawały gumki
             }
         }
 
+        public void Delete()
+        {
+            for (int i = 0; i < _canvObj.Count; i++)
+            {
+                if (_canvObj[i].IsSelected && !_canvObj[i].IsLocked)
+                {
+                    _canvLines.MyDeleteLine(_canvObj[i].ID);
+                    _canvObj.DeleteObj(i);
+                    _rubbers.SetRubberVisible(false);
+                }
+            }
+            Invalidate();
+        }
+
+        public void SetIsLockedForObject()
+        {
+            _canvObj[0].IsLocked = !_canvObj[0].IsLocked;
+        }
         private void LPM_TryAddObject(Point e)
         {
             if (ShapeToDraw != BlocksData.Shape.Nothing)
             {
                 if (ShapeToDraw == BlocksData.Shape.ConnectionLine)
-                    _canvLines.My_AddLine(e, ref _shapeToDraw,ref _canvObj);
+                    _canvLines.MyAddLine(e, ref _shapeToDraw,ref _canvObj);
                 else
                     _canvObj.My_AddObj(e, ref _shapeToDraw);
             }
@@ -89,7 +107,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void LPM_MoveObject(Point e)
         {
             _canvObj.My_MoveSelectedObjects(ref MouseDownLocation, e);
-            _canvLines.UpdateConnectionsPoints(ref _canvObj);
+            _canvLines.MyUpdateConnectionsPoints(ref _canvObj);
             if (_canvObj.Count > 0)
                 _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
             MouseDownLocation = e;

@@ -42,6 +42,9 @@ namespace UmlDesigner2
                 case Keys.ControlKey:
                     canvas1.IsMultiSelect = true;
                     break;
+                case Keys.Delete:
+                    canvas1.Delete();
+                    break;
 
             }
         }

@@ -15,12 +15,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             _contextMenu = new ContextMenuStrip();
             _contextMenu.Items.Add("Zablokuj/Odblokuj");
-            _contextMenu.Items.Add("Przesuń do przodu");
+            _contextMenu.Items.Add("Usuń");
             _contextMenu.Items.Add("Przesuń do tyłu");
             _contextMenu.ItemClicked += _contextMenu_ItemClicked;
         }
         private void _contextMenu_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
         {
+            if (e.ClickedItem.Text.Equals("Usuń"))
+                Delete();
+            else if (e.ClickedItem.Text.Equals("Zablokuj/Odblokuj"))
+                SetIsLockedForObject();
 
         }
         private void ShowContextMenu(Point e)
