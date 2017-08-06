@@ -8,11 +8,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private readonly Clock.Clock _clock = new Clock.Clock();
         private static ListCanvasBlocks _canvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
-        private static ListCanvasLines _canvLines = new ListCanvasLines(); //lista blokow wyrysowanych na ekranie
+
+        private static readonly ListCanvasLines _canvLines = new ListCanvasLines()
+            ; //lista blokow wyrysowanych na ekranie
+
         private readonly Rubbers _rubbers = new Rubbers(ref _canvObj);
 
         public bool IsMultiSelect { get; set; }
-        private BlocksData.Shape _shapeToDraw = CanvasVariables.defaultvalue;
+        private BlocksData.Shape _shapeToDraw = BlocksData.Shape.Nothing;
 
         private BlocksData.Shape ShapeToDraw
         {
@@ -24,9 +27,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        bool ppm = true; //czy teraz resize czu moze menu kontekstowe
-
-        private Point MouseDownLocation;
+        private bool _ppm = true; //czy teraz resize czu moze menu kontekstowe
+        private Point _mouseDownLocation;
 
         public Canvas()
         {
@@ -44,7 +46,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnMouseClick(MouseEventArgs e)
         {
             //po kliknięciu ppm bez przesówania pojawia się menu kontekstowe a także przerywane jest dodawanie elementów do canvasa
-            if (e.Button == MouseButtons.Right && ppm == true)
+            if (e.Button == MouseButtons.Right && _ppm == true)
             {
                 PPM_TryAbortAddingObject();
                 PPM_TryShowContextMenu(e.Location);
@@ -65,28 +67,28 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 PPM_SelectForResizinrOrContextMenu(e.Location);
             }
-            MouseDownLocation = e.Location;
-            Invalidate();
+            _mouseDownLocation = e.Location;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
             //metoda przemieszczająca obiekt dla LPM i zmieniająca jego rozmiar dla PPM
             if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
-            if (e.Button == MouseButtons.Left)
-            {
-                LPM_MoveObject(e.Location);
-            }
-            else if (e.Button == MouseButtons.Right)
-            {
-                PPM_ResizeObject(e.Location);
-            }
+                if (e.Button == MouseButtons.Left)
+                {
+                    LPM_MoveObject(e.Location);
+                }
+                else if (e.Button == MouseButtons.Right)
+                {
+                    PPM_ResizeObject(e.Location);
+                }
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if(ShapeToDraw!=BlocksData.Shape.ConnectionLine)
-            Cursor = Cursors.Default;
+            if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
+                Cursor = Cursors.Default;
+
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -94,7 +96,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = 0; i < _canvLines.Count; i++)
                 _canvLines[i].My_DrawConnectionLine(e.Graphics);
-                
+
             for (int i = _canvObj.Count - 1; i >= 0; i--)
                 _canvObj[i].Draw(e.Graphics);
         }
@@ -110,9 +112,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     public static class CanvasVariables
     {
         public static Color BgColor = Color.Salmon;
-        public static Color SelectionBgColor= Color.DarkOrange;
+        public static Color SelectionBgColor = Color.DarkOrange;
         public static Color DefaultBgColor = Color.Gray;
-        public static BlocksData.Shape defaultvalue = BlocksData.Shape.Nothing;
         public static Keys MultiselectKey = Keys.ControlKey;
     }
 }

@@ -12,8 +12,8 @@ namespace UmlDesigner2
     {
         public static Size RubberSize = new Size(10, 10);
         public static Color RubberColor = Color.Silver;
-        public static SolidBrush TrueLineBackColor = new SolidBrush(Color.Green);
-        public static SolidBrush FalseLineBackColor = new SolidBrush(Color.Red);
+        public static Color TrueLineBackColor = (Color.Green);
+        public static Color FalseLineBackColor = (Color.Red);
 
         public static System.Windows.Forms.Keys MultiselectKey = System.Windows.Forms.Keys.ControlKey;
 
@@ -31,24 +31,24 @@ namespace UmlDesigner2
             ConnectionLine = 6
         };
 
-        public static SolidBrush BackColor(Shape shape)
+        public static Color BackColor(Shape shape)
         {
             switch (shape)
             {
                 case Shape.Start:
-                    return new SolidBrush(Color.FromArgb(255, 50, 50, 50));
+                    return (Color.FromArgb(255, 50, 50, 50));
                 case Shape.Input:
-                    return new SolidBrush(Color.FromArgb(255, 70, 70, 70));
+                    return (Color.FromArgb(255, 70, 70, 70));
                 case Shape.Execution:
-                    return new SolidBrush(Color.FromArgb(255, 90, 90, 90));
+                    return (Color.FromArgb(255, 90, 90, 90));
                 case Shape.End:
-                    return new SolidBrush(Color.FromArgb(255, 110, 110, 110));
+                    return (Color.FromArgb(255, 110, 110, 110));
                 case Shape.Decision:
-                    return new SolidBrush(Color.FromArgb(255, 130, 130, 130));
+                    return (Color.FromArgb(255, 130, 130, 130));
                 case Shape.ConnectionLine:
-                    return new SolidBrush(Color.FromArgb(255, 0, 0, 0));
+                    return (Color.FromArgb(255, 0, 0, 0));
             }
-            return new SolidBrush(Color.FromArgb(0, 250, 0, 0));
+            return Color.FromArgb(0, 250, 0, 0);
         }
 
         public static Color FontColor(Shape shape)

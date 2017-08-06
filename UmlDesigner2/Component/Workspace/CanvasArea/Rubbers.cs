@@ -72,43 +72,54 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// </summary>
         public void ShowRubbers(MyBlock canvasObject)
         {
-            var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
-                          BlocksData.RubberSize.Width / 2;
-            var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
-                          BlocksData.RubberSize.Height / 2;
+            if (canvasObject.IsSelected)
+            {
+                var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
+                              BlocksData.RubberSize.Width / 2;
+                var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
+                              BlocksData.RubberSize.Height / 2;
 
-            var left = canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
-            var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-            var up = canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
-            var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+                var left = canvasObject.Rect.Location.X - BlocksData.RubberSize.Width;
+                var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
+                var up = canvasObject.Rect.Location.Y - BlocksData.RubberSize.Height;
+                var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
 
-            var topLeft = new Point(left, up);
-            var topCenter = new Point(centerX, up);
-            var topRight = new Point(right, up);
-            var centerLeft = new Point(left, centerY);
-            var centerRight = new Point(right, centerY);
-            var bottomLeft = new Point(left, down);
-            var bottomCenter = new Point(centerX, down);
-            var bottomRight = new Point(right, down);
+                var topLeft = new Point(left, up);
+                var topCenter = new Point(centerX, up);
+                var topRight = new Point(right, up);
+                var centerLeft = new Point(left, centerY);
+                var centerRight = new Point(right, centerY);
+                var bottomLeft = new Point(left, down);
+                var bottomCenter = new Point(centerX, down);
+                var bottomRight = new Point(right, down);
 
-            this[0].Location = topLeft;
-            this[1].Location = topCenter;
-            this[2].Location = topRight;
-            this[3].Location = centerRight;
-            this[4].Location = bottomRight;
-            this[5].Location = bottomCenter;
-            this[6].Location = bottomLeft;
-            this[7].Location = centerLeft;
-            SetRubberVisible(canvasObject.IsSelected);
+                this[0].Location = topLeft;
+                this[1].Location = topCenter;
+                this[2].Location = topRight;
+                this[3].Location = centerRight;
+                this[4].Location = bottomRight;
+                this[5].Location = bottomCenter;
+                this[6].Location = bottomLeft;
+                this[7].Location = centerLeft;
+                SetRubberVisible(canvasObject.IsSelected);
+            }
+            else
+                SetRubberVisible(false);
         }
 
         /// <summary>
         /// Metoda aktualizująca widoczność gumek zgodnie z parametrem isSelected
         /// </summary>
-        public void SetRubberVisible(bool isSelected)
+        private void SetRubberVisible(bool isSelected)
         {
             for (int i = 0; i < this.Count; i++)
                 this[i].Visible = isSelected;
+        }
+
+        public void MyHideRubbers()
+        {
+            for (int i = 0; i < Count; i++)
+                this[i].Visible = false;
         }
 
         /// <summary>

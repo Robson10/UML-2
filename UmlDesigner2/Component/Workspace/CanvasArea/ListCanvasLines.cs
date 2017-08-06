@@ -16,12 +16,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <param name="e"></param>
         /// <param name="shapeToDraw"></param>
         /// <param name="listBlocks"></param>
-        public void MyAddLine(Point e, ref BlocksData.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
+        public void MyAdd(Point e, ref BlocksData.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
         {
             var temp = listBlocks.TryGetElementContainingPoint(e);
             if (temp!=null)
             {
-                if (base.Count > 0 && base[0].EndPoint == Point.Empty) //input
+                if (Count > 0 && base[0].EndPoint == Point.Empty) //input
                 {
                     if (temp.Shape == BlocksData.Shape.Start)//start nie może mieć wejscia
                         MessageBox.Show("Blok startu nie może mieć linii wejścia");
@@ -78,7 +78,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// Metoda aktualizująca rozmieszczenie każdej z linii po przemieszczeniu bloku
         /// </summary>
         /// <param name="listBlocks"></param>
-        public void MyUpdateConnectionsPoints(ref ListCanvasBlocks listBlocks)
+        public void MyUpdate(ref ListCanvasBlocks listBlocks)
         {
             if (listBlocks.Count > 0)
             {
@@ -87,10 +87,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     var temp1 = listBlocks.TryGetElementWithId(this[i].BeginId);
                     if (temp1.Shape == BlocksData.Shape.Decision)
                     {
-                        if (this[i].IsTrue)
-                            this[i].BeginPoint = temp1.PointOutput1;
-                        else
-                            this[i].BeginPoint = temp1.PointOutput2;
+                        this[i].BeginPoint = (this[i].IsTrue)?temp1.PointOutput1:temp1.PointOutput2;
                     }
                     else
                     {
@@ -106,35 +103,71 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// Metoda usuwająca wszystkie linie wchodzące i wychodzące z bloku o konkretnym ID
         /// </summary>
         /// <param name="id"></param>
-        public void MyDeleteLine(int id)
+        public void MyRemove(int id)
         {
-            for (int i = this.Count - 1; i >= 0; i--)
-            {
-                if (this[i].BeginId == id || this[i].EndId == id)
-                {
-                    this.RemoveAt(i);
-                }
-            }
+            RemoveAll(x => x.BeginId == id || x.EndId == id);
         }
+
         /// <summary>
         /// Metoda przerywająca dodawanie linii
         /// </summary>
         /// <param name="shapeToDraw"></param>
-        public void MyAbortAddingLine(ref BlocksData.Shape shapeToDraw)
+        public void MyAbortAdd()
         {
-            if (this.Count > 0 && this[0].EndPoint == Point.Empty)
-                base.RemoveAt(0);
-            shapeToDraw = BlocksData.Shape.Nothing;
+            if (Count > 0 && this[0].EndPoint == Point.Empty)
+                RemoveAt(0);
+        }
+
+        public List<MyLine> MyCopy(string clipboardFormat, string clipboardBlockFormat)
+        {
+            var x = new List<MyLine>();
+            if (Clipboard.ContainsData(clipboardBlockFormat))
+            {
+                var blockTemp = (List<MyBlock>)Clipboard.GetData(clipboardBlockFormat);
+                for (int i = 0; i < Count; i++)
+                    for (int j = 0; j < blockTemp.Count; j++)
+                        if (blockTemp[j].ID == this[i].BeginId)
+                            for (int k = 0; k < blockTemp.Count; k++)
+                                if (blockTemp[k].ID == this[i].EndId)
+                                    x.Add(this[i]);
+            }
+            return x;
+        }
+
+        public List<MyLine> MyCut(string clipboardFormat, string clipboardBlockFormat)
+        {
+            var x = new List<MyLine>();
+            if (Clipboard.ContainsData(clipboardBlockFormat))
+            {
+                var blockTemp = (List<MyBlock>) Clipboard.GetData(clipboardBlockFormat);
+                for (int i = Count - 1; i >= 0; i--)
+                for (int j = 0; j < blockTemp.Count; j++)
+                    if (blockTemp[j].ID == this[i].BeginId)
+                        for (int k = 0; k < blockTemp.Count; k++)
+                            if (blockTemp[k].ID == this[i].EndId)
+                            {
+                                x.Add(this[i]);
+                            }
+                for (int i = blockTemp.Count - 1; i >= 0; i--)
+                {
+                    MyRemove(blockTemp[i].ID);
+                }
+            }
+            return x;
+        }
+        public void MyPaste(List<MyLine> lines)
+        {
+            AddRange(lines);
         }
     }
-
+    [Serializable]
     public class MyLine
     {
         public Point BeginPoint;
         public Point EndPoint = Point.Empty;
         public int BeginId, EndId;
         public bool IsSelected = false; //czy jest zaznaczona
-        public SolidBrush BackColor;
+        public Color BackColor;
         public bool IsTrue = true;
 
         /// <summary>

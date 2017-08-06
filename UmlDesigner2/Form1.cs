@@ -34,19 +34,39 @@ namespace UmlDesigner2
 
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.KeyCode)
-            {
-                case Keys.Escape:
-                    canvas1.AbortAddingObject();
-                    break;
-                case Keys.ControlKey:
-                    canvas1.IsMultiSelect = true;
-                    break;
-                case Keys.Delete:
-                    canvas1.Delete();
-                    break;
 
-            }
+            if (e.Control)
+                switch (e.KeyCode)
+                {
+                    case Keys.C:
+                        canvas1.Copy();
+                        break;
+                    case Keys.X:
+                        canvas1.Cut();
+                        break;
+                    case Keys.V:
+                        canvas1.Paste();
+                        break;
+                    case Keys.Z:
+                        canvas1.Undo();
+                        break;
+                    case Keys.Y:
+                        canvas1.Redo();
+                        break;
+                    case Keys.ControlKey:
+                        canvas1.IsMultiSelect = true;
+                        break;
+                }
+            else
+                switch (e.KeyCode)
+                {
+                    case Keys.Escape:
+                        canvas1.AbortAddingObject();
+                        break;
+                    case Keys.Delete:
+                        canvas1.Delete();
+                        break;
+                }
         }
 
 
