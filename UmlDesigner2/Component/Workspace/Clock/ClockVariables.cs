@@ -11,7 +11,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
     {
         public static bool IsRunnable { get; set; } = true;
         public static bool IsRunning { get; set; } = false;
-        public static Color BgColor { get; set; } = Color.Red;
+        public static Color BgColor { get; set; } = Color.Transparent;
 
         public enum ClockType
         {

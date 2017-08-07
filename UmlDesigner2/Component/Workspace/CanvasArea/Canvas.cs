@@ -52,7 +52,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 PPM_TryShowContextMenu(e.Location);
             }
         }
-
+        bool _selectByRect = false; //true jeżeli mamy zaznaczać
         protected override void OnMouseDown(MouseEventArgs e)
         {
             //metoda dodająca obiekt do canvasu po LPM, zaznaczająca element jeżeli nie dodajemy obiektu. W przypadku PPM Zmienia cursor Na resize i sprawdza który obiekt bedzie resizowany.
@@ -61,7 +61,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (e.Button == MouseButtons.Left)
             {
                 LPM_TryAddObject(e.Location);
-                LPM_TrySelectObject(e.Location);
+                LPM_SelectObjectByClick(e.Location);
             }
             else if (e.Button == MouseButtons.Right)
             {
@@ -76,7 +76,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
                 if (e.Button == MouseButtons.Left)
                 {
-                    LPM_MoveObject(e.Location);
+                    if(SelectRect==Rectangle.Empty)
+                    _selectByRect = LPM_MoveObject(e.Location);
+                    if (_selectByRect)
+                        LPM_SelectObjectByRect(_mouseDownLocation,e.Location);
                 }
                 else if (e.Button == MouseButtons.Right)
                 {
@@ -88,17 +91,24 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
                 Cursor = Cursors.Default;
-
+            HideSelectionRect();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = 0; i < _canvLines.Count; i++)
-                _canvLines[i].My_DrawConnectionLine(e.Graphics);
+                if (_canvLines[i].BackColor==BlocksData.BackColor(BlocksData.Shape.ConnectionLine))
+                    _canvLines[i].My_DrawConnectionLine(e.Graphics);
+                else
+                    _canvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);
 
             for (int i = _canvObj.Count - 1; i >= 0; i--)
                 _canvObj[i].Draw(e.Graphics);
+            if (SelectRect != Rectangle.Empty)
+            {
+                e.Graphics.FillRectangle(CanvasVariables.SelectionRectBrush, SelectRect);
+            }
         }
 
 
@@ -111,9 +121,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
     public static class CanvasVariables
     {
-        public static Color BgColor = Color.Salmon;
+        public static Color BgColor = Color.White;
         public static Color SelectionBgColor = Color.DarkOrange;
         public static Color DefaultBgColor = Color.Gray;
         public static Keys MultiselectKey = Keys.ControlKey;
+        public static SolidBrush SelectionRectBrush = new SolidBrush(Color.FromArgb(70, Color.Blue));
     }
 }

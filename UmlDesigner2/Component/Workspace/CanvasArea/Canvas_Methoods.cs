@@ -14,7 +14,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private string _blockClipboardFormat = "CopyOfBlocks";
         private string _lineClipboardFormat = "CopyOfLines";
+        private Rectangle SelectRect = Rectangle.Empty;
 
+        private void HideSelectionRect()
+        {
+            SelectRect = Rectangle.Empty;
+            Invalidate();
+        }
         public void AddObjectInstant(BlocksData.Shape shape)
         {
             ShapeToDraw = shape;
@@ -174,7 +180,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        private void LPM_TrySelectObject(Point e)
+        private void LPM_SelectObjectByClick(Point e)
         {
             if (ShapeToDraw == BlocksData.Shape.Nothing)
                 if (_canvObj.Count > 0)
@@ -185,13 +191,37 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
         }
 
-        private void LPM_MoveObject(Point e)
+        private bool LPM_MoveObject(Point e)
         {
-            _canvObj.My_MoveSelectedObjects(ref _mouseDownLocation, e);
-            _canvLines.MyUpdate(ref _canvObj);
-            if (_canvObj.Count > 0)
-                _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
-            _mouseDownLocation = e;
+            if (_canvObj.My_MoveSelectedObjects(ref _mouseDownLocation, e))
+            {
+                _canvLines.MyUpdate(ref _canvObj);
+                if (_canvObj.Count > 0)
+                    _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
+                _mouseDownLocation = e;
+                Invalidate();
+                return false;
+            }
+            return true;
+        }
+
+        private void LPM_SelectObjectByRect(Point mouseDown, Point e)
+        {
+            int bufor;
+            if (e.X < mouseDown.X)
+            {
+                bufor=e.X;
+                e.X = mouseDown.X;
+                mouseDown.X = bufor;
+            }
+            if (e.Y < mouseDown.Y)
+            {
+                bufor = e.Y;
+                e.Y = mouseDown.Y;
+                mouseDown.Y = bufor;
+            }
+            SelectRect = new Rectangle(mouseDown.X, mouseDown.Y, e.X - mouseDown.X, e.Y - mouseDown.Y);
+            _canvObj.MySelectObjectByRect(SelectRect);
             Invalidate();
         }
 
@@ -229,5 +259,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _mouseDownLocation = e;
             Invalidate();
         }
+
+
+
     }
+
 }

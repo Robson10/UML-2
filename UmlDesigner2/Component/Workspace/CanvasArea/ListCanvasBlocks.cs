@@ -17,13 +17,34 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base[i].IsContain(location))
                 {
                     base[i].IsSelected = true;
-                    base[i].BackColor = (base[i].IsSelected)
-                        ? (CanvasVariables.SelectionBgColor)
-                        : (CanvasVariables.DefaultBgColor);
+                    base[i].BackColor = CanvasVariables.SelectionBgColor;
+                    //base[i].BackColor = (base[i].IsSelected)
+                    //    ? (CanvasVariables.SelectionBgColor)
+                    //    : (CanvasVariables.DefaultBgColor);
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                     break;
                 }
+        }
+        public void MySelectObjectByRect(Rectangle rect)
+        {
+            for (int i = 0; i < Count; i++)
+            {
+                if (base[i].Rect.IntersectsWith(rect))
+                {
+                    base[i].IsSelected = true;
+
+                    Insert(0, base[i]);
+                    RemoveAt(i + 1);
+                }
+                else
+                {
+                    base[i].IsSelected = false;
+                }
+                base[i].BackColor = (base[i].IsSelected)
+                    ? (CanvasVariables.SelectionBgColor)
+                    : (CanvasVariables.DefaultBgColor);
+            }
         }
 
         public bool My_IsAnyObjectContainingPoint(Point location)
@@ -50,14 +71,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             return null;
         }
 
-        public void My_MoveSelectedObjects(ref Point mouseDownLocation, Point e)
+        public bool My_MoveSelectedObjects(ref Point mouseDownLocation, Point e)
         {
+            var isAnyBlockMoved = false;
             for (int i = 0; i < Count; i++)
                 if (base[i].IsSelected && !base[i].IsLocked)
                 {
                     base[i].Rect.Location = new Point((e.X - mouseDownLocation.X) + base[i].Rect.Left,
                         (e.Y - mouseDownLocation.Y) + base[i].Rect.Top);
+                    isAnyBlockMoved = true;
                 }
+            return isAnyBlockMoved;
         }
 
         public void My_ResizeSelectedObjects(ref Point mouseDownLocation, Point e)

@@ -117,7 +117,7 @@ namespace UmlDesigner2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(3, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(910, 165);
+            this.groupBox1.Size = new System.Drawing.Size(910, 53);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Wyniki";
@@ -182,7 +182,7 @@ namespace UmlDesigner2
             this.tabsConnector1.Multiline = true;
             this.tabsConnector1.Name = "tabsConnector1";
             this.tabsConnector1.SelectedIndex = 0;
-            this.tabsConnector1.Size = new System.Drawing.Size(198, 317);
+            this.tabsConnector1.Size = new System.Drawing.Size(150, 50);
             this.tabsConnector1.TabIndex = 0;
             // 
             // splitContainer3
@@ -200,7 +200,7 @@ namespace UmlDesigner2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox1);
             this.splitContainer3.Size = new System.Drawing.Size(916, 451);
-            this.splitContainer3.SplitterDistance = 279;
+            this.splitContainer3.SplitterDistance = 391;
             this.splitContainer3.TabIndex = 0;
             // 
             // canvas1
@@ -208,12 +208,11 @@ namespace UmlDesigner2
             this.canvas1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.canvas1.BackColor = System.Drawing.Color.Salmon;
-            this.canvas1.Cursor = System.Windows.Forms.Cursors.Arrow;
+            this.canvas1.BackColor = System.Drawing.Color.White;
             this.canvas1.IsMultiSelect = false;
-            this.canvas1.Location = new System.Drawing.Point(3, 3);
+            this.canvas1.Location = new System.Drawing.Point(0, 3);
             this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(910, 273);
+            this.canvas1.Size = new System.Drawing.Size(913, 346);
             this.canvas1.TabIndex = 0;
             // 
             // tabPage1
@@ -314,10 +313,10 @@ namespace UmlDesigner2
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private Canvas canvas1;
         private Component.TabsArea.TabsConnector tabsConnector1;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
+        private Canvas canvas1;
     }
 }
 

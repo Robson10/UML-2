@@ -271,7 +271,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                                 new Point(BeginPoint.X-XBreak,BeginPoint.Y+YBreak),
                                 new Point(EndPoint.X+XBreak,EndPoint.Y-YBreak),
                                 new Point(EndPoint.X, EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y)
+                                EndPoint
                             });
                     else
                         g.DrawLines(
@@ -283,7 +283,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                                 new Point(BeginPoint.X+XBreak,BeginPoint.Y+YBreak),
                                 new Point(EndPoint.X-XBreak,EndPoint.Y-YBreak),
                                 new Point(EndPoint.X, EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y)
+                                EndPoint
                             });
                 else
                     g.DrawLines(
@@ -293,10 +293,49 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             BeginPoint,
                             new Point(BeginPoint.X, BeginPoint.Y+YBreak),
                             new Point(EndPoint.X, EndPoint.Y-YBreak),
-                            new Point(EndPoint.X, EndPoint.Y)
+                            EndPoint
                         });
             }
         }
-
+        public void My_DrawConnectionLineForDecisionBlock(Graphics g)
+        {
+            if (EndPoint != Point.Empty)
+            {
+                var YBreak = Math.Abs(BeginPoint.Y - EndPoint.Y) * 50 / 100;
+                var XBreak = Math.Abs(BeginPoint.X - EndPoint.X) * 50 / 100;
+                if (BeginPoint.Y > EndPoint.Y)
+                    if (BeginPoint.X > EndPoint.X)
+                        g.DrawLines(
+                            new Pen(BackColor, 4),
+                            new[]
+                            {
+                                BeginPoint,
+                                new Point(BeginPoint.X-XBreak,BeginPoint.Y),
+                                new Point(EndPoint.X+XBreak,EndPoint.Y-YBreak),
+                                new Point(EndPoint.X, EndPoint.Y-YBreak),
+                                EndPoint
+                            });
+                    else
+                        g.DrawLines(
+                            new Pen(BackColor, 4),
+                            new[]
+                            {
+                                BeginPoint,
+                                new Point(BeginPoint.X+XBreak,BeginPoint.Y),
+                                new Point(EndPoint.X-XBreak,EndPoint.Y-YBreak),
+                                new Point(EndPoint.X, EndPoint.Y-YBreak),
+                                EndPoint
+                            });
+                else
+                    g.DrawLines(
+                        new Pen(BackColor, 4),
+                        new[]
+                        {
+                            BeginPoint,
+                            new Point(EndPoint.X, BeginPoint.Y),
+                            EndPoint
+                        });
+            }
+        }
     }
 }
