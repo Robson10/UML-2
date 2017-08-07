@@ -155,6 +155,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
             return x;
         }
+
         public void MyPaste(List<MyLine> lines)
         {
             AddRange(lines);

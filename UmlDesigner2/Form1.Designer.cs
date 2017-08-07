@@ -37,7 +37,6 @@ namespace UmlDesigner2
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolStrip1 = new UmlDesigner2.Component.ToolStripArea.MyToolStrip();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
-            this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabsConnector1 = new UmlDesigner2.Component.TabsArea.TabsConnector();
@@ -56,7 +55,6 @@ namespace UmlDesigner2
             this.splitContainer1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
@@ -115,24 +113,12 @@ namespace UmlDesigner2
             this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(3, 3);
+            this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(910, 53);
+            this.groupBox1.Size = new System.Drawing.Size(913, 53);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Wyniki";
-            // 
-            // groupBox2
-            // 
-            this.groupBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox2.Location = new System.Drawing.Point(3, 3);
-            this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(155, 105);
-            this.groupBox2.TabIndex = 11;
-            this.groupBox2.TabStop = false;
-            this.groupBox2.Text = "Propertis";
             // 
             // splitContainer1
             // 
@@ -164,12 +150,8 @@ namespace UmlDesigner2
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabsConnector1);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this.groupBox2);
             this.splitContainer2.Size = new System.Drawing.Size(200, 451);
-            this.splitContainer2.SplitterDistance = 320;
+            this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
             // 
             // tabsConnector1
@@ -210,9 +192,9 @@ namespace UmlDesigner2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.canvas1.BackColor = System.Drawing.Color.White;
             this.canvas1.IsMultiSelect = false;
-            this.canvas1.Location = new System.Drawing.Point(0, 3);
+            this.canvas1.Location = new System.Drawing.Point(0, 0);
             this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(913, 346);
+            this.canvas1.Size = new System.Drawing.Size(916, 392);
             this.canvas1.TabIndex = 0;
             // 
             // tabPage1
@@ -284,7 +266,6 @@ namespace UmlDesigner2
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
@@ -305,7 +286,6 @@ namespace UmlDesigner2
         private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
         private Component.ToolStripArea.MyToolStrip myToolStrip1;
         private System.Windows.Forms.GroupBox groupBox1;
-        private System.Windows.Forms.GroupBox groupBox2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;

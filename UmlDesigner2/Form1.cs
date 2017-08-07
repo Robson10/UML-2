@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Windows.Forms;
+using UmlDesigner2.Component.TabsArea.BlockPropertis;
 using UmlDesigner2.Component.ToolStripArea;
 using UmlDesigner2.Component.Workspace;
 namespace UmlDesigner2
 {
     public partial class Form1 : Form
     {
+        private BlockProp temp = new BlockProp();
         //Workspace Canvas = new Workspace();
         public Form1()
         {
@@ -20,7 +22,15 @@ namespace UmlDesigner2
             //tabsConnector1.SizeMode = TabSizeMode.FillToRight;
             //AddStripMenuEvents();
         }
-
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            temp.BringToFront();
+            temp.Width = splitContainer2.Panel2.Width;
+            temp.Height = splitContainer2.Panel2.Height;
+            temp.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Panel2.Controls.Add(this.temp);
+        }
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)

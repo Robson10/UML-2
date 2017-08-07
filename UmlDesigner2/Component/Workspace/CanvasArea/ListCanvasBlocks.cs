@@ -18,14 +18,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     base[i].IsSelected = true;
                     base[i].BackColor = CanvasVariables.SelectionBgColor;
-                    //base[i].BackColor = (base[i].IsSelected)
-                    //    ? (CanvasVariables.SelectionBgColor)
-                    //    : (CanvasVariables.DefaultBgColor);
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                     break;
                 }
         }
+
         public void MySelectObjectByRect(Rectangle rect)
         {
             for (int i = 0; i < Count; i++)
@@ -210,6 +208,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             x.AddRange(this.Where(z => z.IsSelected));
             return x;
         }
+
         public List<MyBlock> MyCut(string clipboardFormat)
         {
             var x = new List<MyBlock>();
@@ -217,6 +216,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             RemoveAll(z => z.IsSelected);
             return x;
         }
+
         public int MyPaste(MyBlock block)
         {
             block.ID = _id;
@@ -225,10 +225,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             return _id-1;
         }
     }
-
-
-
-
+    
     [Serializable]
     public class MyBlock
     {

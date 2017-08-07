@@ -48,6 +48,12 @@
   <ItemGroup>
     <Compile Include="BlocksData.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
+    <Compile Include="Component\TabsArea\BlockPropertis\BlockProp.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Component\TabsArea\BlockPropertis\BlockProp.Designer.cs">
+      <DependentUpon>BlockProp.cs</DependentUpon>
+    </Compile>
     <Compile Include="Component\TabsArea\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -191,7 +197,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Component\MenuStrip\" />
-    <Folder Include="Component\TabsArea\BlockPropertis\" />
     <Folder Include="Component\Workspace\ResultComponent\" />
   </ItemGroup>
   <ItemGroup>

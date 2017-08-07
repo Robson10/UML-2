@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     //krzywo wyrysowują się linie podczas szybkiego przesuwania
-    //nie usuwa mi linii przy wycięciu 1 el (1 z końców)
+    //zaznaczanie przez rect i przesuwanie bez ctrl
     partial class Canvas
     {
         private string _blockClipboardFormat = "CopyOfBlocks";
@@ -160,7 +160,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         }
 
         #endregion
-
         private void LPM_TryAddObject(Point e)
         {
             if (ShapeToDraw != BlocksData.Shape.Nothing)
