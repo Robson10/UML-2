@@ -34,8 +34,6 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             _block = block;
             PrepareView();
 
-            tbLabel.Text = _block.Text;
-            tbCode.Text = _block.Label;
             Pg.SelectedObject = new PropertyGridItems(_block);
         }
 
@@ -77,6 +75,10 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
                 tbCode.Multiline = true;
                 tbCode.Font = new Font("Arial", 12);
                 tbCode.ScrollBars = ScrollBars.Vertical;
+
+
+                tbLabel.Text = _block.Label;
+                tbCode.Text = _block.Code;
             }
 
             Pg = new PropertyGrid();

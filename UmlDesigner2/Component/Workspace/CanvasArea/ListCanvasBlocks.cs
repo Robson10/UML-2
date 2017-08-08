@@ -233,13 +233,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Rect = rect;
             Shape = shape;
-            Label = BlocksData.Name(Shape);
-            Text = BlocksData.Text(Shape);
+            Label = BlocksData.Text(Shape);
+            Code = BlocksData.Text(Shape);
             ID = id;
         }
 
         public string Label = "";
-        public string Text; //zawartosc tekstowa kontrolki
+        public string Code{ get; set; } //zawartosc tekstowa kontrolki
         public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
         public bool AutoResize = false;
@@ -371,6 +371,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
             PointInput= new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillPath(new SolidBrush(BackColor), x);
+            DrawText(g);
         }
 
         private void DrawExecution(Graphics g)
@@ -378,6 +379,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
             PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillRectangle(new SolidBrush(BackColor), Rect);
+            DrawText(g);
         }
 
         private void DrawDecision(Graphics g)
@@ -393,6 +395,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             PointOutput2 = new Point(Rect.Right, Rect.Top + Rect.Height / 2);
             PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillPath(new SolidBrush(BackColor), x);
+            DrawText(g);
         }
         
         //for start/end
@@ -404,13 +407,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             do
             {
                 font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
-                stringSize = g.MeasureString(Text, font).ToSize();
+                stringSize = g.MeasureString(Code, font).ToSize();
                 fontSize--;
             } while ((stringSize.Width > Math.Abs(Rect.Width) && fontSize > 2));
 
             g.DrawString
             (
-                Text,
+                Label,
                 font,
                 new SolidBrush(BlocksData.FontColor(Shape)),
                 Rect.Location.X + (Rect.Width - stringSize.Width) / 2,
