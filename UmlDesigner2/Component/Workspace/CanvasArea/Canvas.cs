@@ -8,7 +8,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private readonly Clock.Clock _clock = new Clock.Clock();
         private static ListCanvasBlocks _canvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
-
         private static readonly ListCanvasLines _canvLines = new ListCanvasLines()
             ; //lista blokow wyrysowanych na ekranie
 
@@ -38,11 +37,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Controls.Add(_clock);
             ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
+            
         }
-
-
-
-
+        
         protected override void OnMouseClick(MouseEventArgs e)
         {
             //po kliknięciu ppm bez przesówania pojawia się menu kontekstowe a także przerywane jest dodawanie elementów do canvasa
@@ -72,6 +69,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         protected override void OnMouseMove(MouseEventArgs e)
         {
+            Focus();
             //metoda przemieszczająca obiekt dla LPM i zmieniająca jego rozmiar dla PPM
             if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
                 if (e.Button == MouseButtons.Left)

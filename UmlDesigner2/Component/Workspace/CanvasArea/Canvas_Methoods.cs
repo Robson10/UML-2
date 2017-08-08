@@ -5,11 +5,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UmlDesigner2.Component.TabsArea.BlockPropertis;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     //krzywo wyrysowują się linie podczas szybkiego przesuwania
     //zaznaczanie przez rect i przesuwanie bez ctrl
+    //szybkie zaznaczenie powoduje że niekiedy niektore bloczki nie zmieniają koloru(ale mają true)
     partial class Canvas
     {
         private string _blockClipboardFormat = "CopyOfBlocks";
@@ -21,6 +23,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             SelectRect = Rectangle.Empty;
             Invalidate();
         }
+
         public void AddObjectInstant(BlocksData.Shape shape)
         {
             ShapeToDraw = shape;
@@ -136,7 +139,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
                         var oldId = blockTemp[i].ID;
-                        var newId= _canvObj.MyPaste(blockTemp[i]);
+                        var newId = _canvObj.MyPaste(blockTemp[i]);
                         if (lineTemp.Count > 0)
                         {
                             lineTemp.Where(w => w.BeginId == oldId).ToList().ForEach(f => f.BeginId = newId);
@@ -151,15 +154,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void Undo()
         {
-
         }
 
         public void Redo()
         {
-
         }
 
         #endregion
+
         private void LPM_TryAddObject(Point e)
         {
             if (ShapeToDraw != BlocksData.Shape.Nothing)
@@ -174,7 +176,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     _canvObj.MyAdd(e, ShapeToDraw);
                     ShapeToDraw = BlocksData.Shape.Nothing;
                 }
-                _rubbers.ShowRubbers(_canvObj[0]);
+                if (_canvObj.Count>0) _rubbers.ShowRubbers(_canvObj[0]);
                 Invalidate();
             }
         }
@@ -186,6 +188,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     _canvObj.My_SelectObjectContainingPoint(e);
                     _rubbers.ShowRubbers(_canvObj[0]);
+                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
                     Invalidate();
                 }
         }
@@ -209,7 +212,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             int bufor;
             if (e.X < mouseDown.X)
             {
-                bufor=e.X;
+                bufor = e.X;
                 e.X = mouseDown.X;
                 mouseDown.X = bufor;
             }
@@ -242,7 +245,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Cursor = Cursors.SizeAll;
             _canvObj.My_SelectObjectContainingPoint(e);
-            
+
             _ppm = true;
             Invalidate();
         }
@@ -258,9 +261,5 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _mouseDownLocation = e;
             Invalidate();
         }
-
-
-
     }
-
 }

@@ -15,6 +15,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             _canvasBlocks = _listCanvasItems;
             RubbersPresets();
         }
+      
         /// <summary>
         /// Metoda ustawiająca gumki.Wywoływana w konstruktorze.
         /// </summary>
@@ -39,6 +40,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             this[6].Cursor = Cursors.SizeNESW;
             this[7].Cursor = Cursors.SizeWE;
         }
+
 
         /// <summary>
         /// Metoda służąca do zapisania miejsca wcisniecia LPM na 1z8 gumek
@@ -134,4 +136,5 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
     }
+    
 }

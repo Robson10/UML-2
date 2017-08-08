@@ -67,7 +67,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
         protected override void OnResize(EventArgs eventargs)
         {
             base.OnResize(eventargs);
-            _listViewOfBlocks.Columns[0].Width = Width;
+            _listViewOfBlocks.Columns[0].Width = ClientRectangle.Width-4;
         }
 
         public event EventHandler ListItemClick

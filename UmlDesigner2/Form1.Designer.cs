@@ -48,6 +48,8 @@ namespace UmlDesigner2
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
+            this.tabPage7 = new System.Windows.Forms.TabPage();
+            this.tabPage8 = new System.Windows.Forms.TabPage();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -115,7 +117,7 @@ namespace UmlDesigner2
             | System.Windows.Forms.AnchorStyles.Right)));
             this.groupBox1.Location = new System.Drawing.Point(0, 3);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(913, 53);
+            this.groupBox1.Size = new System.Drawing.Size(881, 53);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Wyniki";
@@ -137,7 +139,7 @@ namespace UmlDesigner2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer1.Size = new System.Drawing.Size(1120, 451);
-            this.splitContainer1.SplitterDistance = 200;
+            this.splitContainer1.SplitterDistance = 232;
             this.splitContainer1.TabIndex = 12;
             // 
             // splitContainer2
@@ -150,7 +152,7 @@ namespace UmlDesigner2
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabsConnector1);
-            this.splitContainer2.Size = new System.Drawing.Size(200, 451);
+            this.splitContainer2.Size = new System.Drawing.Size(232, 451);
             this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
             // 
@@ -164,7 +166,7 @@ namespace UmlDesigner2
             this.tabsConnector1.Multiline = true;
             this.tabsConnector1.Name = "tabsConnector1";
             this.tabsConnector1.SelectedIndex = 0;
-            this.tabsConnector1.Size = new System.Drawing.Size(150, 50);
+            this.tabsConnector1.Size = new System.Drawing.Size(182, 50);
             this.tabsConnector1.TabIndex = 0;
             // 
             // splitContainer3
@@ -181,7 +183,7 @@ namespace UmlDesigner2
             // splitContainer3.Panel2
             // 
             this.splitContainer3.Panel2.Controls.Add(this.groupBox1);
-            this.splitContainer3.Size = new System.Drawing.Size(916, 451);
+            this.splitContainer3.Size = new System.Drawing.Size(884, 451);
             this.splitContainer3.SplitterDistance = 391;
             this.splitContainer3.TabIndex = 0;
             // 
@@ -194,7 +196,7 @@ namespace UmlDesigner2
             this.canvas1.IsMultiSelect = false;
             this.canvas1.Location = new System.Drawing.Point(0, 0);
             this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(916, 392);
+            this.canvas1.Size = new System.Drawing.Size(884, 392);
             this.canvas1.TabIndex = 0;
             // 
             // tabPage1
@@ -247,6 +249,28 @@ namespace UmlDesigner2
             this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Visible = false;
             // 
+            // tabPage7
+            // 
+            this.tabPage7.Location = new System.Drawing.Point(42, 4);
+            this.tabPage7.Name = "tabPage7";
+            this.tabPage7.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage7.Size = new System.Drawing.Size(154, 92);
+            this.tabPage7.TabIndex = 2;
+            this.tabPage7.Text = "tabPage7";
+            this.tabPage7.UseVisualStyleBackColor = true;
+            this.tabPage7.Visible = false;
+            // 
+            // tabPage8
+            // 
+            this.tabPage8.Location = new System.Drawing.Point(42, 4);
+            this.tabPage8.Name = "tabPage8";
+            this.tabPage8.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage8.Size = new System.Drawing.Size(154, 92);
+            this.tabPage8.TabIndex = 2;
+            this.tabPage8.Text = "tabPage8";
+            this.tabPage8.UseVisualStyleBackColor = true;
+            this.tabPage8.Visible = false;
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -293,10 +317,12 @@ namespace UmlDesigner2
         private System.Windows.Forms.TabPage tabPage2;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
-        private Component.TabsArea.TabsConnector tabsConnector1;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
         private Canvas canvas1;
+        private Component.TabsArea.TabsConnector tabsConnector1;
+        private System.Windows.Forms.TabPage tabPage7;
+        private System.Windows.Forms.TabPage tabPage8;
     }
 }
 

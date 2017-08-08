@@ -233,21 +233,23 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Rect = rect;
             Shape = shape;
+            Label = BlocksData.Name(Shape);
             Text = BlocksData.Text(Shape);
             ID = id;
         }
 
+        public string Label = "";
         public string Text; //zawartosc tekstowa kontrolki
         public bool IsSelected { get; set; } = false; //czy jest zaznaczona
         public bool IsLocked = false;
-
+        public bool AutoResize = false;
         public int ID{ get; set; }
         #region Done
 
 
         public Point PointInput;
         public Point PointOutput1, PointOutput2;
-        public Rectangle Rect; //obszar dla figury - point , size - dodatkowo wyliczane są punkty dla linii
+        public Rectangle Rect; //obszar dla figury 
         
         public Color BackColor;
         public Color FontColor;
