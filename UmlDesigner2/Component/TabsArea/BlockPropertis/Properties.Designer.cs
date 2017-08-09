@@ -1,6 +1,6 @@
 ﻿namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 {
-    partial class BlockProp
+    partial class Properties
     {
         /// <summary> 
         /// Required designer variable.

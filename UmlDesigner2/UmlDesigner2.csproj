@@ -48,11 +48,11 @@
   <ItemGroup>
     <Compile Include="BlocksData.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
-    <Compile Include="Component\TabsArea\BlockPropertis\BlockProp.cs">
+    <Compile Include="Component\TabsArea\BlockPropertis\Properties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\BlockPropertis\BlockProp.Designer.cs">
-      <DependentUpon>BlockProp.cs</DependentUpon>
+    <Compile Include="Component\TabsArea\BlockPropertis\Properties.Designer.cs">
+      <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\TabsArea\OAKListView.cs">
       <SubType>Component</SubType>

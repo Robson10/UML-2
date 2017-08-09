@@ -25,7 +25,7 @@ namespace UmlDesigner2
             //AddStripMenuEvents();
         }
 
-        private static BlockProp temp;
+        private static Component.TabsArea.BlockPropertis.Properties temp;
         public void MyCreateBlockProp(MyBlock temp2)
         {
 
@@ -34,12 +34,17 @@ namespace UmlDesigner2
                     return;
                 else
                     splitContainer2.Panel2.Controls.Remove(temp);
-            temp = new BlockProp(temp2);
+            temp = new Component.TabsArea.BlockPropertis.Properties(temp2);
             splitContainer2.Panel2.Controls.Add(temp);
             temp.Width = splitContainer2.Panel2.Width;
             temp.Height = splitContainer2.Panel2.Height;
             temp.Location = new System.Drawing.Point(0, 0);
 
+        }
+
+        public void CanvasInvalidateForProperties()
+        {
+            canvas1.Invalidate();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)

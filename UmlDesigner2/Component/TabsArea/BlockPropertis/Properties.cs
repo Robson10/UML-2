@@ -12,7 +12,7 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 {
-    public partial class BlockProp : Panel
+    public partial class Properties : UserControl
     {
         private GroupBox grLabel;
         private TextBox tbLabel;
@@ -22,7 +22,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         private PropertyGrid Pg;
         private MyBlock _block;
 
-        public BlockProp(MyBlock block)
+        public Properties(MyBlock block)
         {
             BackColor = Color.White;
             Anchor = AnchorStyles.Bottom|AnchorStyles.Top|AnchorStyles.Left|AnchorStyles.Right;
@@ -35,6 +35,18 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             PrepareView();
 
             Pg.SelectedObject = new PropertyGridItems(_block);
+            Pg.PropertyValueChanged += Pg_PropertyValueChanged;
+            tbLabel.KeyUp += TbLabel_KeyUp;
+        }
+
+        private void TbLabel_KeyUp(object sender, KeyEventArgs e)
+        {
+            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidateForProperties();
+        }
+
+        private void Pg_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
+        {
+            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidateForProperties();
         }
 
 
@@ -142,7 +154,10 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public BlocksData.Shape Shape
         {
             get { return _block.Shape; }
-            set { _block.Shape = value; }
+            set
+            {
+                _block.Shape = value; 
+            }
         }
         [Category("Parametry")]
         [Description("Zablokowane")]
