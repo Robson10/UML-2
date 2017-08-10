@@ -31,7 +31,10 @@ namespace UmlDesigner2
 
             if (temp != null)
                 if (temp.ShouldRefresh(temp2))
+                {
+                    temp.UpdateProperties();
                     return;
+                }
                 else
                     splitContainer2.Panel2.Controls.Remove(temp);
             temp = new Component.TabsArea.BlockPropertis.Properties(temp2);

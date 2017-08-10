@@ -12,6 +12,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     //krzywo wyrysowują się linie podczas szybkiego przesuwania
     //zaznaczanie przez rect i przesuwanie bez ctrl
     //szybkie zaznaczenie powoduje że niekiedy niektore bloczki nie zmieniają koloru(ale mają true)
+    //wprowadzany tekst jako label przekracza szer bloku
     partial class Canvas
     {
         private string _blockClipboardFormat = "CopyOfBlocks";
@@ -85,6 +86,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             IsMultiSelect = false;
         }
 
+        private void AutoResizeBlockToContent()
+        {
+            throw new NotImplementedException();
+        }
         #region ShortcutsMethods
 
         public void Delete()
@@ -154,10 +159,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void Undo()
         {
+            throw new NotImplementedException();
         }
 
         public void Redo()
         {
+            throw new NotImplementedException();
         }
 
         #endregion
@@ -188,7 +195,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     _canvObj.My_SelectObjectContainingPoint(e);
                     _rubbers.ShowRubbers(_canvObj[0]);
-                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
                     Invalidate();
                 }
         }

@@ -90,6 +90,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
                 Cursor = Cursors.Default;
             HideSelectionRect();
+
+            (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
         }
 
         protected override void OnPaint(PaintEventArgs e)

@@ -28,7 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // Properties
+            // 
+            this.Name = "Properties";
+            this.Size = new System.Drawing.Size(227, 234);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
