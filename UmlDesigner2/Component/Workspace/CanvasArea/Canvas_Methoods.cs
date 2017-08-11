@@ -9,13 +9,18 @@ using UmlDesigner2.Component.TabsArea.BlockPropertis;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    //krzywo wyrysowują się linie podczas szybkiego przesuwania
-    //zaznaczanie przez rect i przesuwanie bez ctrl
-    //kiepskie odświerzanie rozmiaru i tekstu bloku z poziomu properties
+    //zaznaczanie przez rect i przesuwanie bez ctrl???
+    //kiepskie odświerzanie rozmiaru i tekstu bloku z poziomu properties po kliknięciu autodopasowywanie=true
     partial class Canvas
     {
         private Rectangle SelectRect = Rectangle.Empty;
 
+        public void OnPropertiesChange()
+        {
+            _canvLines.MyUpdate(ref _canvObj);
+            _rubbers.ShowRubbers(_canvObj[0]);
+            Invalidate();
+        }
         private void ShowProperties()
         {
             if (_canvObj.Count > 0)
@@ -91,7 +96,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        public void SetIsLockedForObject()
+        private void SetIsLockedForObject()
         {
             _canvObj.MySetIsLockedForSelectedObj();
             IsMultiSelect = false;

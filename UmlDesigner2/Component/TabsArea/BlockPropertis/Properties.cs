@@ -134,7 +134,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
             _block.Code = tbCode.Text;
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
+            //(Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
 
         private void Pg_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e)
@@ -245,7 +245,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Point Location
         {
             get { return _block.Rect.Location; }
-            set { _block.Rect.Location = value; }
+            set { _block.Rect = new Rectangle(value, _block.Rect.Size); }
         }
         [Category("Parametry")]
         [Description("Wymiary")]
@@ -253,7 +253,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Size Size
         {
             get { return _block.Rect.Size; }
-            set { _block.Rect.Size = value; }
+            set { _block.Rect= new Rectangle(_block.Rect.Location, value); }
         }
     }
 }

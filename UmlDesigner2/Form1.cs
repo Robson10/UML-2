@@ -51,7 +51,7 @@ namespace UmlDesigner2
         }
         public void CanvasInvalidatebyInvalidateByProperties()
         {
-            canvas1.Invalidate();
+            canvas1.OnPropertiesChange();
         }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
