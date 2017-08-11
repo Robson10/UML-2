@@ -4,21 +4,37 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2
 {
     public class BlocksData
     {
+        #region Shortcuts
+
+        public static Keys MultiselectKey = Keys.ControlKey;
+
+        #endregion
+
+        #region Clipboard
+        
+        public static string BlockClipboardFormat = "CopyOfBlocks";
+        public static string LineClipboardFormat = "CopyOfLines";
+
+        #endregion
+
+        #region Rubbers
+
         public static Size RubberSize = new Size(10, 10);
         public static Color RubberColor = Color.Silver;
-        public static Color TrueLineBackColor = (Color.Green);
-        public static Color FalseLineBackColor = (Color.Red);
 
-        public static System.Windows.Forms.Keys MultiselectKey = System.Windows.Forms.Keys.ControlKey;
+        #endregion
 
-        public static Size DefaultSize = new Size(100, 50);
-        public static Size MinSize = new Size(10, 10);
+        #region Block & Line
+
+        public static Size DefaultBlockSize = new Size(100, 50);
+        public static Size MinBlockSize = new Size(10, 10);
 
         public enum Shape
         {
@@ -31,27 +47,31 @@ namespace UmlDesigner2
             ConnectionLine = 6
         };
 
-        public static Color BackColor(Shape shape)
+        public static Color DefaultSelectionColor = Color.DarkOrange;
+        public static Color TrueLineBackColor = Color.Green;
+        public static Color FalseLineBackColor = Color.Red;
+
+        public static Color DefaultBackColor(Shape shape)
         {
             switch (shape)
             {
                 case Shape.Start:
-                    return (Color.FromArgb(255, 50, 50, 50));
+                    return Color.FromArgb(255, 130, 130, 130);
                 case Shape.Input:
-                    return (Color.FromArgb(255, 70, 70, 70));
+                    return Color.FromArgb(255, 130, 130, 130);
                 case Shape.Execution:
-                    return (Color.FromArgb(255, 90, 90, 90));
+                    return Color.FromArgb(255, 130, 130, 130);
                 case Shape.End:
-                    return (Color.FromArgb(255, 110, 110, 110));
+                    return Color.FromArgb(255, 130, 130, 130);
                 case Shape.Decision:
-                    return (Color.FromArgb(255, 130, 130, 130));
+                    return Color.FromArgb(255, 130, 130, 130);
                 case Shape.ConnectionLine:
-                    return (Color.FromArgb(255, 0, 0, 0));
+                    return Color.FromArgb(255, 0, 0, 0);
             }
             return Color.FromArgb(0, 250, 0, 0);
         }
 
-        public static Color FontColor(Shape shape)
+        public static Color DefaultFontColor(Shape shape)
         {
             switch (shape)
             {
@@ -70,7 +90,7 @@ namespace UmlDesigner2
             }
         }
 
-        public static int FontSize(Shape shape)
+        public static int DefaultFontSize(Shape shape)
         {
             switch (shape)
             {
@@ -89,28 +109,7 @@ namespace UmlDesigner2
             }
         }
 
-        public static string Name(Shape shape)
-        {
-            switch (shape)
-            {
-                case Shape.Start:
-                    return "Start";
-                case Shape.Input:
-                    return "Input";
-                case Shape.Execution:
-                    return "Execution";
-                case Shape.End:
-                    return "End";
-                case Shape.Decision:
-                    return "Decision";
-                case Shape.ConnectionLine:
-                    return "ConnectionLine";
-                default:
-                    return "Error";
-            }
-        }
-
-        public static string Text(Shape shape)
+        public static string DefaultLabel(Shape shape)
         {
             switch (shape)
             {
@@ -151,5 +150,7 @@ namespace UmlDesigner2
                     return "Error";
             }
         }
+
+        #endregion
     }
 }

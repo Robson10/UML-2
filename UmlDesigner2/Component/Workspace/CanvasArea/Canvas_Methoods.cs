@@ -11,13 +11,24 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     //krzywo wyrysowują się linie podczas szybkiego przesuwania
     //zaznaczanie przez rect i przesuwanie bez ctrl
-    //szybkie zaznaczenie powoduje że niekiedy niektore bloczki nie zmieniają koloru(ale mają true)
-    //wprowadzany tekst jako label przekracza szer bloku
+    //kiepskie odświerzanie rozmiaru i tekstu bloku z poziomu properties
     partial class Canvas
     {
-        private string _blockClipboardFormat = "CopyOfBlocks";
-        private string _lineClipboardFormat = "CopyOfLines";
         private Rectangle SelectRect = Rectangle.Empty;
+
+        private void ShowProperties()
+        {
+            if (_canvObj.Count > 0)
+                if (_canvObj[0].IsSelected)
+                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
+                else
+                    (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
+        }
+
+        private void RemoveProperties()
+        {
+            (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
+        }
 
         private void HideSelectionRect()
         {
@@ -88,8 +99,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void AutoResizeBlockToContent()
         {
-            throw new NotImplementedException();
+            _canvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
+            ShowProperties();
         }
+
         #region ShortcutsMethods
 
         public void Delete()
@@ -101,6 +114,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     _canvLines.MyRemove(_canvObj[i].ID);
                     _canvObj.MyDelete(i);
                     _rubbers.MyHideRubbers();
+                    RemoveProperties();
                 }
             }
             Invalidate();
@@ -110,9 +124,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(_blockClipboardFormat, _canvObj.MyCopy(_blockClipboardFormat));
+            clips.SetData(BlocksData.BlockClipboardFormat, _canvObj.MyCopy(BlocksData.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(_lineClipboardFormat, _canvLines.MyCopy(_lineClipboardFormat, _blockClipboardFormat));
+            clips.SetData(BlocksData.LineClipboardFormat, _canvLines.MyCopy(BlocksData.LineClipboardFormat, BlocksData.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
         }
@@ -121,9 +135,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(_blockClipboardFormat, _canvObj.MyCut(_blockClipboardFormat));
+            clips.SetData(BlocksData.BlockClipboardFormat, _canvObj.MyCut(BlocksData.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(_lineClipboardFormat, _canvLines.MyCut(_lineClipboardFormat, _blockClipboardFormat));
+            clips.SetData(BlocksData.LineClipboardFormat, _canvLines.MyCut(BlocksData.LineClipboardFormat, BlocksData.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
 
@@ -135,12 +149,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             _canvObj.My_IsSelectedSetForAll(false);
             _rubbers.MyHideRubbers();
-            if (Clipboard.ContainsData(_blockClipboardFormat))
+            if (Clipboard.ContainsData(BlocksData.BlockClipboardFormat))
             {
-                if (Clipboard.ContainsData(_lineClipboardFormat))
+                if (Clipboard.ContainsData(BlocksData.LineClipboardFormat))
                 {
-                    var blockTemp = (List<MyBlock>) Clipboard.GetData(_blockClipboardFormat);
-                    var lineTemp = (List<MyLine>) Clipboard.GetData(_lineClipboardFormat);
+                    var blockTemp = (List<MyBlock>) Clipboard.GetData(BlocksData.BlockClipboardFormat);
+                    var lineTemp = (List<MyLine>) Clipboard.GetData(BlocksData.LineClipboardFormat);
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
                         var oldId = blockTemp[i].ID;
@@ -184,10 +198,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     ShapeToDraw = BlocksData.Shape.Nothing;
                 }
                 if (_canvObj.Count>0) _rubbers.ShowRubbers(_canvObj[0]);
+                ShowProperties();
                 Invalidate();
             }
         }
-
+        
         private void LPM_SelectObjectByClick(Point e)
         {
             if (ShapeToDraw == BlocksData.Shape.Nothing)

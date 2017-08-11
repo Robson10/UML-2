@@ -25,7 +25,16 @@ namespace UmlDesigner2.Component.Workspace.Clock
             private void DrawDigitalCountingUp(ref PaintEventArgs e)
             {
                 _textForDigitalClock.Clear();
-                _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine + new DateTime(DateTime.Now.Ticks - _beginExam.Ticks).ToLongTimeString());
+                if (_endExam == DateTime.MinValue)
+                    _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                                                new DateTime(0).ToLongTimeString());
+                else if (DateTime.Now > _endExam)
+                    _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                                                new DateTime(_endExam.Ticks - _beginExam.Ticks).ToLongTimeString());
+                else
+                    _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                                                new DateTime(DateTime.Now.Ticks - _beginExam.Ticks).ToLongTimeString());
+
                 e.Graphics.DrawString(_textForDigitalClock.ToString(),
                     FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));

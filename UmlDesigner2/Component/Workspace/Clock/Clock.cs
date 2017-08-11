@@ -11,7 +11,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
 {
     public partial class Clock : Panel
     {
-        readonly Timer _timer = new Timer() {Interval = 100};
+        readonly Timer _timer = new Timer() {Interval = 400};
         private DateTime _beginExam;
         private DateTime _endExam;
         private ToolTip _toolTip;
@@ -19,6 +19,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         public Clock()
         {
             DoubleBuffered = true;
+            Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Update();
             Start(); //bedzie wywolywane z zewnątrz
             _contextMenu=new ContextMenuStrip();
@@ -33,19 +34,25 @@ namespace UmlDesigner2.Component.Workspace.Clock
         {
             if (ClockVariables.IsRunnable)
             {
-                _timer.Start();
-                _timer.Tick += Timer_Tick;
-                _beginExam = new DateTime(DateTime.Now.Ticks);
-                if (ClockVariables.TimeForExam.TotalSeconds!=0)
-                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
                 ClockVariables.IsRunning = true;
                 ClockVariables.IsRunnable = false;
+                _beginExam = new DateTime(DateTime.Now.Ticks);
+                if (Math.Abs(ClockVariables.TimeForExam.TotalSeconds) > 0)
+                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
+                if (_endExam != DateTime.MinValue)
+                {
+                    _timer.Start();
+                    _timer.Tick += Timer_Tick;
+                }
+                else
+                    Stop();
+
                 _toolTip = new ToolTip {AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
                 //Wyczyścić workSpace przed rozpoczęciem egzaminu
             }
         }
 
-        public void End()
+        public void Stop()
         {
             if (!ClockVariables.IsRunnable)
             {
@@ -71,6 +78,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                     DigitalUpdate();
                     break;
             }
+            Invalidate();
 
         }
 
@@ -93,18 +101,18 @@ namespace UmlDesigner2.Component.Workspace.Clock
             }
             else if (e.ClickedItem.Text.Contains("Wyłącz"))
             {
-                this.Dispose();
+                Dispose();
             }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            if (ClockVariables.TimeForExam.TotalSeconds!=0)
+            if (Math.Abs(ClockVariables.TimeForExam.TotalSeconds) >= 0)
             {
                 if (DateTime.Now >= _endExam)
                 {
-                    End();
+                    Stop();
                 }
             }
         }
@@ -125,18 +133,13 @@ namespace UmlDesigner2.Component.Workspace.Clock
             }
         }
        
-
-        protected override void CreateHandle() //ustawienie położenia po dodaniu kontrolki do "parenta"
-        {
-            base.CreateHandle();
-            this.Location = new Point(this.Parent.Size.Width - this.Width, 0);
-        }
+        
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            if (this.Parent != null)
-                this.Location = new Point(this.Parent.Size.Width - this.Width, 0);
+            if (Parent != null)
+                Location = new Point(this.Parent.Size.Width - this.Width, 0);
         }
 
         //rysowanie odpowiedniego zegara na podstawie wybranej opcji

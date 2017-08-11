@@ -42,10 +42,14 @@ namespace UmlDesigner2
             temp.Width = splitContainer2.Panel2.Width;
             temp.Height = splitContainer2.Panel2.Height;
             temp.Location = new System.Drawing.Point(0, 0);
-
         }
 
-        public void CanvasInvalidateForProperties()
+        public void MyRemoveBlockProp()
+        {
+            splitContainer2.Panel2.Controls.Remove(temp);
+            temp = null;
+        }
+        public void CanvasInvalidatebyInvalidateByProperties()
         {
             canvas1.Invalidate();
         }
@@ -63,7 +67,7 @@ namespace UmlDesigner2
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
 
-            if (e.Control)
+            if (e.Modifiers==Keys.Control )
                 switch (e.KeyCode)
                 {
                     case Keys.C:
@@ -76,9 +80,11 @@ namespace UmlDesigner2
                         canvas1.Paste();
                         break;
                     case Keys.Z:
+                        if (canvas1.Focused)
                         canvas1.Undo();
                         break;
                     case Keys.Y:
+                        if (canvas1.Focused)
                         canvas1.Redo();
                         break;
                     case Keys.ControlKey:

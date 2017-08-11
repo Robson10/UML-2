@@ -28,13 +28,16 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             PrepareControlView();
             Pg.SelectedObject = new PropertyGridItems(_block);
         }
+
         /// <summary>
         /// Metoda służąca do aktualizowania zmian w obszarze ProperisGrid po wykonaniu zmian w Canvas na zaznaczonej figurze
         /// </summary>
         public void UpdateProperties()
         {
             Pg.SelectedObject= new PropertyGridItems(_block);
+            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
         }
+
         /// <summary>
         /// Metoda ta ma za zadanie utworzenie wszystkich niezbędnych komponentów zgodnie z wybranym blokiem
         /// oraz nadanie samej sobie niezbędnych ustawień
@@ -102,6 +105,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
             Pg.PropertyValueChanged += Pg_PropertyValueChanged;
         }
+
         /// <summary>
         /// Metoda zmieniająca szerokość pierwszej kolumny w kontrolce typu PropertyGrid zgodnie z zadaną szerokością (<paramref name="width"/>)
         /// </summary>
@@ -109,6 +113,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// <param name="width"></param>
         private static void SetPropertyLabelColumnWidth(PropertyGrid grid, int width)
         {
+            width = 130;
             var memberInfo = grid.GetType().GetField("gridView", BindingFlags.Instance | BindingFlags.NonPublic);
             if (memberInfo != null)
             {
@@ -123,21 +128,26 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         private void TbLabel_KeyUp(object sender, KeyEventArgs e)
         {
             _block.Label = tbLabel.Text;
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidateForProperties();
+            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
 
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
             _block.Code = tbCode.Text;
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidateForProperties();
+            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
 
         private void Pg_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e)
         {
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidateForProperties();
+            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
-        
-        
+
+        protected override void OnResize(EventArgs e)
+        {
+            Pg.Size = new Size(ClientRectangle.Size.Width - 10, 250);
+            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
+            AutoScroll = true;
+        }
 
 
 
@@ -171,11 +181,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 
 
         //}
-        protected override void OnResize(EventArgs e)
-        {
-            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
-            AutoScroll = true;
-        }
+
         public bool ShouldRefresh(MyBlock newBlock)
         {
             return (newBlock == _block);
@@ -191,7 +197,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         }
 
         [Category("Parametry")]
-        [Description("Zablokowane")]
+        [Description("Zablokowane bloku przed jego edycją")]
         [DisplayName("Zablokowane")]
         public bool IsLocked
         {
@@ -200,7 +206,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         }
 
         [Category("Parametry")]
-        [Description("Auto dopasowywanie")]
+        [Description("Auto dopasowywanie rozmiaru tekstu do szerokości bloku")]
         [DisplayName("Auto dopasowywanie")]
         public bool AutoResize
         {
@@ -230,8 +236,8 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         [DisplayName("Kolor tła")]  
         public Color BackColor
         {
-            get { return _block.BackColor; }
-            set { _block.BackColor = value; }
+            get { return _block.BackColorStorage; }
+            set { _block.BackColorStorage = value; }
         }
         [Category("Parametry")]                    
         [Description("Położenie")]        

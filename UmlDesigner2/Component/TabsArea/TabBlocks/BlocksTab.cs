@@ -39,7 +39,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             _listViewOfBlocks.SmallImageList = LoadImageList();
             for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
             {
-                _listViewOfBlocks.Items.Add(new ListViewItem(BlocksData.Text((BlocksData.Shape)i)) { ImageIndex = i-1 });
+                _listViewOfBlocks.Items.Add(new ListViewItem(BlocksData.DefaultLabel((BlocksData.Shape)i)) { ImageIndex = i-1 });
             }
         }
         

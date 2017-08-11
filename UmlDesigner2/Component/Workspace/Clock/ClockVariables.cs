@@ -21,7 +21,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         };
         public static ClockType ChoosenClockType = ClockType.Analog;
         public static int ClockSize = 100;
-        public static TimeSpan TimeForExam = new TimeSpan(2, 0, 5);
+        public static TimeSpan TimeForExam = new TimeSpan(2, 0, 0);
         public static Color ColorHandOfClock= Color.Black;
         public static Color ColorOfClockScale = Color.Black;
         public static string MessageWhenTimeIsOver = "Skończył ci się czas";

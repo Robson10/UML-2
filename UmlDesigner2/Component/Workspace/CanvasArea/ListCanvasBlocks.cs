@@ -11,13 +11,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     public class ListCanvasBlocks : List<MyBlock>
     {
         private static int _id = 0;
+
         public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < Count; i++)
                 if (base[i].IsContain(location))
                 {
                     base[i].IsSelected = true;
-                    base[i].BackColor = CanvasVariables.SelectionBgColor;
+                    base[i].BackColor = BlocksData.DefaultSelectionColor;
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                     break;
@@ -31,17 +32,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base[i].Rect.IntersectsWith(rect))
                 {
                     base[i].IsSelected = true;
-
+                    base[i].BackColor = BlocksData.DefaultSelectionColor;
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                 }
                 else
                 {
                     base[i].IsSelected = false;
+                    base[i].BackColor = base[i].BackColorStorage;
                 }
-                base[i].BackColor = (base[i].IsSelected)
-                    ? (CanvasVariables.SelectionBgColor)
-                    : (CanvasVariables.DefaultBgColor);
             }
         }
 
@@ -64,7 +63,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public MyBlock TryGetElementWithId(int id)
         {
             for (int i = 0; i < base.Count; i++)
-                if (base[i].ID==id)
+                if (base[i].ID == id)
                     return base[i];
             return null;
         }
@@ -90,9 +89,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     int NewWidth = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - mouseDownLocation.X);
                     int NewHeight = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - mouseDownLocation.Y);
-                    if (NewWidth >= BlocksData.MinSize.Width)
+                    if (NewWidth >= BlocksData.MinBlockSize.Width)
                         base[i].Rect.Width = NewWidth;
-                    if (NewHeight >= BlocksData.MinSize.Height)
+                    if (NewHeight >= BlocksData.MinBlockSize.Height)
                         base[i].Rect.Height = NewHeight;
                 }
             }
@@ -152,12 +151,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             width -= e.X - mouseDownLocation.X;
                             break;
                     }
-                    if (width > BlocksData.MinSize.Width)
+                    if (width > BlocksData.MinBlockSize.Width)
                     {
                         base[i].Rect.Width = width;
                         base[i].Rect.Location = new Point(x, base[i].Rect.Location.Y);
                     }
-                    if (height > BlocksData.MinSize.Height)
+                    if (height > BlocksData.MinBlockSize.Height)
                     {
                         base[i].Rect.Height = height;
                         base[i].Rect.Location = new Point(base[i].Rect.Location.X, y);
@@ -171,22 +170,24 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             for (int i = 0; i < Count; i++)
             {
                 base[i].BackColor = (isSelected)
-                        ? (CanvasVariables.SelectionBgColor)
-                        : (CanvasVariables.DefaultBgColor);
+                    ? (BlocksData.DefaultSelectionColor)
+                    : (this[i].BackColorStorage);
                 base[i].IsSelected = isSelected;
             }
         }
 
-        public void MyAdd(Point e,BlocksData.Shape shapeToDraw)
+        public void MyAdd(Point e, BlocksData.Shape shapeToDraw)
         {
-            Insert(0, (new MyBlock(new Rectangle(e.X - BlocksData.DefaultSize.Width / 2,
-                e.Y - BlocksData.DefaultSize.Height / 2, BlocksData.DefaultSize.Width, BlocksData.DefaultSize.Height), shapeToDraw,_id)));
+            Insert(0, (new MyBlock(new Rectangle(e.X - BlocksData.DefaultBlockSize.Width / 2,
+                    e.Y - BlocksData.DefaultBlockSize.Height / 2, BlocksData.DefaultBlockSize.Width,
+                    BlocksData.DefaultBlockSize.Height),
+                shapeToDraw, _id)));
             _id++;
         }
 
         public void MyAbortAdd()
         {
-            if (Count>0)
+            if (Count > 0)
                 RemoveAt(0);
         }
 
@@ -221,51 +222,44 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             block.ID = _id;
             _id++;
-            Insert(0,block);
-            return _id-1;
+            Insert(0, block);
+            return _id - 1;
         }
     }
-    
+
     [Serializable]
     public class MyBlock
     {
-        public MyBlock(Rectangle rect, BlocksData.Shape shape,int id)
-        {
-            Rect = rect;
-            Shape = shape;
-            Label = BlocksData.Text(Shape);
-            Code = BlocksData.Text(Shape);
-            ID = id;
-        }
-
+        public BlocksData.Shape Shape { get; }
         public string Label = "";
-        public string Code{ get; set; } //zawartosc tekstowa kontrolki
-        public bool IsSelected { get; set; } = false; //czy jest zaznaczona
+        public string Code  = "";
+        public bool IsSelected  = false;
         public bool IsLocked = false;
-        public bool AutoResize = false;
-        public int ID{ get; set; }
-        #region Done
-
+        public bool AutoResize  = false;
+        public int ID;
 
         public Point PointInput;
         public Point PointOutput1, PointOutput2;
         public Rectangle Rect; //obszar dla figury 
-        
-        public Color BackColor;
+
+        public Color BackColor { get; set; }
+        public Color BackColorStorage;
         public Color FontColor;
         public int FontSize;
-        private BlocksData.Shape _shape;
-        public BlocksData.Shape Shape //jaką kontrolke rysujemy
+        public MyBlock(Rectangle rect, BlocksData.Shape shape, int id)
         {
-            get => _shape;
-            set
-            {
-                _shape = value;
-                BackColor = BlocksData.BackColor(_shape);
-                FontColor = BlocksData.FontColor(_shape);
-                FontSize = BlocksData.FontSize(_shape);
-            }
+            Rect = rect;
+            Shape = shape;
+            ID = id;
+            Label = BlocksData.DefaultLabel(Shape);
+            BackColor = BlocksData.DefaultBackColor(Shape);
+            BackColorStorage= BlocksData.DefaultBackColor(Shape);
+            FontColor = BlocksData.DefaultFontColor(Shape);
+            FontSize = BlocksData.DefaultFontSize(Shape);
         }
+
+       
+
 
         public bool IsContain(Point location)
         {
@@ -350,14 +344,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             g.FillEllipse(new SolidBrush(BackColor), Rect);
             PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
-            DrawText(g);
+            DrawLabel(g);
         }
 
         private void DrawEnd(Graphics g)
         {
             g.FillEllipse(new SolidBrush(BackColor), Rect);
             PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
-            DrawText(g);
+            DrawLabel(g);
         }
 
         private void DrawInput(Graphics g)
@@ -369,9 +363,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 new Point(Rect.Location.X + Rect.Width - 10, Rect.Location.Y + Rect.Height));
 
             PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
-            PointInput= new Point(Rect.Left + Rect.Width / 2, Rect.Top);
+            PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillPath(new SolidBrush(BackColor), x);
-            DrawText(g);
+            DrawLabel(g);
         }
 
         private void DrawExecution(Graphics g)
@@ -379,7 +373,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
             PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillRectangle(new SolidBrush(BackColor), Rect);
-            DrawText(g);
+            DrawLabel(g);
         }
 
         private void DrawDecision(Graphics g)
@@ -391,38 +385,44 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             x.AddLine(new Point(Rect.Location.X + Rect.Width, Rect.Location.Y + Rect.Height / 2),
                 new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y + Rect.Height));
 
-            PointOutput1 = new Point(Rect.Left, Rect.Top + Rect.Height/2);
+            PointOutput1 = new Point(Rect.Left, Rect.Top + Rect.Height / 2);
             PointOutput2 = new Point(Rect.Right, Rect.Top + Rect.Height / 2);
             PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
             g.FillPath(new SolidBrush(BackColor), x);
-            DrawText(g);
+            DrawLabel(g);
         }
-        
-        //for start/end
-        private void DrawText(Graphics g)
+
+        private void DrawLabel(Graphics g)
         {
             Font font;
             Size stringSize;
-            int fontSize = (int) Math.Ceiling(Math.Abs(Rect.Height) / 3.0) + 2;
-            do
+            var maxWidth = Math.Abs((Shape == BlocksData.Shape.Decision)? (int) (Rect.Width * 0.7f): Rect.Width);
+            if (!AutoResize)
             {
-                font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
-                stringSize = g.MeasureString(Code, font).ToSize();
-                fontSize--;
-            } while ((stringSize.Width > Math.Abs(Rect.Width) && fontSize > 2));
-
-            g.DrawString
-            (
-                Label,
-                font,
-                new SolidBrush(BlocksData.FontColor(Shape)),
-                Rect.Location.X + (Rect.Width - stringSize.Width) / 2,
-                Rect.Location.Y + Rect.Height / 2 - stringSize.Height / 2
-            );
+                int fontSize = (int) Math.Ceiling(Math.Abs(Rect.Height) / 3.0) + 2;
+                do
+                {
+                    font = new Font(FontFamily.GenericSansSerif, fontSize, FontStyle.Bold);
+                    stringSize = g.MeasureString(Label, font).ToSize();
+                    fontSize--;
+                } while ((stringSize.Width > maxWidth && fontSize > 2));
+                g.DrawString(Label, font, new SolidBrush(FontColor), Rect,
+                    CanvasVariables.BlockStringFormat);
+            }
+            else
+            {
+                font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Bold);
+                stringSize = g.MeasureString(Label, font).ToSize();
+                if (Shape == BlocksData.Shape.Decision)
+                    Rect.Size = new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2);
+                else
+                    Rect.Size = new Size(stringSize.Width, stringSize.Height);
+                g.DrawString(Label, font, new SolidBrush(FontColor), Rect,
+                    CanvasVariables.BlockStringFormat);
+            }
         }
 
         #endregion
-
-        #endregion
+        
     }
 }

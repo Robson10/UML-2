@@ -91,7 +91,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 Cursor = Cursors.Default;
             HideSelectionRect();
 
-            (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
+            ShowProperties();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -99,7 +99,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = 0; i < _canvLines.Count; i++)
             {
-                if (_canvLines[i].BackColor == BlocksData.BackColor(BlocksData.Shape.ConnectionLine))
+                if (_canvLines[i].BackColor == BlocksData.DefaultBackColor(BlocksData.Shape.ConnectionLine))
                     _canvLines[i].My_DrawConnectionLine(e.Graphics);
                 else
                     _canvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);
@@ -109,11 +109,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 _canvObj[i].Draw(e.Graphics);
 
             if (SelectRect != Rectangle.Empty)
-            {
                 e.Graphics.FillRectangle(CanvasVariables.SelectionRectBrush, SelectRect);
-            }
         }
-
 
         protected override void OnResize(EventArgs e)
         {
@@ -129,5 +126,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public static Color DefaultBgColor = Color.Gray;
         public static Keys MultiselectKey = Keys.ControlKey;
         public static SolidBrush SelectionRectBrush = new SolidBrush(Color.FromArgb(70, Color.Blue));
+
+        public static StringFormat BlockStringFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
     }
 }

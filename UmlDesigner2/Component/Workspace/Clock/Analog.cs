@@ -39,12 +39,13 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private void DrawAnalog(ref PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-
-            startAngle = 360f / (12f * 60f) * ((_beginExam.Hour % 12) * 60f + _beginExam.Minute);
-            endAngle = 360f / (12f * 60f) * ((_endExam.Hour % 12) * 60f + _endExam.Minute);
-            endAngle = (startAngle > endAngle) ? 360f - startAngle + endAngle : endAngle - startAngle;
-            e.Graphics.FillPie(ClockVariables.PartOfTimeColor, partOfTimeArea, -90f + startAngle, endAngle);
-
+            if (_endExam != DateTime.MinValue)
+            {
+                startAngle = 360f / (12f * 60f) * ((_beginExam.Hour % 12) * 60f + _beginExam.Minute);
+                endAngle = 360f / (12f * 60f) * ((_endExam.Hour % 12) * 60f + _endExam.Minute);
+                endAngle = (startAngle > endAngle) ? 360f - startAngle + endAngle : endAngle - startAngle;
+                e.Graphics.FillPie(ClockVariables.PartOfTimeColor, partOfTimeArea, -90f + startAngle, endAngle);
+            }
             _timeNow = DateTime.Now;
 
             for (int i = 0; i < 60; i++)
