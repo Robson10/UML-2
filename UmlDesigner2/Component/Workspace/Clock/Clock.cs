@@ -32,13 +32,13 @@ namespace UmlDesigner2.Component.Workspace.Clock
         }
         public void Start()//bedzie wywolywane z zewnątrz
         {
-            if (ClockVariables.IsRunnable)
+            if (MyDictionary.ClockIsRunnable)
             {
-                ClockVariables.IsRunning = true;
-                ClockVariables.IsRunnable = false;
+                MyDictionary.ClockIsRunning = true;
+                MyDictionary.ClockIsRunnable = false;
                 _beginExam = new DateTime(DateTime.Now.Ticks);
-                if (Math.Abs(ClockVariables.TimeForExam.TotalSeconds) > 0)
-                    _endExam = _beginExam.Add(ClockVariables.TimeForExam);
+                if (Math.Abs(MyDictionary.ClockTimeForExam.TotalSeconds) > 0)
+                    _endExam = _beginExam.Add(MyDictionary.ClockTimeForExam);
                 if (_endExam != DateTime.MinValue)
                 {
                     _timer.Start();
@@ -54,24 +54,24 @@ namespace UmlDesigner2.Component.Workspace.Clock
 
         public void Stop()
         {
-            if (!ClockVariables.IsRunnable)
+            if (!MyDictionary.ClockIsRunnable)
             {
                 _timer.Stop();
-                ClockVariables.IsRunning = false;
-                ClockVariables.IsRunnable = true;
-                MessageBox.Show(ClockVariables.MessageWhenTimeIsOver);
+                MyDictionary.ClockIsRunning = false;
+                MyDictionary.ClockIsRunnable = true;
+                MessageBox.Show(MyDictionary.ClockMessageWhenTimeIsOver);
                 //Wysłać event do workspace by zablokować wszelkie zmiany na nim
             }
         }
         public new void Update()//metoda służąca do aktualizowania wrazie zmian.
         {
             base.Update();
-            BackColor = ClockVariables.BgColor;
-            Size = new Size(ClockVariables.ClockSize, ClockVariables.ClockSize);
+            BackColor = MyDictionary.ClockBackColor;
+            Size = new Size(MyDictionary.ClockSize, MyDictionary.ClockSize);
             OnResize(null);
-            switch (ClockVariables.ChoosenClockType)
+            switch (MyDictionary.ClockChoosenType)
             {
-                case (ClockVariables.ClockType.Analog):
+                case (MyDictionary.ClockType.Analog):
                     AnalogUpdate();
                     break;
                 default:
@@ -86,17 +86,17 @@ namespace UmlDesigner2.Component.Workspace.Clock
         {
             if (e.ClickedItem.Text.Equals("Zegar Analogowy"))
             {
-                ClockVariables.ChoosenClockType = ClockVariables.ClockType.Analog;
+                MyDictionary.ClockChoosenType = MyDictionary.ClockType.Analog;
                 Update();
             }
             else if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #1") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Odliczający"))
             {
-                ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingDown;
+                MyDictionary.ClockChoosenType = MyDictionary.ClockType.DigitalCountingDown;
                 Update();
             }
             else if (e.ClickedItem.Text.Equals("Zegar Cyfrowy #2") || e.ClickedItem.Text.Equals("Zegar Cyfrowy Naliczający"))
             {
-                ClockVariables.ChoosenClockType = ClockVariables.ClockType.DigitalCountingUp;
+                MyDictionary.ClockChoosenType = MyDictionary.ClockType.DigitalCountingUp;
                 Update();
             }
             else if (e.ClickedItem.Text.Contains("Wyłącz"))
@@ -108,7 +108,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private void Timer_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            if (Math.Abs(ClockVariables.TimeForExam.TotalSeconds) >= 0)
+            if (Math.Abs(MyDictionary.ClockTimeForExam.TotalSeconds) >= 0)
             {
                 if (DateTime.Now >= _endExam)
                 {
@@ -129,7 +129,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
             catch
             {
                 _toolTip.SetToolTip(this,
-                    ClockVariables.MessageWhenTimeIsOver);
+                    MyDictionary.ClockMessageWhenTimeIsOver);
             }
         }
        
@@ -146,15 +146,15 @@ namespace UmlDesigner2.Component.Workspace.Clock
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            switch (ClockVariables.ChoosenClockType)
+            switch (MyDictionary.ClockChoosenType)
             {
-                case (ClockVariables.ClockType.DigitalCountingDown):
+                case (MyDictionary.ClockType.DigitalCountingDown):
                     DrawDigitalCountingDown(ref e);
                     break;
-                case (ClockVariables.ClockType.DigitalCountingUp):
+                case (MyDictionary.ClockType.DigitalCountingUp):
                     DrawDigitalCountingUp(ref e);
                     break;
-                case (ClockVariables.ClockType.Analog):
+                case (MyDictionary.ClockType.Analog):
                     DrawAnalog(ref e);
                     break;
             }

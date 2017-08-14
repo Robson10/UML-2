@@ -173,5 +173,28 @@ namespace UmlDesigner2
         }
 
         #endregion
+
+        #region Clock
+
+        public static bool ClockIsRunnable { get; set; } = true;
+        public static bool ClockIsRunning { get; set; } = false;
+        public static Color ClockBackColor { get; set; } = Color.Transparent;
+
+        public enum ClockType
+        {
+            Analog = 1,
+            DigitalCountingDown = 2,
+            DigitalCountingUp = 3
+        };
+
+        public static ClockType ClockChoosenType = ClockType.Analog;
+        public static int ClockSize = 100;
+        public static TimeSpan ClockTimeForExam = new TimeSpan(2, 0, 0);
+        public static Color ClockColorHand = Color.Black;
+        public static Color ClockColorScale = Color.Black;
+        public static string ClockMessageWhenTimeIsOver = "Skończył ci się czas";
+        public static Brush ClockPartOfTimeColor = Brushes.LightSalmon;
+
+        #endregion
     }
 }

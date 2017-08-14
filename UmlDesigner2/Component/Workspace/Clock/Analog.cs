@@ -18,22 +18,22 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private int ThicknessHandOfClock = 1;
         private float _thicknessClockScale = 1;
 
-        float fHourLength;
-        float fMinLength;
-        float fSecLength;
-        private float startAngle;
-        private float endAngle;
-        float _radius;
-        private Rectangle partOfTimeArea;
+        private float _hourLength;
+        private float _minLength;
+        private float _secLength;
+        private float _startAngle;
+        private float _endAngle;
+        private float _radius;
+        private Rectangle _partOfTimeArea;
         private void AnalogUpdate()
         {
-            Size=new Size(ClockVariables.ClockSize, ClockVariables.ClockSize);
+            Size=new Size(MyDictionary.ClockSize, MyDictionary.ClockSize);
             _radius = (int)(Height / 1.6);
             _center = new Point(ClientSize.Width / 2, ClientSize.Height / 2);
-            fHourLength = (float)Height / 2 / 1.65F;
-            fMinLength = (float)Height / 2 / 1.20F;
-            fSecLength = (float)Height / 2 / 1.15F;
-            partOfTimeArea = new Rectangle((int)(Width*0.1),(int)(Height*0.1),(int)(Width*0.8),(int)(Height*0.8));
+            _hourLength = (float)Height / 2 / 1.65F;
+            _minLength = (float)Height / 2 / 1.20F;
+            _secLength = (float)Height / 2 / 1.15F;
+            _partOfTimeArea = new Rectangle((int)(Width*0.1),(int)(Height*0.1),(int)(Width*0.8),(int)(Height*0.8));
         }
 
         private void DrawAnalog(ref PaintEventArgs e)
@@ -41,10 +41,10 @@ namespace UmlDesigner2.Component.Workspace.Clock
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             if (_endExam != DateTime.MinValue)
             {
-                startAngle = 360f / (12f * 60f) * ((_beginExam.Hour % 12) * 60f + _beginExam.Minute);
-                endAngle = 360f / (12f * 60f) * ((_endExam.Hour % 12) * 60f + _endExam.Minute);
-                endAngle = (startAngle > endAngle) ? 360f - startAngle + endAngle : endAngle - startAngle;
-                e.Graphics.FillPie(ClockVariables.PartOfTimeColor, partOfTimeArea, -90f + startAngle, endAngle);
+                _startAngle = 360f / (12f * 60f) * ((_beginExam.Hour % 12) * 60f + _beginExam.Minute);
+                _endAngle = 360f / (12f * 60f) * ((_endExam.Hour % 12) * 60f + _endExam.Minute);
+                _endAngle = (_startAngle > _endAngle) ? 360f - _startAngle + _endAngle : _endAngle - _startAngle;
+                e.Graphics.FillPie(MyDictionary.ClockPartOfTimeColor, _partOfTimeArea, -90f + _startAngle, _endAngle);
             }
             _timeNow = DateTime.Now;
 
@@ -52,7 +52,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
             {
                 if (i % 5 == 0) // Draw 5 minute line
                 {
-                    e.Graphics.DrawLine(new Pen(ClockVariables.ColorOfClockScale, _thicknessClockScale),
+                    e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorScale, _thicknessClockScale),
                         _center.X + (float)(_radius / 1.50F * Math.Sin(i * 6 * Math.PI / 180)),
                         _center.Y - (float)(_radius / 1.50F * Math.Cos(i * 6 * Math.PI / 180)),
                         _center.X + (float)(_radius / 1.95F * Math.Sin(i * 6 * Math.PI / 180)),
@@ -60,7 +60,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 }
                 else  // draw 1 minute line
                 {
-                    e.Graphics.DrawLine(new Pen(ClockVariables.ColorOfClockScale, _thicknessClockScale),
+                    e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorScale, _thicknessClockScale),
                         _center.X + (float)(_radius / 1.50F * Math.Sin(i * 6 * Math.PI / 180)),
                         _center.Y - (float)(_radius / 1.50F * Math.Cos(i * 6 * Math.PI / 180)),
                         _center.X + (float)(_radius / 1.65F * Math.Sin(i * 6 * Math.PI / 180)),
@@ -73,40 +73,39 @@ namespace UmlDesigner2.Component.Workspace.Clock
             var radSec = (float)((_timeNow.Second) * 6 * Math.PI / 180);
 
 
-            DrawPolygon(ThicknessHandOfClock, fHourLength, radHr, e);
-            DrawPolygon(ThicknessHandOfClock, fMinLength, radMin, e);
-            DrawLine(ThicknessHandOfClock, fSecLength, radSec, e);
+            DrawPolygon(ThicknessHandOfClock, _hourLength, radHr, e);
+            DrawPolygon(ThicknessHandOfClock, _minLength, radMin, e);
+            DrawLine(ThicknessHandOfClock, _secLength, radSec, e);
         }
 
-        private void DrawLine(float fThickness, float fLength,  float fRadians,PaintEventArgs e)
+        private void DrawLine(float thickness, float length,  float radians,PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.DrawLine(new Pen(ClockVariables.ColorHandOfClock, fThickness),
-                _center.X - (float)(fLength / 9 * Math.Sin(fRadians)),
-                _center.Y + (float)(fLength / 9 * Math.Cos(fRadians)),
-                _center.X + (float)(fLength * Math.Sin(fRadians)),
-                _center.Y - (float)(fLength * Math.Cos(fRadians)));
+            e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorHand, thickness),
+                _center.X - (float)(length / 9 * Math.Sin(radians)),
+                _center.Y + (float)(length / 9 * Math.Cos(radians)),
+                _center.X + (float)(length * Math.Sin(radians)),
+                _center.Y - (float)(length * Math.Cos(radians)));
         }
-
-
-        private void DrawPolygon(float fThickness, float fLength,  float fRadians,PaintEventArgs e)
+        
+        private void DrawPolygon(float thickness, float length,  float radians,PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             PointF[] points =
             {
-                new PointF((float) (_center.X + fThickness * 2 * Math.Sin(fRadians + Math.PI / 2)),
-                    (float) (_center.Y - fThickness * 2 * Math.Cos(fRadians + Math.PI / 2))),
+                new PointF((float) (_center.X + thickness * 2 * Math.Sin(radians + Math.PI / 2)),
+                    (float) (_center.Y - thickness * 2 * Math.Cos(radians + Math.PI / 2))),
 
-                new PointF((float) (_center.X + fThickness * 2 * Math.Sin(fRadians - Math.PI / 2)),
-                    (float) (_center.Y - fThickness * 2 * Math.Cos(fRadians - Math.PI / 2))),
+                new PointF((float) (_center.X + thickness * 2 * Math.Sin(radians - Math.PI / 2)),
+                    (float) (_center.Y - thickness * 2 * Math.Cos(radians - Math.PI / 2))),
 
-                new PointF((float) (_center.X + fLength * Math.Sin(fRadians)),
-                    (float) (_center.Y - fLength * Math.Cos(fRadians))),
+                new PointF((float) (_center.X + length * Math.Sin(radians)),
+                    (float) (_center.Y - length * Math.Cos(radians))),
 
-                new PointF((float) (_center.X - fThickness * 4 * Math.Sin(fRadians)),
-                    (float) (_center.Y + fThickness * 4 * Math.Cos(fRadians)))
+                new PointF((float) (_center.X - thickness * 4 * Math.Sin(radians)),
+                    (float) (_center.Y + thickness * 4 * Math.Cos(radians)))
             };
-            e.Graphics.FillPolygon(new SolidBrush(ClockVariables.ColorHandOfClock), points);
+            e.Graphics.FillPolygon(new SolidBrush(MyDictionary.ClockColorHand), points);
         }
     }
 
