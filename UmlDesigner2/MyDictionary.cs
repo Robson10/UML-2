@@ -11,7 +11,26 @@ namespace UmlDesigner2
 {
     public class MyDictionary
     {
-        public static string BlockTabText="Bloki";
+        #region TabsArea
+
+        #region Blocks
+
+        public static string BlockTabText = "Bloki";
+
+        #endregion
+
+        #region Schemats
+
+        public static string SchematsTabText = "Schematy";
+
+        public static string SchematsPath = "Z:\\Programowanie\\UmlDesigner2\\UmlDesigner2\\bin\\Debug\\Schemats"
+            ; // System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";
+
+        public static string SchematsExtension = ".txt";
+
+        #endregion
+
+        #endregion
 
         #region Shortcuts
 
@@ -20,7 +39,7 @@ namespace UmlDesigner2
         #endregion
 
         #region Clipboard
-        
+
         public static string BlockClipboardFormat = "CopyOfBlocks";
         public static string LineClipboardFormat = "CopyOfLines";
 

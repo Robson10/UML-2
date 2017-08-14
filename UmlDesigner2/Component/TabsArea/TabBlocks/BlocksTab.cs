@@ -23,7 +23,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
         }
 
         /// <summary>
-        /// Metoda tworząca listę bloków na podstawie Enum'a w BlockData. Dodatkowo ustawia odpowiednie pola kontrolki
+        /// Metoda dodająca do listy obrazki i etykiety bloków. Dodatkowo ustawia odpowiedni wygląd kontrolki
         /// </summary>
         private void CreateList()
         {

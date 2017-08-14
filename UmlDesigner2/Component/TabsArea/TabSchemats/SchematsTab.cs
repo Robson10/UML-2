@@ -7,16 +7,20 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
 {
     public class SchematsTab : TabPage
     {
-        private readonly ListView _listViewOfSchemats = new ListView() { };
+        private readonly ListView _listViewOfSchemats = new ListView();
 
-
-
+        /// <summary>
+        /// Konstruktor nadający nazwę zakładi z pola BlockData.BlockTabText a następnie dodający listę schematów (etykiety)
+        /// </summary>
         public SchematsTab()
         {
-            Text = SchematsTabPropertis.TabText;
+            Text = MyDictionary.SchematsTabText;
             CreateList();
         }
 
+        /// <summary>
+        /// Metoda dodająca do listy nazwy schematów. Dodatkowo ustawia odpowiedni wygląd kontrolki
+        /// </summary>
         private void CreateList()
         {
             _listViewOfSchemats.View = View.Details;
@@ -34,6 +38,11 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
             this.Controls.Add(_listViewOfSchemats);
         }
 
+        /// <summary>
+        /// Metoda pozwalająca na edycję wyglądu etykiet - ich wyrównania oraz koloru czcionki czy tła
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void _listViewOfSchemats_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
 
@@ -55,33 +64,48 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
             e.DrawText(flags);
         }
 
+        /// <summary>
+        /// Metoda sprawdzająca czy folder schematów istnieje. Jeśli nie tworzy go.
+        /// Następnie wczytuje wszystko ze ścieżki podanej w MyDictionary.SchematsPath o określonym 
+        /// rozszerzeniu MyDictionary.SchematsExtension i dodaje do listy
+        /// </summary>
         private void LoadElementsToList()
         {
-            if (!System.IO.Directory.Exists(SchematsTabPropertis.Path))
-                System.IO.Directory.CreateDirectory(SchematsTabPropertis.Path);
+            if (!System.IO.Directory.Exists(MyDictionary.SchematsPath))
+                System.IO.Directory.CreateDirectory(MyDictionary.SchematsPath);
             
-            var filesPaths = System.IO.Directory.GetFiles(SchematsTabPropertis.Path, "*"+ SchematsTabPropertis.Extension);
+            var filesPaths = System.IO.Directory.GetFiles(MyDictionary.SchematsPath, "*"+ MyDictionary.SchematsExtension);
 
             for (int i = 0; i < filesPaths.Length; i++)
-                _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(SchematsTabPropertis.Path + @"\","").Replace(SchematsTabPropertis.Extension, "")));
+                _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(MyDictionary.SchematsPath + @"\","").Replace(MyDictionary.SchematsExtension, "")));
             
             _listViewOfSchemats.Items.Add(new ListViewItem("Importuj"){ForeColor=Color.Blue});
             _listViewOfSchemats.RedrawItems(0, 3, true);
             _listViewOfSchemats.Invalidate();
         }
 
+        /// <summary>
+        /// Zdarzenie wywoływane zmianą rozmiaru kontrolki. ustawia szerokość pierwszej kolumny zgodnie z maksymalnym dostępnym obszarem
+        /// </summary>
+        /// <param name="eventargs"></param>
         protected override void OnResize(EventArgs eventargs)
         {
             base.OnResize(eventargs);
             _listViewOfSchemats.Columns[0].Width = Width;
         }
 
+        /// <summary>
+        ///Dodanie EventHandlera dla wybrania elementu z listy poprzez pojedyncze kliknięcie LPM
+        /// </summary>
         public event EventHandler ListItemClick
         {
             add { _listViewOfSchemats.Click += value; }
             remove { _listViewOfSchemats.Click -= value; }
         }
 
+        /// <summary>
+        ///Dodanie EventHandlera dla wybrania elementu z listy poprzez podwójne kliknięcie LPM
+        /// </summary>
         public event EventHandler ListItemDoubleClick
         {
             add { _listViewOfSchemats.DoubleClick += value; }

@@ -58,7 +58,6 @@
     <Compile Include="Component\TabsArea\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabSchemats\SchematsTabPropertis.cs" />
     <Compile Include="Component\TabsArea\TabBlocks\BlocksTab.cs">
       <SubType>Component</SubType>
     </Compile>
