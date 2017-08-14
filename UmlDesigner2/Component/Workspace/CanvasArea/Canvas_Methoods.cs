@@ -48,12 +48,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Invalidate();
         }
 
-        public void AddObjectInstant(BlocksData.Shape shape)
+        public void AddObjectInstant(MyDictionary.Shape shape)
         {
             ShapeToDraw = shape;
-            if (shape != BlocksData.Shape.ConnectionLine)
+            if (shape != MyDictionary.Shape.ConnectionLine)
             {
-                if (ShapeToDraw == BlocksData.Shape.Start)
+                if (ShapeToDraw == MyDictionary.Shape.Start)
                 {
                     if (!CheckIsStartExist())
                         _canvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
@@ -62,7 +62,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     _canvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
                 }
-                ShapeToDraw = BlocksData.Shape.Nothing;
+                ShapeToDraw = MyDictionary.Shape.Nothing;
                 Invalidate();
             }
             else
@@ -70,9 +70,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     "Niestety linia nie może zostać dodana poprzez 2xLPM. Należy wybrać linie a następnie wskazać blok początkowy a następnie blok końcowy by powstało połączenie między blokami");
         }
 
-        public void AddObjectAfterClick(BlocksData.Shape shape)
+        public void AddObjectAfterClick(MyDictionary.Shape shape)
         {
-            if (shape == BlocksData.Shape.Start)
+            if (shape == MyDictionary.Shape.Start)
             {
                 if (!CheckIsStartExist())
                     ShapeToDraw = shape;
@@ -84,7 +84,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private bool CheckIsStartExist()
         {
             for (int i = 0; i < _canvObj.Count; i++)
-                if (_canvObj[i].Shape == BlocksData.Shape.Start)
+                if (_canvObj[i].Shape == MyDictionary.Shape.Start)
                 {
                     MessageBox.Show("Każdy schemat blokowy może posiadać tylko jeden początek (blok startu)");
                     Cursor = Cursors.Default;
@@ -95,9 +95,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void AbortAddingObject()
         {
-            if (ShapeToDraw != BlocksData.Shape.Nothing)
+            if (ShapeToDraw != MyDictionary.Shape.Nothing)
             {
-                ShapeToDraw = BlocksData.Shape.Nothing;
+                ShapeToDraw = MyDictionary.Shape.Nothing;
                 _canvLines.MyAbortAdd(); //usuniecie 1 pkt lini (jeśli jest)
                 _rubbers.MyHideRubbers();
             }
@@ -136,9 +136,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(BlocksData.BlockClipboardFormat, _canvObj.MyCopy(BlocksData.BlockClipboardFormat));
+            clips.SetData(MyDictionary.BlockClipboardFormat, _canvObj.MyCopy(MyDictionary.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(BlocksData.LineClipboardFormat, _canvLines.MyCopy(BlocksData.LineClipboardFormat, BlocksData.BlockClipboardFormat));
+            clips.SetData(MyDictionary.LineClipboardFormat, _canvLines.MyCopy(MyDictionary.LineClipboardFormat, MyDictionary.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
         }
@@ -147,9 +147,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(BlocksData.BlockClipboardFormat, _canvObj.MyCut(BlocksData.BlockClipboardFormat));
+            clips.SetData(MyDictionary.BlockClipboardFormat, _canvObj.MyCut(MyDictionary.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(BlocksData.LineClipboardFormat, _canvLines.MyCut(BlocksData.LineClipboardFormat, BlocksData.BlockClipboardFormat));
+            clips.SetData(MyDictionary.LineClipboardFormat, _canvLines.MyCut(MyDictionary.LineClipboardFormat, MyDictionary.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
 
@@ -161,12 +161,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             _canvObj.My_IsSelectedSetForAll(false);
             _rubbers.MyHideRubbers();
-            if (Clipboard.ContainsData(BlocksData.BlockClipboardFormat))
+            if (Clipboard.ContainsData(MyDictionary.BlockClipboardFormat))
             {
-                if (Clipboard.ContainsData(BlocksData.LineClipboardFormat))
+                if (Clipboard.ContainsData(MyDictionary.LineClipboardFormat))
                 {
-                    var blockTemp = (List<MyBlock>) Clipboard.GetData(BlocksData.BlockClipboardFormat);
-                    var lineTemp = (List<MyLine>) Clipboard.GetData(BlocksData.LineClipboardFormat);
+                    var blockTemp = (List<MyBlock>) Clipboard.GetData(MyDictionary.BlockClipboardFormat);
+                    var lineTemp = (List<MyLine>) Clipboard.GetData(MyDictionary.LineClipboardFormat);
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
                         var oldId = blockTemp[i].ID;
@@ -197,9 +197,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void LPM_TryAddObject(Point e)
         {
-            if (ShapeToDraw != BlocksData.Shape.Nothing)
+            if (ShapeToDraw != MyDictionary.Shape.Nothing)
             {
-                if (ShapeToDraw == BlocksData.Shape.ConnectionLine)
+                if (ShapeToDraw == MyDictionary.Shape.ConnectionLine)
                 {
                     _canvLines.MyAdd(e, ref _shapeToDraw, ref _canvObj);
                     _canvObj.My_SelectObjectContainingPoint(e);
@@ -207,7 +207,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 else
                 {
                     _canvObj.MyAdd(e, ShapeToDraw);
-                    ShapeToDraw = BlocksData.Shape.Nothing;
+                    ShapeToDraw = MyDictionary.Shape.Nothing;
                 }
                 if (_canvObj.Count>0) _rubbers.ShowRubbers(_canvObj[0]);
                 ShowProperties();
@@ -217,7 +217,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         
         private void LPM_SelectObjectByClick(Point e)
         {
-            if (ShapeToDraw == BlocksData.Shape.Nothing)
+            if (ShapeToDraw == MyDictionary.Shape.Nothing)
                 if (_canvObj.Count > 0)
                 {
                     _canvObj.My_SelectObjectContainingPoint(e);
@@ -285,7 +285,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void PPM_ResizeObject(Point e)
         {
-            if (ShapeToDraw != BlocksData.Shape.Nothing) return;
+            if (ShapeToDraw != MyDictionary.Shape.Nothing) return;
             _ppm = false;
             _canvObj.My_ResizeSelectedObjects(ref _mouseDownLocation, e);
             _canvLines.MyUpdate(ref _canvObj);

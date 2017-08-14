@@ -50,7 +50,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             HorizontalScroll.Maximum = 0;
 
-            if (_block.Shape != BlocksData.Shape.Start && _block.Shape != BlocksData.Shape.End)
+            if (_block.Shape != MyDictionary.Shape.Start && _block.Shape != MyDictionary.Shape.End)
             {
                 _grLabel = new GroupBox();
                 Controls.Add(_grLabel);

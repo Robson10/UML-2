@@ -18,7 +18,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base[i].IsContain(location))
                 {
                     base[i].IsSelected = true;
-                    base[i].BackColor = BlocksData.DefaultSelectionColor;
+                    base[i].BackColor = MyDictionary.DefaultSelectionColor;
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                     break;
@@ -32,7 +32,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (base[i].Rect.IntersectsWith(rect))
                 {
                     base[i].IsSelected = true;
-                    base[i].BackColor = BlocksData.DefaultSelectionColor;
+                    base[i].BackColor = MyDictionary.DefaultSelectionColor;
                     Insert(0, base[i]);
                     RemoveAt(i + 1);
                 }
@@ -89,9 +89,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     int NewWidth = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - mouseDownLocation.X);
                     int NewHeight = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - mouseDownLocation.Y);
-                    if (NewWidth >= BlocksData.MinBlockSize.Width)
+                    if (NewWidth >= MyDictionary.MinBlockSize.Width)
                         base[i].Rect = new Rectangle(base[i].Rect.Location,new Size( NewWidth,base[i].Rect.Size.Height));
-                    if (NewHeight >= BlocksData.MinBlockSize.Height)
+                    if (NewHeight >= MyDictionary.MinBlockSize.Height)
                     base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(base[i].Rect.Size.Width, NewHeight));
                 }
             }
@@ -151,12 +151,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             width -= e.X - mouseDownLocation.X;
                             break;
                     }
-                    if (width > BlocksData.MinBlockSize.Width)
+                    if (width > MyDictionary.MinBlockSize.Width)
                     {
                         base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(width, base[i].Rect.Size.Height));
                         base[i].Rect =new Rectangle( new Point(x, base[i].Rect.Location.Y), base[i].Rect.Size);
                     }
-                    if (height > BlocksData.MinBlockSize.Height)
+                    if (height > MyDictionary.MinBlockSize.Height)
                     {
                         base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(this[i].Rect.Size.Width, height));
                         base[i].Rect = new Rectangle(new Point(base[i].Rect.Location.X, y), base[i].Rect.Size);
@@ -170,17 +170,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             for (int i = 0; i < Count; i++)
             {
                 base[i].BackColor = (isSelected)
-                    ? (BlocksData.DefaultSelectionColor)
+                    ? (MyDictionary.DefaultSelectionColor)
                     : (this[i].BackColorStorage);
                 base[i].IsSelected = isSelected;
             }
         }
 
-        public void MyAdd(Point e, BlocksData.Shape shapeToDraw)
+        public void MyAdd(Point e, MyDictionary.Shape shapeToDraw)
         {
-            Insert(0, (new MyBlock(new Rectangle(e.X - BlocksData.DefaultBlockSize.Width / 2,
-                    e.Y - BlocksData.DefaultBlockSize.Height / 2, BlocksData.DefaultBlockSize.Width,
-                    BlocksData.DefaultBlockSize.Height),
+            Insert(0, (new MyBlock(new Rectangle(e.X - MyDictionary.DefaultBlockSize.Width / 2,
+                    e.Y - MyDictionary.DefaultBlockSize.Height / 2, MyDictionary.DefaultBlockSize.Width,
+                    MyDictionary.DefaultBlockSize.Height),
                 shapeToDraw, _id)));
             _id++;
         }
@@ -230,7 +230,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     [Serializable]
     public class MyBlock
     {
-        public BlocksData.Shape Shape { get; }
+        public MyDictionary.Shape Shape { get; }
         public string Label = "";
         public string Code  = "";
         public bool IsSelected  = false;
@@ -248,14 +248,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             set
             {
                 _rect = value;
-                if(Shape!= BlocksData.Shape.Start)//procz start
+                if(Shape!= MyDictionary.Shape.Start)//procz start
                     PointInput = new Point(Rect.Left + Rect.Width / 2, Rect.Top);
-                if (Shape== BlocksData.Shape.Decision)//dla decision
+                if (Shape== MyDictionary.Shape.Decision)//dla decision
                 {
                     PointOutput1 = new Point(Rect.Left, Rect.Top + Rect.Height / 2);
                     PointOutput2 = new Point(Rect.Right, Rect.Top + Rect.Height / 2);
                 }
-                else if (Shape!= BlocksData.Shape.End)//procz koniec
+                else if (Shape!= MyDictionary.Shape.End)//procz koniec
                     PointOutput1 = new Point(Rect.Left + Rect.Width / 2, Rect.Bottom);
 
             }
@@ -265,16 +265,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public Color BackColorStorage;
         public Color FontColor;
         public int FontSize;
-        public MyBlock(Rectangle rect, BlocksData.Shape shape, int id)
+        public MyBlock(Rectangle rect, MyDictionary.Shape shape, int id)
         {
             Rect = rect;
             Shape = shape;
             ID = id;
-            Label = BlocksData.DefaultLabel(Shape);
-            BackColor = BlocksData.DefaultBackColor(Shape);
-            BackColorStorage= BlocksData.DefaultBackColor(Shape);
-            FontColor = BlocksData.DefaultFontColor(Shape);
-            FontSize = BlocksData.DefaultFontSize(Shape);
+            Label = MyDictionary.DefaultLabel(Shape);
+            BackColor = MyDictionary.DefaultBackColor(Shape);
+            BackColorStorage= MyDictionary.DefaultBackColor(Shape);
+            FontColor = MyDictionary.DefaultFontColor(Shape);
+            FontSize = MyDictionary.DefaultFontSize(Shape);
         }
 
         public void UpdateRectSizeOnAutoresize()
@@ -286,7 +286,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     var font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Bold);
                     var stringSize = g.MeasureString(Label, font).ToSize();
-                    if (Shape == BlocksData.Shape.Decision)
+                    if (Shape == MyDictionary.Shape.Decision)
                         Rect = new Rectangle(Rect.Location,
                             new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
                     else
@@ -299,7 +299,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public bool IsContain(Point location)
         {
             var contains = false;
-            if (Shape == BlocksData.Shape.Start)
+            if (Shape == MyDictionary.Shape.Start)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -307,7 +307,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlocksData.Shape.End)
+            else if (Shape == MyDictionary.Shape.End)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -315,7 +315,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlocksData.Shape.Execution)
+            else if (Shape == MyDictionary.Shape.Execution)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -323,7 +323,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlocksData.Shape.Input)
+            else if (Shape == MyDictionary.Shape.Input)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -334,7 +334,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     contains = gp.IsVisible(location);
                 }
             }
-            else if (Shape == BlocksData.Shape.Decision)
+            else if (Shape == MyDictionary.Shape.Decision)
             {
                 using (var gp = new System.Drawing.Drawing2D.GraphicsPath())
                 {
@@ -354,19 +354,19 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             switch (Shape)
             {
-                case (BlocksData.Shape.Start):
+                case (MyDictionary.Shape.Start):
                     DrawStart(g);
                     break;
-                case (BlocksData.Shape.End):
+                case (MyDictionary.Shape.End):
                     DrawEnd(g);
                     break;
-                case (BlocksData.Shape.Input):
+                case (MyDictionary.Shape.Input):
                     DrawInput(g);
                     break;
-                case (BlocksData.Shape.Execution):
+                case (MyDictionary.Shape.Execution):
                     DrawExecution(g);
                     break;
-                case (BlocksData.Shape.Decision):
+                case (MyDictionary.Shape.Decision):
                     DrawDecision(g);
                     break;
                 default:
@@ -420,7 +420,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Font font;
             Size stringSize;
-            var maxWidth = Math.Abs((Shape == BlocksData.Shape.Decision)? (int) (Rect.Width * 0.7f): Rect.Width);
+            var maxWidth = Math.Abs((Shape == MyDictionary.Shape.Decision)? (int) (Rect.Width * 0.7f): Rect.Width);
             if (!AutoResize)
             {
                 int fontSize = (int) Math.Ceiling(Math.Abs(Rect.Height) / 3.0) + 2;
@@ -437,7 +437,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Bold);
                 stringSize = g.MeasureString(Label, font).ToSize();
-                if (Shape == BlocksData.Shape.Decision)
+                if (Shape == MyDictionary.Shape.Decision)
                     Rect =new Rectangle(Rect.Location, new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
                 else
                     Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height));

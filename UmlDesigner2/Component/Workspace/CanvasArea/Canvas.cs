@@ -14,15 +14,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private readonly Rubbers _rubbers = new Rubbers(ref _canvObj);
 
         public bool IsMultiSelect { get; set; }
-        private BlocksData.Shape _shapeToDraw = BlocksData.Shape.Nothing;
+        private MyDictionary.Shape _shapeToDraw = MyDictionary.Shape.Nothing;
 
-        private BlocksData.Shape ShapeToDraw
+        private MyDictionary.Shape ShapeToDraw
         {
             get => _shapeToDraw;
             set
             {
                 _shapeToDraw = value;
-                Cursor = (value == BlocksData.Shape.Nothing) ? Cursors.Default : Cursors.Cross;
+                Cursor = (value == MyDictionary.Shape.Nothing) ? Cursors.Default : Cursors.Cross;
             }
         }
 
@@ -71,7 +71,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Focus();
             //metoda przemieszczająca obiekt dla LPM i zmieniająca jego rozmiar dla PPM
-            if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
+            if (ShapeToDraw != MyDictionary.Shape.ConnectionLine)
                 if (e.Button == MouseButtons.Left)
                 {
                     if(SelectRect==Rectangle.Empty)
@@ -87,7 +87,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
-            if (ShapeToDraw != BlocksData.Shape.ConnectionLine)
+            if (ShapeToDraw != MyDictionary.Shape.ConnectionLine)
                 Cursor = Cursors.Default;
             HideSelectionRect();
 
@@ -99,7 +99,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = 0; i < _canvLines.Count; i++)
             {
-                if (_canvLines[i].BackColor == BlocksData.DefaultBackColor(BlocksData.Shape.ConnectionLine))
+                if (_canvLines[i].BackColor == MyDictionary.DefaultBackColor(MyDictionary.Shape.ConnectionLine))
                     _canvLines[i].My_DrawConnectionLine(e.Graphics);
                 else
                     _canvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);

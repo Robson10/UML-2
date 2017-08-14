@@ -16,14 +16,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <param name="e"></param>
         /// <param name="shapeToDraw"></param>
         /// <param name="listBlocks"></param>
-        public void MyAdd(Point e, ref BlocksData.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
+        public void MyAdd(Point e, ref MyDictionary.Shape shapeToDraw,ref ListCanvasBlocks listBlocks)
         {
             var temp = listBlocks.TryGetElementContainingPoint(e);
             if (temp!=null)
             {
                 if (Count > 0 && base[0].EndPoint == Point.Empty) //input
                 {
-                    if (temp.Shape == BlocksData.Shape.Start)//start nie może mieć wejscia
+                    if (temp.Shape == MyDictionary.Shape.Start)//start nie może mieć wejscia
                         MessageBox.Show("Blok startu nie może mieć linii wejścia");
                     else if (this[0].BeginId == temp.ID) //wyjscie na wejscie - zapetlenie
                         MessageBox.Show("Nie możesz połączyć wyjścia bloku z jego wejściem - Zapętlenie");
@@ -31,14 +31,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         this[0].EndPoint = temp.PointInput;
                         this[0].EndId = temp.ID;
-                        shapeToDraw = BlocksData.Shape.Nothing;
+                        shapeToDraw = MyDictionary.Shape.Nothing;
                     }
                 }
                 else //output
                 {
-                    if (temp.Shape == BlocksData.Shape.End)//start nie może mieć wejscia
+                    if (temp.Shape == MyDictionary.Shape.End)//start nie może mieć wejscia
                         MessageBox.Show("Blok Końca nie może mieć linii wyjścia");
-                    else if (temp.Shape == BlocksData.Shape.Decision)
+                    else if (temp.Shape == MyDictionary.Shape.Decision)
                     {
                         DialogResult dialogResult =
                             MessageBox.Show("Czy ma być to linia dla prawdy (true)", "", MessageBoxButtons.YesNo);
@@ -85,7 +85,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 for (int i = 0; i < Count; i++)
                 {
                     var temp1 = listBlocks.TryGetElementWithId(this[i].BeginId);
-                    if (temp1.Shape == BlocksData.Shape.Decision)
+                    if (temp1.Shape == MyDictionary.Shape.Decision)
                     {
                         this[i].BeginPoint = (this[i].IsTrue)?temp1.PointOutput1:temp1.PointOutput2;
                     }
@@ -179,7 +179,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public MyLine(Point beginPoint,int beginId)
         {
             BeginPoint = beginPoint;
-            BackColor = BlocksData.DefaultBackColor(BlocksData.Shape.ConnectionLine);
+            BackColor = MyDictionary.DefaultBackColor(MyDictionary.Shape.ConnectionLine);
             BeginId = beginId;
         }
 
@@ -192,7 +192,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public MyLine(Point beginPoint, int beginId, bool isTrue)
         {
             BeginPoint = beginPoint;
-            BackColor = (isTrue)?BlocksData.TrueLineBackColor:BlocksData.FalseLineBackColor;
+            BackColor = (isTrue)?MyDictionary.TrueLineBackColor:MyDictionary.FalseLineBackColor;
             BeginId = beginId;
             IsTrue = isTrue;
         }

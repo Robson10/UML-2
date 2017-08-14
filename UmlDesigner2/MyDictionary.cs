@@ -9,9 +9,10 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2
 {
-    public class BlocksData
+    public class MyDictionary
     {
         public static string BlockTabText="Bloki";
+
         #region Shortcuts
 
         public static Keys MultiselectKey = Keys.ControlKey;

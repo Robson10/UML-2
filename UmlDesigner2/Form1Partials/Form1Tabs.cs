@@ -30,12 +30,12 @@ namespace UmlDesigner2
         private void TabsConnector2_BlocksListItemDoubleClick(object sender, EventArgs e)
         {
             var text = (sender as ListView).SelectedItems[0].Text;
-            for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
+            for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
-                var blockText = BlocksData.DefaultLabel((BlocksData.Shape) i);
+                var blockText = MyDictionary.DefaultLabel((MyDictionary.Shape) i);
                 if (text.Equals(blockText))
                 {
-                    canvas1.AddObjectInstant((BlocksData.Shape) i);
+                    canvas1.AddObjectInstant((MyDictionary.Shape) i);
                     break;
                 }
             }
@@ -44,12 +44,12 @@ namespace UmlDesigner2
         private void TabsConnector2_BlocksListItemClick(object sender, EventArgs e)
         {
             var text = (sender as ListView).SelectedItems[0].Text;
-            for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
+            for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
-                var blockText = BlocksData.DefaultLabel((BlocksData.Shape)i);
+                var blockText = MyDictionary.DefaultLabel((MyDictionary.Shape)i);
                 if (text.Equals(blockText))
                 {
-                    canvas1.AddObjectAfterClick((BlocksData.Shape)i);
+                    canvas1.AddObjectAfterClick((MyDictionary.Shape)i);
                     break;
                 }
             }
