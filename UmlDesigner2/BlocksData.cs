@@ -11,6 +11,7 @@ namespace UmlDesigner2
 {
     public class BlocksData
     {
+        public static string BlockTabText="Bloki";
         #region Shortcuts
 
         public static Keys MultiselectKey = Keys.ControlKey;

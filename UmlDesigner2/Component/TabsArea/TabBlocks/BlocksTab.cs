@@ -11,14 +11,20 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
 {
     public class BlocksTab : TabPage
     {
-        private readonly OAKListView _listViewOfBlocks = new OAKListView() { };
-        public string TabText = "Bloki";
+        private readonly OAKListView _listViewOfBlocks = new OAKListView();
+
+        /// <summary>
+        /// Konstruktor nadający nazwę zakładi z pola BlockData.BlockTabText a następnie dodający listę bloków (obrazek,etykieta)
+        /// </summary>
         public BlocksTab()
         {
-            Text = TabText;
+            Text = BlocksData.BlockTabText;
             CreateList();
         }
 
+        /// <summary>
+        /// Metoda tworząca listę bloków na podstawie Enum'a w BlockData. Dodatkowo ustawia odpowiednie pola kontrolki
+        /// </summary>
         private void CreateList()
         {
             _listViewOfBlocks.View = View.Details;
@@ -31,18 +37,27 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             _listViewOfBlocks.FullRowSelect = true;
             _listViewOfBlocks.MultiSelect = false;
             FillList();
-            this.Controls.Add(_listViewOfBlocks);
+            Controls.Add(_listViewOfBlocks);
         }
-        
+
+        /// <summary>
+        /// Metoda dodająca do listy elementy (obrazek, etykieta)
+        /// </summary>
         private void FillList()
         {
             _listViewOfBlocks.SmallImageList = LoadImageList();
             for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
             {
-                _listViewOfBlocks.Items.Add(new ListViewItem(BlocksData.DefaultLabel((BlocksData.Shape)i)) { ImageIndex = i-1 });
+                _listViewOfBlocks.Items.Add(
+                    new ListViewItem(BlocksData.DefaultLabel((BlocksData.Shape) i)) {ImageIndex = i - 1});
             }
         }
-        
+
+        /// <summary>
+        /// Metoda ładująca obrazki i zwracająca listę obrazków na wyjściu. Ścieżki do obrazków pobierane są z BlokData.ImgPath 
+        /// a następnie odczytywane z dysku o dpdawane do ImageList
+        /// </summary>
+        /// <returns></returns>
         private ImageList LoadImageList()
         {
             var imageList1 = new ImageList();
@@ -50,32 +65,37 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             imageList1.TransparentColor = Color.Transparent;
             for (int i = 1; i <= Enum.GetValues(typeof(BlocksData.Shape)).Cast<int>().Max(); i++)
             {
-                AddImageToImageListFromPath(BlocksData.ImgPath((BlocksData.Shape) i), ref imageList1);
+                using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly()
+                    .GetManifestResourceStream(BlocksData.ImgPath((BlocksData.Shape) i)))
+                {
+                    imageList1.Images.Add(Image.FromStream(stream));
+                }
             }
             return imageList1;
         }
 
-        private void AddImageToImageListFromPath(string path, ref ImageList imageList1)
-        {
-            using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly()
-                .GetManifestResourceStream(path))
-            {
-                imageList1.Images.Add(Image.FromStream(stream));
-            }
-        }
-
+        /// <summary>
+        /// Nodpisanie  zdarzenia OnResize.
+        /// </summary>
+        /// <param name="eventargs"></param>
         protected override void OnResize(EventArgs eventargs)
         {
             base.OnResize(eventargs);
-            _listViewOfBlocks.Columns[0].Width = ClientRectangle.Width-4;
+            _listViewOfBlocks.Columns[0].Width = ClientRectangle.Width - 4;
         }
 
+        /// <summary>
+        ///Dodanie EventHandlera dla wybrania elementu z listy poprzez pojedyncze kliknięcie LPM
+        /// </summary>
         public event EventHandler ListItemClick
         {
             add { _listViewOfBlocks.Click += value; }
             remove { _listViewOfBlocks.Click -= value; }
         }
 
+        /// <summary>
+        ///Dodanie EventHandlera dla wybrania elementu z listy poprzez podwójne kliknięcie LPM
+        /// </summary>
         public event EventHandler ListItemDoubleClick
         {
             add { _listViewOfBlocks.DoubleClick += value; }
