@@ -20,34 +20,32 @@ namespace UmlDesigner2
             this.KeyDown += Form1_KeyDown;
             this.KeyUp += Form1_KeyUp;
             splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
-
-            //tabsConnector1.SizeMode = TabSizeMode.FillToRight;
-            //AddStripMenuEvents();
+            
         }
 
-        private static Component.TabsArea.BlockPropertis.Properties temp;
+        private static Component.TabsArea.BlockPropertis.Properties _properties;
         public void MyCreateBlockProp(MyBlock temp2)
         {
 
-            if (temp != null)
-                if (temp.ShouldRefresh(temp2))
+            if (_properties != null)
+                if (_properties.ShouldRefresh(temp2))
                 {
-                    temp.UpdateProperties();
+                    _properties.UpdateProperties();
                     return;
                 }
                 else
-                    splitContainer2.Panel2.Controls.Remove(temp);
-            temp = new Component.TabsArea.BlockPropertis.Properties(temp2);
-            splitContainer2.Panel2.Controls.Add(temp);
-            temp.Width = splitContainer2.Panel2.Width;
-            temp.Height = splitContainer2.Panel2.Height;
-            temp.Location = new System.Drawing.Point(0, 0);
+                    splitContainer2.Panel2.Controls.Remove(_properties);
+            _properties = new Component.TabsArea.BlockPropertis.Properties(temp2);
+            splitContainer2.Panel2.Controls.Add(_properties);
+            _properties.Width = splitContainer2.Panel2.Width;
+            _properties.Height = splitContainer2.Panel2.Height;
+            _properties.Location = new System.Drawing.Point(0, 0);
         }
 
         public void MyRemoveBlockProp()
         {
-            splitContainer2.Panel2.Controls.Remove(temp);
-            temp = null;
+            splitContainer2.Panel2.Controls.Remove(_properties);
+            _properties = null;
         }
         public void CanvasInvalidatebyInvalidateByProperties()
         {
@@ -98,20 +96,12 @@ namespace UmlDesigner2
                         canvas1.AbortAddingObject();
                         break;
                     case Keys.Delete:
-                        if (temp!=null && !temp.ContainsFocus)
+                        if (_properties != null && !_properties.ContainsFocus)
                         canvas1.Delete();
                         break;
                 }
         }
 
-
-
-        //protected override void OnResize(EventArgs e)
-        //{
-        //    base.OnResize(e);
-        //    myToolStrip.MyResize(ClientSize);
-        //    Canvas.ResizeAll(ClientSize);
-        //}
 
     }
 }

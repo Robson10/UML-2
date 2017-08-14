@@ -1,32 +1,29 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
-using System.Data;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 {
+    
     public partial class Properties : UserControl
     {
-        private GroupBox grLabel;
-        private TextBox tbLabel;
-        private GroupBox grCode;
-        private TextBox tbCode;
-
-        private PropertyGrid Pg;
+        private GroupBox _grLabel, _grCode;
+        private TextBox _tbLabel, _tbCode;
+        private PropertyGrid _pg;
         private MyBlock _block;
 
+        /// <summary>
+        /// Konstruktor tworzący kontrolkę. Na podstawie MyBlock wyświetlane są wszystkie niezbędne pola dla użytkownika.
+        /// </summary>
+        /// <param name="block"></param>
         public Properties(MyBlock block)
         {
             _block = block;
             PrepareControlView();
-            Pg.SelectedObject = new PropertyGridItems(_block);
+            _pg.SelectedObject = new PropertyGridItems(_block);
         }
 
         /// <summary>
@@ -34,8 +31,8 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// </summary>
         public void UpdateProperties()
         {
-            Pg.SelectedObject= new PropertyGridItems(_block);
-            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
+            _pg.SelectedObject= new PropertyGridItems(_block);
+            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
         }
 
         /// <summary>
@@ -55,55 +52,55 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 
             if (_block.Shape != BlocksData.Shape.Start && _block.Shape != BlocksData.Shape.End)
             {
-                grLabel = new GroupBox();
-                Controls.Add(grLabel);
-                grLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                grLabel.Text = "Etykieta";
-                grLabel.Font = new Font("Arial", 13);
-                grLabel.Location = new Point(5, 0);
-                grLabel.Size = new Size(ClientRectangle.Width - 10, 70);
+                _grLabel = new GroupBox();
+                Controls.Add(_grLabel);
+                _grLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                _grLabel.Text = "Etykieta";
+                _grLabel.Font = new Font("Arial", 13);
+                _grLabel.Location = new Point(5, 0);
+                _grLabel.Size = new Size(ClientRectangle.Width - 10, 70);
 
-                tbLabel = new TextBox();
-                grLabel.Controls.Add(tbLabel);
-                tbLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                tbLabel.Font = new Font("Arial", 12);
-                tbLabel.Location = new Point(5, 20);
-                tbLabel.Size = new Size(grLabel.ClientRectangle.Width - 10, grLabel.ClientRectangle.Height - 25);
-                tbLabel.Multiline = true;
-                tbLabel.ScrollBars = ScrollBars.Vertical;
-                tbLabel.KeyUp += TbLabel_KeyUp;
+                _tbLabel = new TextBox();
+                _grLabel.Controls.Add(_tbLabel);
+                _tbLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                _tbLabel.Font = new Font("Arial", 12);
+                _tbLabel.Location = new Point(5, 20);
+                _tbLabel.Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25);
+                _tbLabel.Multiline = true;
+                _tbLabel.ScrollBars = ScrollBars.Vertical;
+                _tbLabel.KeyUp += TbLabel_KeyUp;
 
-                grCode = new GroupBox();
-                Controls.Add(grCode);
-                grCode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                grCode.Text = "Kod";
-                grCode.Font = new Font("Arial", 13);
-                grCode.Location = new Point(grLabel.Left, grLabel.Bottom);
-                grCode.Size = new Size(ClientRectangle.Width - 10, 100);
+                _grCode = new GroupBox();
+                Controls.Add(_grCode);
+                _grCode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                _grCode.Text = "Kod";
+                _grCode.Font = new Font("Arial", 13);
+                _grCode.Location = new Point(_grLabel.Left, _grLabel.Bottom);
+                _grCode.Size = new Size(ClientRectangle.Width - 10, 100);
 
-                tbCode = new TextBox();
-                grCode.Controls.Add(tbCode);
-                tbCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                tbCode.Font = new Font("Arial", 12);
-                tbCode.Location = new Point(5, 20);
-                tbCode.Size = new Size(grCode.ClientRectangle.Width - 10, grCode.ClientRectangle.Height - 25);
-                tbCode.Multiline = true;
-                tbCode.ScrollBars = ScrollBars.Vertical;
-                tbCode.KeyUp += TbCode_KeyUp;
+                _tbCode = new TextBox();
+                _grCode.Controls.Add(_tbCode);
+                _tbCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+                _tbCode.Font = new Font("Arial", 12);
+                _tbCode.Location = new Point(5, 20);
+                _tbCode.Size = new Size(_grCode.ClientRectangle.Width - 10, _grCode.ClientRectangle.Height - 25);
+                _tbCode.Multiline = true;
+                _tbCode.ScrollBars = ScrollBars.Vertical;
+                _tbCode.KeyUp += TbCode_KeyUp;
 
 
-                tbLabel.Text = _block.Label;
-                tbCode.Text = _block.Code;
+                _tbLabel.Text = _block.Label;
+                _tbCode.Text = _block.Code;
             }
 
-            Pg = new PropertyGrid();
-            Pg.Location = new Point(grCode?.Left ?? 0, grCode?.Bottom ?? 0);
-            Pg.Anchor= AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Pg.Size = new Size(ClientRectangle.Size.Width-10, 250);
-            Controls.Add(Pg);
-            Pg.PropertySort = PropertySort.NoSort;
-            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
-            Pg.PropertyValueChanged += Pg_PropertyValueChanged;
+            _pg = new PropertyGrid();
+            _pg.Location = new Point(_grCode?.Left ?? 0, _grCode?.Bottom ?? 0);
+            _pg.Anchor= AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            _pg.Size = new Size(ClientRectangle.Size.Width-10, 250);
+            Controls.Add(_pg);
+            _pg.PropertySort = PropertySort.NoSort;
+            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
+            _pg.PropertyValueChanged += Pg_PropertyValueChanged;
         }
 
         /// <summary>
@@ -125,135 +122,58 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
             }
         }
 
+        /// <summary>
+        /// zdarzenie dla pola tekstowego gdzie przechowywana jest etykieta. Aktualizuje pole Label dla bloku oraz wywołuje metodę odświerzającą kontrolkę canvas
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TbLabel_KeyUp(object sender, KeyEventArgs e)
         {
-            _block.Label = tbLabel.Text;
+            _block.Label = _tbLabel.Text;
             (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
 
+        /// <summary>
+        /// zdarzenie dla pola tekstowego gdzie przechowyway jest część kodu programu. Aktualizuje pole Code dla bloku
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
-            _block.Code = tbCode.Text;
-            //(Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
+            _block.Code = _tbCode.Text;
         }
 
+        /// <summary>
+        /// Zdarzenie wywołujące metodę aktualizującą canvas w chwili gdy któreś pole w kontrolce PropertyGrid ulegnie zmianie.
+        /// Wywołuje odświerzenie kontrolki canvas
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Pg_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e)
         {
             (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
         }
 
+        /// <summary>
+        /// Zdarzenie wywoływane zmianą rozmiaru kontrolki Properties. Zdarzenie to ustala nowe rozmiary dla przechowywanych kontrolek
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
-            Pg.Size = new Size(ClientRectangle.Size.Width - 10, 250);
-            SetPropertyLabelColumnWidth(Pg, Pg.Width * 60 / 100);
+            _pg.Size = new Size(ClientRectangle.Size.Width - 10, 250);
+            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
             AutoScroll = true;
         }
 
-
-
-        //protected override void OnResize(EventArgs e)
-        //{
-        //    Location = new Point(0, 0);
-        //    AutoScrollPosition = new Point(0,0);
-
-        //    if (tbCode != null)
-        //    {
-        //        if (grLabel != null)
-        //        {
-        //            grLabel.Location = new Point(5, 0);
-        //            grLabel.Size = new Size(ClientRectangle.Width - 10, 70);
-        //            tbLabel.Location = new Point(5, 0 + 20);
-        //            tbLabel.Size = new Size(grLabel.ClientRectangle.Width - 10, grLabel.ClientRectangle.Height - 25);
-        //        }
-        //        if (grCode != null)
-        //        {
-        //            grCode.Location = new Point(grLabel.Left, grLabel.Bottom);
-        //            grCode.Size = new Size(ClientRectangle.Width - 10, 100);
-        //            tbCode.Location = new Point(5, 20);
-        //            tbCode.Size = new Size(grCode.ClientRectangle.Width - 10, grCode.ClientRectangle.Height - 25);
-        //        }
-        //    }
-        //    Pg.Location = new Point(grCode?.Left ?? 0, grCode?.Bottom ?? 0);
-        //    Pg.Size = new Size(ClientRectangle.Size.Width-10,200);
-        //    //Parent.Parent.Parent.MinimumSize = new Size(250, 0);
-        //    SetPropertyLabelColumnWidth(Pg, Pg.Width*60/100);
-        //    AutoScroll = true;
-
-
-        //}
-
+        /// <summary>
+        /// Metoda zwracająca wartość typu bool. Zadaniem jej jest porównanie nowo zaznaczonego bloku z obecnie wyświetlanym. 
+        /// Jeżeli są takie same zwracana jest wartość true i kontrolka powinna zostać tylko zaktualizowana.
+        /// </summary>
+        /// <param name="newBlock"></param>
+        /// <returns></returns>
         public bool ShouldRefresh(MyBlock newBlock)
         {
             return (newBlock == _block);
-        }
-    }
-    class PropertyGridItems
-    {
-        private MyBlock _block;
-        public PropertyGridItems(MyBlock block)
-        {
-            _block = null;
-            _block = block;
-        }
-
-        [Category("Parametry")]
-        [Description("Zablokowane bloku przed jego edycją")]
-        [DisplayName("Zablokowane")]
-        public bool IsLocked
-        {
-            get { return _block.IsLocked; }
-            set { _block.IsLocked = value; }
-        }
-
-        [Category("Parametry")]
-        [Description("Auto dopasowywanie rozmiaru tekstu do szerokości bloku")]
-        [DisplayName("Auto dopasowywanie")]
-        public bool AutoResize
-        {
-            get { return _block.AutoResize; }
-            set { _block.AutoResize = value; }
-        }
-
-        [Category("Parametry")]                    
-        [Description("Rozmiar Czcionki")]        
-        [DisplayName("Rozmiar Czcionki")]  
-        public int FontSize
-        {
-            get { return _block.FontSize; }
-            set { _block.FontSize = value; }
-        }
-
-        [Category("Parametry")]                    
-        [Description("Kolor czcionki")]        
-        [DisplayName("Kolor czcionki")]  
-        public Color FontColor
-        {
-            get { return _block.FontColor; }
-            set { _block.FontColor = value; }
-        }
-        [Category("Parametry")]                    
-        [Description("Kolor tła")]        
-        [DisplayName("Kolor tła")]  
-        public Color BackColor
-        {
-            get { return _block.BackColorStorage; }
-            set { _block.BackColorStorage = value; }
-        }
-        [Category("Parametry")]                    
-        [Description("Położenie")]        
-        [DisplayName("Położenie")]  
-        public Point Location
-        {
-            get { return _block.Rect.Location; }
-            set { _block.Rect = new Rectangle(value, _block.Rect.Size); }
-        }
-        [Category("Parametry")]
-        [Description("Wymiary")]
-        [DisplayName("Wymiary")]
-        public Size Size
-        {
-            get { return _block.Rect.Size; }
-            set { _block.Rect= new Rectangle(_block.Rect.Location, value); }
         }
     }
 }

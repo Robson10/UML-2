@@ -277,7 +277,23 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             FontSize = BlocksData.DefaultFontSize(Shape);
         }
 
-       
+        public void UpdateRectSizeOnAutoresize()
+        {
+            if (AutoResize)
+            {
+                using (Panel x = new Panel())
+                using (Graphics g = x.CreateGraphics())
+                {
+                    var font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Bold);
+                    var stringSize = g.MeasureString(Label, font).ToSize();
+                    if (Shape == BlocksData.Shape.Decision)
+                        Rect = new Rectangle(Rect.Location,
+                            new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
+                    else
+                        Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height));
+                }
+            }
+        }
 
 
         public bool IsContain(Point location)
@@ -424,7 +440,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (Shape == BlocksData.Shape.Decision)
                     Rect =new Rectangle(Rect.Location, new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
                 else
-                    Rect= new Rectangle(Rect.Location, new Size(stringSize.Width, stringSize.Height));
+                    Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height));
                 g.DrawString(Label, font, new SolidBrush(FontColor), Rect,
                     CanvasVariables.BlockStringFormat);
             }

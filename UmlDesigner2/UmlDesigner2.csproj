@@ -54,6 +54,7 @@
     <Compile Include="Component\TabsArea\BlockPropertis\Properties.Designer.cs">
       <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
+    <Compile Include="Component\TabsArea\BlockPropertis\PropertyGridItems.cs" />
     <Compile Include="Component\TabsArea\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>

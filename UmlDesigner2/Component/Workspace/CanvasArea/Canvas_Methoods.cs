@@ -10,13 +10,13 @@ using UmlDesigner2.Component.TabsArea.BlockPropertis;
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     //zaznaczanie przez rect i przesuwanie bez ctrl???
-    //kiepskie odświerzanie rozmiaru i tekstu bloku z poziomu properties po kliknięciu autodopasowywanie=true
     partial class Canvas
     {
         private Rectangle SelectRect = Rectangle.Empty;
 
         public void OnPropertiesChange()
         {
+            _canvObj[0].UpdateRectSizeOnAutoresize();
             _canvLines.MyUpdate(ref _canvObj);
             _rubbers.ShowRubbers(_canvObj[0]);
             Invalidate();
@@ -25,7 +25,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (_canvObj.Count > 0)
                 if (_canvObj[0].IsSelected)
+                {
+                    if (_canvObj.Count > 1 && _canvObj[1].IsSelected)
+                    {
+                        (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
+                        return;
+                    }
                     (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
+                }
                 else
                     (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
         }

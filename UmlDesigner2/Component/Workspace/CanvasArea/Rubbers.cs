@@ -10,9 +10,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private ListCanvasBlocks _canvasBlocks;
         private Point MouseDownLocation_Rubbers;
 
-        public Rubbers(ref ListCanvasBlocks _listCanvasItems)
+        public Rubbers(ref ListCanvasBlocks _listCanvasBlocks)
         {
-            _canvasBlocks = _listCanvasItems;
+            _canvasBlocks = _listCanvasBlocks;
             RubbersPresets();
         }
       
@@ -114,10 +114,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// </summary>
         private void SetRubberVisible(bool isSelected)
         {
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
                 this[i].Visible = isSelected;
         }
 
+        /// <summary>
+        /// Metoda ukrywająca gumki
+        /// </summary>
         public void MyHideRubbers()
         {
             for (int i = 0; i < Count; i++)
@@ -130,11 +133,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <param name="control"></param>
         public void AddRubbersToControl(Control control)
         {
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 control.Controls.Add(this[i]);
             }
         }
     }
-    
+
 }
