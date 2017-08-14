@@ -49,9 +49,17 @@ namespace UmlDesigner2
             this.tabPage6 = new System.Windows.Forms.TabPage();
             this.tabPage7 = new System.Windows.Forms.TabPage();
             this.tabPage8 = new System.Windows.Forms.TabPage();
-            this.tabsConnector1 = new UmlDesigner2.Component.TabsArea.TabsConnector();
             this.tabPage9 = new System.Windows.Forms.TabPage();
             this.tabPage10 = new System.Windows.Forms.TabPage();
+            this.tabPage11 = new System.Windows.Forms.TabPage();
+            this.tabPage12 = new System.Windows.Forms.TabPage();
+            this.tabPage13 = new System.Windows.Forms.TabPage();
+            this.tabPage14 = new System.Windows.Forms.TabPage();
+            this.tabPage15 = new System.Windows.Forms.TabPage();
+            this.tabPage16 = new System.Windows.Forms.TabPage();
+            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
+            this.tabPage17 = new System.Windows.Forms.TabPage();
+            this.tabPage18 = new System.Windows.Forms.TabPage();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -153,7 +161,7 @@ namespace UmlDesigner2
             // 
             // splitContainer2.Panel1
             // 
-            this.splitContainer2.Panel1.Controls.Add(this.tabsConnector1);
+            this.splitContainer2.Panel1.Controls.Add(this.tabsArea1);
             this.splitContainer2.Size = new System.Drawing.Size(232, 451);
             this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
@@ -260,19 +268,6 @@ namespace UmlDesigner2
             this.tabPage8.UseVisualStyleBackColor = true;
             this.tabPage8.Visible = false;
             // 
-            // tabsConnector1
-            // 
-            this.tabsConnector1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabsConnector1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsConnector1.Location = new System.Drawing.Point(3, 3);
-            this.tabsConnector1.Multiline = true;
-            this.tabsConnector1.Name = "tabsConnector1";
-            this.tabsConnector1.SelectedIndex = 0;
-            this.tabsConnector1.Size = new System.Drawing.Size(200, 100);
-            this.tabsConnector1.TabIndex = 0;
-            // 
             // tabPage9
             // 
             this.tabPage9.Location = new System.Drawing.Point(42, 4);
@@ -294,6 +289,107 @@ namespace UmlDesigner2
             this.tabPage10.Text = "tabPage10";
             this.tabPage10.UseVisualStyleBackColor = true;
             this.tabPage10.Visible = false;
+            // 
+            // tabPage11
+            // 
+            this.tabPage11.Location = new System.Drawing.Point(42, 4);
+            this.tabPage11.Name = "tabPage11";
+            this.tabPage11.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage11.Size = new System.Drawing.Size(154, 92);
+            this.tabPage11.TabIndex = 2;
+            this.tabPage11.Text = "tabPage11";
+            this.tabPage11.UseVisualStyleBackColor = true;
+            this.tabPage11.Visible = false;
+            // 
+            // tabPage12
+            // 
+            this.tabPage12.Location = new System.Drawing.Point(42, 4);
+            this.tabPage12.Name = "tabPage12";
+            this.tabPage12.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage12.Size = new System.Drawing.Size(154, 92);
+            this.tabPage12.TabIndex = 2;
+            this.tabPage12.Text = "tabPage12";
+            this.tabPage12.UseVisualStyleBackColor = true;
+            this.tabPage12.Visible = false;
+            // 
+            // tabPage13
+            // 
+            this.tabPage13.Location = new System.Drawing.Point(42, 4);
+            this.tabPage13.Name = "tabPage13";
+            this.tabPage13.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage13.Size = new System.Drawing.Size(154, 92);
+            this.tabPage13.TabIndex = 2;
+            this.tabPage13.Text = "tabPage13";
+            this.tabPage13.UseVisualStyleBackColor = true;
+            this.tabPage13.Visible = false;
+            // 
+            // tabPage14
+            // 
+            this.tabPage14.Location = new System.Drawing.Point(42, 4);
+            this.tabPage14.Name = "tabPage14";
+            this.tabPage14.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage14.Size = new System.Drawing.Size(154, 92);
+            this.tabPage14.TabIndex = 2;
+            this.tabPage14.Text = "tabPage14";
+            this.tabPage14.UseVisualStyleBackColor = true;
+            this.tabPage14.Visible = false;
+            // 
+            // tabPage15
+            // 
+            this.tabPage15.Location = new System.Drawing.Point(42, 4);
+            this.tabPage15.Name = "tabPage15";
+            this.tabPage15.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage15.Size = new System.Drawing.Size(154, 92);
+            this.tabPage15.TabIndex = 2;
+            this.tabPage15.Text = "tabPage15";
+            this.tabPage15.UseVisualStyleBackColor = true;
+            this.tabPage15.Visible = false;
+            // 
+            // tabPage16
+            // 
+            this.tabPage16.Location = new System.Drawing.Point(42, 4);
+            this.tabPage16.Name = "tabPage16";
+            this.tabPage16.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage16.Size = new System.Drawing.Size(154, 92);
+            this.tabPage16.TabIndex = 2;
+            this.tabPage16.Text = "tabPage16";
+            this.tabPage16.UseVisualStyleBackColor = true;
+            this.tabPage16.Visible = false;
+            // 
+            // tabsArea1
+            // 
+            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsArea1.Location = new System.Drawing.Point(91, 59);
+            this.tabsArea1.Multiline = true;
+            this.tabsArea1.Name = "tabsArea1";
+            this.tabsArea1.SelectedIndex = 0;
+            this.tabsArea1.Size = new System.Drawing.Size(200, 100);
+            this.tabsArea1.TabIndex = 0;
+            // 
+            // tabPage17
+            // 
+            this.tabPage17.Location = new System.Drawing.Point(42, 4);
+            this.tabPage17.Name = "tabPage17";
+            this.tabPage17.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage17.Size = new System.Drawing.Size(154, 92);
+            this.tabPage17.TabIndex = 2;
+            this.tabPage17.Text = "tabPage17";
+            this.tabPage17.UseVisualStyleBackColor = true;
+            this.tabPage17.Visible = false;
+            // 
+            // tabPage18
+            // 
+            this.tabPage18.Location = new System.Drawing.Point(42, 4);
+            this.tabPage18.Name = "tabPage18";
+            this.tabPage18.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage18.Size = new System.Drawing.Size(154, 92);
+            this.tabPage18.TabIndex = 2;
+            this.tabPage18.Text = "tabPage18";
+            this.tabPage18.UseVisualStyleBackColor = true;
+            this.tabPage18.Visible = false;
             // 
             // Form1
             // 
@@ -346,9 +442,18 @@ namespace UmlDesigner2
         private Canvas canvas1;
         private System.Windows.Forms.TabPage tabPage7;
         private System.Windows.Forms.TabPage tabPage8;
-        private Component.TabsArea.TabsConnector tabsConnector1;
+        private Component.TabsArea.TabsArea tabsConnector1;
         private System.Windows.Forms.TabPage tabPage9;
         private System.Windows.Forms.TabPage tabPage10;
+        private System.Windows.Forms.TabPage tabPage11;
+        private System.Windows.Forms.TabPage tabPage12;
+        private System.Windows.Forms.TabPage tabPage13;
+        private System.Windows.Forms.TabPage tabPage14;
+        private System.Windows.Forms.TabPage tabPage15;
+        private System.Windows.Forms.TabPage tabPage16;
+        private Component.TabsArea.TabsArea tabsArea1;
+        private System.Windows.Forms.TabPage tabPage17;
+        private System.Windows.Forms.TabPage tabPage18;
     }
 }
 

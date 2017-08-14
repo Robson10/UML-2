@@ -11,23 +11,23 @@ namespace UmlDesigner2
     {
         private void TabsPresets()
         {
-            tabsConnector1.BlocksListItemClick += TabsConnector2_BlocksListItemClick;
-            tabsConnector1.BlocksListItemDoubleClick += TabsConnector2_BlocksListItemDoubleClick;
-            tabsConnector1.SchematsListItemClick += TabsConnector2_SchematsListItemClick;
-            tabsConnector1.SchematsListItemDoubleClick += TabsConnector2_SchematsListItemDoubleClick;
+            tabsArea1.BlocksListItemClick += tabsArea1_BlocksListItemClick;
+            tabsArea1.BlocksListItemDoubleClick += tabsArea1_BlocksListItemDoubleClick;
+            tabsArea1.SchematsListItemClick += tabsArea1_SchematsListItemClick;
+            tabsArea1.SchematsListItemDoubleClick += tabsArea1_SchematsListItemDoubleClick;
         }
 
-        private void TabsConnector2_SchematsListItemDoubleClick(object sender, EventArgs e)
+        private void tabsArea1_SchematsListItemDoubleClick(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void TabsConnector2_SchematsListItemClick(object sender, EventArgs e)
+        private void tabsArea1_SchematsListItemClick(object sender, EventArgs e)
         {
             throw new NotImplementedException();
         }
 
-        private void TabsConnector2_BlocksListItemDoubleClick(object sender, EventArgs e)
+        private void tabsArea1_BlocksListItemDoubleClick(object sender, EventArgs e)
         {
             var text = (sender as ListView).SelectedItems[0].Text;
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
@@ -41,7 +41,7 @@ namespace UmlDesigner2
             }
         }
 
-        private void TabsConnector2_BlocksListItemClick(object sender, EventArgs e)
+        private void tabsArea1_BlocksListItemClick(object sender, EventArgs e)
         {
             var text = (sender as ListView).SelectedItems[0].Text;
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)

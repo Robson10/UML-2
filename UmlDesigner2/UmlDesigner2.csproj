@@ -55,7 +55,7 @@
       <DependentUpon>Properties.cs</DependentUpon>
     </Compile>
     <Compile Include="Component\TabsArea\BlockPropertis\PropertyGridItems.cs" />
-    <Compile Include="Component\TabsArea\OAKListView.cs">
+    <Compile Include="Component\TabsArea\TabBlocks\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\TabsArea\TabBlocks\BlocksTab.cs">
@@ -64,7 +64,7 @@
     <Compile Include="Component\TabsArea\TabSchemats\SchematsTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabsConnector.cs">
+    <Compile Include="Component\TabsArea\TabsArea.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\CanvasArea\Canvas.cs">

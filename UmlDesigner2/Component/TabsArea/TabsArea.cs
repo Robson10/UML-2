@@ -9,46 +9,69 @@ using UmlDesigner2.Component.TabsArea.TabSchemats;
 
 namespace UmlDesigner2.Component.TabsArea
 {
-    class TabsConnector:TabControl
+    class TabsArea:TabControl
     {
         private BlocksTab _blocksTab = new BlocksTab();
         private SchematsTab _schematsTab = new SchematsTab();
-        public TabsConnector()
+
+        /// <summary>
+        /// Konstruktor ustawiający wygląd kontrolki oraz dodający zakładkę z blokami oraz schematami
+        /// </summary>
+        public TabsArea()
         {
-            //TabPages.Clear();
             Alignment= TabAlignment.Left;
             TabPages.Add(_blocksTab);
             TabPages.Add(_schematsTab);
             Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top|AnchorStyles.Right);
         }
 
+        /// <summary>
+        /// Eventhandler do pojedynczego kliknięcia na element listy bloków
+        /// </summary>
         public event EventHandler BlocksListItemClick
         {
             add { _blocksTab.ListItemClick += value; }
             remove { _blocksTab.ListItemClick += value; }
         }
+
+        /// <summary>
+        /// Eventhandler do podwójnego kliknięcia na element listy bloków
+        /// </summary>
         public event EventHandler BlocksListItemDoubleClick
         {
             add { _blocksTab.ListItemDoubleClick += value; }
             remove { _blocksTab.ListItemDoubleClick += value; }
         }
+
+        /// <summary>
+        /// Eventhandler do pojedynczego kliknięcia na element listy schematów
+        /// </summary>
         public event EventHandler SchematsListItemClick
         {
             add { _schematsTab.ListItemClick += value; }
             remove { _schematsTab.ListItemClick += value; }
         }
+
+        /// <summary>
+        /// Eventhandler do podwójnego kliknięcia na element listy schematów
+        /// </summary>
         public event EventHandler SchematsListItemDoubleClick
         {
             add { _schematsTab.ListItemDoubleClick += value; }
             remove { _schematsTab.ListItemDoubleClick += value; }
         }
 
+        /// <summary>
+        /// Zdarzenie ustawiające połozenie i rozmiar kontrolki parajej dodaniu
+        /// </summary>
+        /// <param name="e"></param>
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
             Location = new System.Drawing.Point(0, 0);
             Size = new System.Drawing.Size(Parent.Width, Parent.Height);
         }
+
         /// <summary>
         /// Usuniecie domyślnie tworzonych zakładek przez Form1.designer.cs
         /// </summary>
@@ -60,10 +83,6 @@ namespace UmlDesigner2.Component.TabsArea
             {
                 e.Control.Dispose();
             }
-        }
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
         }
     }
 }

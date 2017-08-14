@@ -4,9 +4,11 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.TabsArea
 {
-    public class OAKListView : ListView
+    /// <summary>
+    /// downloaded from https://www.codeproject.com/Articles/7630/ListView-with-Image-on-SubItems
+    /// </summary>
+    class OAKListView : ListView
     {
-        //https://www.codeproject.com/Articles/7630/ListView-with-Image-on-SubItems
         [StructLayout(LayoutKind.Sequential)]
         public struct LV_ITEM
         {
