@@ -36,12 +36,11 @@ namespace UmlDesigner2
             this.wstawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.myToolStrip1 = new UmlDesigner2.Component.ToolStripArea.MyToolStrip();
-            this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
-            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.MenuStrip.SuspendLayout();
@@ -54,7 +53,6 @@ namespace UmlDesigner2
             this.splitContainer2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
             this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.Panel2.SuspendLayout();
             this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -104,18 +102,6 @@ namespace UmlDesigner2
             this.myToolStrip1.TabIndex = 1;
             this.myToolStrip1.Text = "myToolStrip1";
             // 
-            // groupBox1
-            // 
-            this.groupBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.groupBox1.Location = new System.Drawing.Point(0, 3);
-            this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(881, 53);
-            this.groupBox1.TabIndex = 6;
-            this.groupBox1.TabStop = false;
-            this.groupBox1.Text = "Wyniki";
-            // 
             // splitContainer1
             // 
             this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -150,6 +136,19 @@ namespace UmlDesigner2
             this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
             // 
+            // tabsArea1
+            // 
+            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsArea1.Location = new System.Drawing.Point(0, 0);
+            this.tabsArea1.Multiline = true;
+            this.tabsArea1.Name = "tabsArea1";
+            this.tabsArea1.SelectedIndex = 0;
+            this.tabsArea1.Size = new System.Drawing.Size(150, 50);
+            this.tabsArea1.TabIndex = 0;
+            // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -160,10 +159,6 @@ namespace UmlDesigner2
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.canvas1);
-            // 
-            // splitContainer3.Panel2
-            // 
-            this.splitContainer3.Panel2.Controls.Add(this.groupBox1);
             this.splitContainer3.Size = new System.Drawing.Size(884, 451);
             this.splitContainer3.SplitterDistance = 391;
             this.splitContainer3.TabIndex = 0;
@@ -179,19 +174,6 @@ namespace UmlDesigner2
             this.canvas1.Name = "canvas1";
             this.canvas1.Size = new System.Drawing.Size(884, 392);
             this.canvas1.TabIndex = 0;
-            // 
-            // tabsArea1
-            // 
-            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsArea1.Location = new System.Drawing.Point(3, 3);
-            this.tabsArea1.Multiline = true;
-            this.tabsArea1.Name = "tabsArea1";
-            this.tabsArea1.SelectedIndex = 0;
-            this.tabsArea1.Size = new System.Drawing.Size(200, 100);
-            this.tabsArea1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -237,7 +219,6 @@ namespace UmlDesigner2
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
             this.splitContainer3.Panel1.ResumeLayout(false);
-            this.splitContainer3.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
             this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
@@ -253,7 +234,6 @@ namespace UmlDesigner2
         private System.Windows.Forms.ToolStripMenuItem wstawToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pomocToolStripMenuItem;
         private Component.ToolStripArea.MyToolStrip myToolStrip1;
-        private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
         private System.Windows.Forms.SplitContainer splitContainer3;

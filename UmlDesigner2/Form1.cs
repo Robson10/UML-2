@@ -20,8 +20,12 @@ namespace UmlDesigner2
             this.KeyDown += Form1_KeyDown;
             this.KeyUp += Form1_KeyUp;
             splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
-            
+            splitContainer3.Panel2.BackColor = System.Drawing.Color.Gray;
+            splitContainer3.Panel2.Controls.Add(_results);
+            _results.Size = splitContainer3.Panel2.ClientRectangle.Size;
         }
+
+        private static Component.Workspace.ResultComponent.Results _results = new Component.Workspace.ResultComponent.Results();
 
         private static Component.TabsArea.BlockPropertis.Properties _properties;
         public void MyCreateBlockProp(MyBlock temp2)
@@ -47,10 +51,12 @@ namespace UmlDesigner2
             splitContainer2.Panel2.Controls.Remove(_properties);
             _properties = null;
         }
+
         public void CanvasInvalidatebyInvalidateByProperties()
         {
             canvas1.OnPropertiesChange();
         }
+
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
