@@ -10,6 +10,7 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
 {
     class Results:ListView
     {
+        
         public Results()
         {
             Text = "Wyniki";

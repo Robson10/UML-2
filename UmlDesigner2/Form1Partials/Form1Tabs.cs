@@ -32,7 +32,7 @@ namespace UmlDesigner2
             var text = (sender as ListView).SelectedItems[0].Text;
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
-                var blockText = MyDictionary.DefaultLabel((MyDictionary.Shape) i);
+                var blockText = MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape)i].Label;
                 if (text.Equals(blockText))
                 {
                     canvas1.AddObjectInstant((MyDictionary.Shape) i);
@@ -46,7 +46,7 @@ namespace UmlDesigner2
             var text = (sender as ListView).SelectedItems[0].Text;
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
-                var blockText = MyDictionary.DefaultLabel((MyDictionary.Shape)i);
+                var blockText = MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape)i].Label;
                 if (text.Equals(blockText))
                 {
                     canvas1.AddObjectAfterClick((MyDictionary.Shape)i);

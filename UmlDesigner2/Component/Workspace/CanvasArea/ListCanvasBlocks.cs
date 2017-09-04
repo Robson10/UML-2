@@ -89,9 +89,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     int NewWidth = e.X - base[i].Rect.X + (base[i].Rect.X + base[i].Rect.Width - mouseDownLocation.X);
                     int NewHeight = e.Y - base[i].Rect.Y + (base[i].Rect.Y + base[i].Rect.Height - mouseDownLocation.Y);
-                    if (NewWidth >= MyDictionary.MinBlockSize.Width)
+                    if (NewWidth >= MyDictionary.DefaultBlocksSettings[this[i].Shape].MinSize.Width)
                         base[i].Rect = new Rectangle(base[i].Rect.Location,new Size( NewWidth,base[i].Rect.Size.Height));
-                    if (NewHeight >= MyDictionary.MinBlockSize.Height)
+                    if (NewHeight >= MyDictionary.DefaultBlocksSettings[this[i].Shape].MinSize.Height)
                     base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(base[i].Rect.Size.Width, NewHeight));
                 }
             }
@@ -151,12 +151,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             width -= e.X - mouseDownLocation.X;
                             break;
                     }
-                    if (width > MyDictionary.MinBlockSize.Width)
+                    if (width > MyDictionary.DefaultBlocksSettings[this[i].Shape].MinSize.Width)
                     {
                         base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(width, base[i].Rect.Size.Height));
                         base[i].Rect =new Rectangle( new Point(x, base[i].Rect.Location.Y), base[i].Rect.Size);
                     }
-                    if (height > MyDictionary.MinBlockSize.Height)
+                    if (height > MyDictionary.DefaultBlocksSettings[this[i].Shape].MinSize.Height)
                     {
                         base[i].Rect = new Rectangle(base[i].Rect.Location, new Size(this[i].Rect.Size.Width, height));
                         base[i].Rect = new Rectangle(new Point(base[i].Rect.Location.X, y), base[i].Rect.Size);
@@ -178,9 +178,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void MyAdd(Point e, MyDictionary.Shape shapeToDraw)
         {
-            Insert(0, (new MyBlock(new Rectangle(e.X - MyDictionary.DefaultBlockSize.Width / 2,
-                    e.Y - MyDictionary.DefaultBlockSize.Height / 2, MyDictionary.DefaultBlockSize.Width,
-                    MyDictionary.DefaultBlockSize.Height),
+            Insert(0, (new MyBlock(new Rectangle(e.X - MyDictionary.DefaultBlocksSettings[shapeToDraw].BlockSize.Width / 2,
+                    e.Y - MyDictionary.DefaultBlocksSettings[shapeToDraw].BlockSize.Height / 2, MyDictionary.DefaultBlocksSettings[shapeToDraw].BlockSize.Width,
+                    MyDictionary.DefaultBlocksSettings[shapeToDraw].BlockSize.Height),
                 shapeToDraw, _id)));
             _id++;
         }
@@ -270,11 +270,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Rect = rect;
             Shape = shape;
             ID = id;
-            Label = MyDictionary.DefaultLabel(Shape);
-            BackColor = MyDictionary.DefaultBackColor(Shape);
-            BackColorStorage= MyDictionary.DefaultBackColor(Shape);
-            FontColor = MyDictionary.DefaultFontColor(Shape);
-            FontSize = MyDictionary.DefaultFontSize(Shape);
+            Label = MyDictionary.DefaultBlocksSettings[Shape].Label;
+            BackColor = MyDictionary.DefaultBlocksSettings[Shape].BackColor;
+            BackColorStorage= MyDictionary.DefaultBlocksSettings[Shape].BackColor;
+            FontColor = MyDictionary.DefaultBlocksSettings[Shape].FontColor;
+            FontSize = MyDictionary.DefaultBlocksSettings[Shape].FontSize;
         }
 
         public void UpdateRectSizeOnAutoresize()

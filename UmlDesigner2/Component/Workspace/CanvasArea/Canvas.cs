@@ -99,7 +99,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
             for (int i = 0; i < _canvLines.Count; i++)
             {
-                if (_canvLines[i].BackColor == MyDictionary.DefaultBackColor(MyDictionary.Shape.ConnectionLine))
+                if (_canvLines[i].BackColor == MyDictionary.DefaultBlocksSettings[MyDictionary.Shape.ConnectionLine].BackColor)
                     _canvLines[i].My_DrawConnectionLine(e.Graphics);
                 else
                     _canvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);

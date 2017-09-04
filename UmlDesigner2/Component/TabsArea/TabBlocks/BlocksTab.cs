@@ -49,7 +49,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
                 _listViewOfBlocks.Items.Add(
-                    new ListViewItem(MyDictionary.DefaultLabel((MyDictionary.Shape) i)) {ImageIndex = i - 1});
+                    new ListViewItem(MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape) i].Label) {ImageIndex = i - 1});
             }
         }
 
@@ -66,7 +66,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
             {
                 using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream(MyDictionary.ImgPath((MyDictionary.Shape) i)))
+                    .GetManifestResourceStream(MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape) i].ImgPath))
                 {
                     imageList1.Images.Add(Image.FromStream(stream));
                 }

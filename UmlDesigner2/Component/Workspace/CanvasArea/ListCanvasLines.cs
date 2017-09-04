@@ -179,7 +179,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public MyLine(Point beginPoint,int beginId)
         {
             BeginPoint = beginPoint;
-            BackColor = MyDictionary.DefaultBackColor(MyDictionary.Shape.ConnectionLine);
+            BackColor = MyDictionary.DefaultBlocksSettings[MyDictionary.Shape.ConnectionLine].BackColor;
             BeginId = beginId;
         }
 
