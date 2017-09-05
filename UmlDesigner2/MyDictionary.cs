@@ -73,10 +73,7 @@ namespace UmlDesigner2
         #endregion
 
         #region Block & Line
-
-        //public static Size DefaultBlockSize = new Size(100, 50);
-        //public static Size MinBlockSize = new Size(10, 10);
-
+        
         public enum Shape
         {
             Nothing = 0,
