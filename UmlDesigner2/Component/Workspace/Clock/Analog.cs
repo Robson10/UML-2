@@ -18,11 +18,8 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private int ThicknessHandOfClock = 1;
         private float _thicknessClockScale = 1;
 
-        private float _hourLength;
-        private float _minLength;
-        private float _secLength;
-        private float _startAngle;
-        private float _endAngle;
+        private float _hourLength,_minLength,_secLength;
+        private float _startAngle,_endAngle;
         private float _radius;
         private Rectangle _partOfTimeArea;
         private void AnalogUpdate()
@@ -108,5 +105,4 @@ namespace UmlDesigner2.Component.Workspace.Clock
             e.Graphics.FillPolygon(new SolidBrush(Helper.ClockColorHand), points);
         }
     }
-
 }

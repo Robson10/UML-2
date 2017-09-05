@@ -11,17 +11,17 @@ namespace UmlDesigner2
     {
         private void ToolStripPresets()
         {
-            myToolStrip1.NewFile_Click += MyToolStripContainer_NewFile_Click;
-            myToolStrip1.OpenFile_Click += MyToolStripContainer_OpenFile_Click;
-            myToolStrip1.SaveFile_Click += MyToolStripContainer_SaveFile_Click;
-            myToolStrip1.SaveFileAs_Click += MyToolStripContainer_SaveFileAs_Click;
-            myToolStrip1.Undo_Click += MyToolStripContainer_Undo_Click;
-            myToolStrip1.Redo_Click += MyToolStripContainer_Redo_Click;
-            myToolStrip1.Options_Click += MyToolStripContainer_Options_Click;
-            myToolStrip1.LogIn_Click += MyToolStripContainer_LogIn_Click;
-            myToolStrip1.OpenCloudFile_Click += MyToolStripContainer_OpenCloudFile_Click;
-            myToolStrip1.Run_Click += MyToolStripContainer_Run_Click;
-            myToolStrip1.Debug_Click += MyToolStripContainer_Debug_Click;
+            myToolStrip1.NewFileClick += MyToolStripContainer_NewFile_Click;
+            myToolStrip1.OpenFileClick += MyToolStripContainer_OpenFile_Click;
+            myToolStrip1.SaveFileClick += MyToolStripContainer_SaveFile_Click;
+            myToolStrip1.SaveFileAsClick += MyToolStripContainer_SaveFileAs_Click;
+            myToolStrip1.UndoClick += MyToolStripContainer_Undo_Click;
+            myToolStrip1.RedoClick += MyToolStripContainer_Redo_Click;
+            myToolStrip1.OptionsClick += MyToolStripContainer_Options_Click;
+            myToolStrip1.LogInClick += MyToolStripContainer_LogIn_Click;
+            myToolStrip1.OpenCloudFileClick += MyToolStripContainer_OpenCloudFile_Click;
+            myToolStrip1.RunClick += MyToolStripContainer_Run_Click;
+            myToolStrip1.DebugClick += MyToolStripContainer_Debug_Click;
 
          
         }

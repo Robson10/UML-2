@@ -11,6 +11,8 @@ namespace UmlDesigner2.Component.Workspace.Clock
     //Digital Clock Class
     sealed partial class Clock
     {
+        private readonly StringBuilder _textForDigitalClock = new StringBuilder();
+
         private void DigitalUpdate()
         {
             using (var f = new Font("Arial", 10))
@@ -19,13 +21,11 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 var tempText = new StringBuilder(DateTime.Now.ToLongTimeString() + Environment.NewLine +
                                                  DateTime.Now.ToLongTimeString());
                 Size = g.MeasureString(tempText.ToString(),
-                        FindMeasuredFont(g, tempText, new Size(Helper.ClockSize, Helper.ClockSize), f))
+                        DigitalFindMeasuredFont(g, tempText, new Size(Helper.ClockSize, Helper.ClockSize), f))
                     .ToSize();
             }
         }
-
-        private readonly StringBuilder _textForDigitalClock = new StringBuilder();
-
+        
         private void DrawDigitalCountingUp(ref PaintEventArgs e)
         {
             _textForDigitalClock.Clear();
@@ -40,7 +40,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                                             new DateTime(DateTime.Now.Ticks - _beginExam.Ticks).ToLongTimeString());
 
             e.Graphics.DrawString(_textForDigitalClock.ToString(),
-                FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
+                DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                 new PointF(0, 0));
         }
 
@@ -52,7 +52,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
                                             new DateTime(_endExam.Ticks - DateTime.Now.Ticks).ToLongTimeString());
                 e.Graphics.DrawString(_textForDigitalClock.ToString(),
-                    FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));
             }
             catch (ArgumentOutOfRangeException)
@@ -60,13 +60,13 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
                                             new DateTime(0).ToLongTimeString());
                 e.Graphics.DrawString(_textForDigitalClock.ToString(),
-                    FindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));
             }
 
         }
 
-        private static Font FindMeasuredFont(Graphics g, StringBuilder longString, Size room,
+        private static Font DigitalFindMeasuredFont(Graphics g, StringBuilder longString, Size room,
             Font preferedFont)
         {
             var realSize = g.MeasureString(longString.ToString(), preferedFont);

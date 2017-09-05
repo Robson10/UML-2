@@ -9,7 +9,6 @@ namespace UmlDesigner2.Component
 {
     public class ToolStripButtonParameters
     {
-        //ToolStrip
         public enum StripButtons
         {
             Start = 1,
@@ -96,6 +95,5 @@ namespace UmlDesigner2.Component
                 return Image.FromStream(stream);
             }
         }
-
     }
 }

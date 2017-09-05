@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Component\ToolStripArea\MyToolStripButton.cs">
+      <SubType>Component</SubType>
+    </Compile>
     <Compile Include="Component\Workspace\ResultComponent\Compile.cs" />
     <Compile Include="Component\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
@@ -102,7 +105,7 @@
     <Compile Include="Component\ToolStripArea\MyToolStripContainer.Designer.cs">
       <DependentUpon>MyToolStripContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\ToolStripArea\ToolStripButtonParameters.cs" />
+    <Compile Include="Component\ToolStripArea\HelperToolStripButton.cs" />
     <Compile Include="Form1.cs">
       <SubType>Form</SubType>
     </Compile>

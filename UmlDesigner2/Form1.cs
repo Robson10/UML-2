@@ -57,7 +57,6 @@ namespace UmlDesigner2
             canvas1.OnPropertiesChange();
         }
 
-
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
             switch (e.KeyCode)
