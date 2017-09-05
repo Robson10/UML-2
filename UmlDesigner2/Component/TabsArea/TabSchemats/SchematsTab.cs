@@ -14,7 +14,7 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
         /// </summary>
         public SchematsTab()
         {
-            Text = MyDictionary.SchematsTabText;
+            Text = Helper.SchematsTabText;
             CreateList();
         }
 
@@ -71,13 +71,13 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
         /// </summary>
         private void LoadElementsToList()
         {
-            if (!System.IO.Directory.Exists(MyDictionary.SchematsPath))
-                System.IO.Directory.CreateDirectory(MyDictionary.SchematsPath);
+            if (!System.IO.Directory.Exists(Helper.SchematsPath))
+                System.IO.Directory.CreateDirectory(Helper.SchematsPath);
             
-            var filesPaths = System.IO.Directory.GetFiles(MyDictionary.SchematsPath, "*"+ MyDictionary.SchematsExtension);
+            var filesPaths = System.IO.Directory.GetFiles(Helper.SchematsPath, "*"+ Helper.SchematsExtension);
 
             for (int i = 0; i < filesPaths.Length; i++)
-                _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(MyDictionary.SchematsPath + @"\","").Replace(MyDictionary.SchematsExtension, "")));
+                _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(Helper.SchematsPath + @"\","").Replace(Helper.SchematsExtension, "")));
             
             _listViewOfSchemats.Items.Add(new ListViewItem("Importuj"){ForeColor=Color.Blue});
             _listViewOfSchemats.RedrawItems(0, 3, true);

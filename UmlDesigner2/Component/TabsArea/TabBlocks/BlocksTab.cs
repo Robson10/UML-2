@@ -18,7 +18,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
         /// </summary>
         public BlocksTab()
         {
-            Text = MyDictionary.BlockTabText;
+            Text = Helper.BlockTabText;
             CreateList();
         }
 
@@ -46,10 +46,10 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
         private void FillList()
         {
             _listViewOfBlocks.SmallImageList = LoadImageList();
-            for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
+            for (int i = 1; i <= Enum.GetValues(typeof(Helper.Shape)).Cast<int>().Max(); i++)
             {
                 _listViewOfBlocks.Items.Add(
-                    new ListViewItem(MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape) i].Label) {ImageIndex = i - 1});
+                    new ListViewItem(Helper.DefaultBlocksSettings[(Helper.Shape) i].Label) {ImageIndex = i - 1});
             }
         }
 
@@ -63,10 +63,10 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             var imageList1 = new ImageList();
             imageList1.ImageSize = new Size(40, 40);
             imageList1.TransparentColor = Color.Transparent;
-            for (int i = 1; i <= Enum.GetValues(typeof(MyDictionary.Shape)).Cast<int>().Max(); i++)
+            for (int i = 1; i <= Enum.GetValues(typeof(Helper.Shape)).Cast<int>().Max(); i++)
             {
                 using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream(MyDictionary.DefaultBlocksSettings[(MyDictionary.Shape) i].ImgPath))
+                    .GetManifestResourceStream(Helper.DefaultBlocksSettings[(Helper.Shape) i].ImgPath))
                 {
                     imageList1.Images.Add(Image.FromStream(stream));
                 }

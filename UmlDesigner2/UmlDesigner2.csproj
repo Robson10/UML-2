@@ -54,7 +54,7 @@
     <Compile Include="Component\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="MyDictionary.cs" />
+    <Compile Include="Helper.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
     <Compile Include="Component\TabsArea\BlockPropertis\Properties.cs">
       <SubType>UserControl</SubType>

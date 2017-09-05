@@ -27,7 +27,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private Rectangle _partOfTimeArea;
         private void AnalogUpdate()
         {
-            Size=new Size(MyDictionary.ClockSize, MyDictionary.ClockSize);
+            Size=new Size(Helper.ClockSize, Helper.ClockSize);
             _radius = (int)(Height / 1.6);
             _center = new Point(ClientSize.Width / 2, ClientSize.Height / 2);
             _hourLength = (float)Height / 2 / 1.65F;
@@ -44,7 +44,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 _startAngle = 360f / (12f * 60f) * ((_beginExam.Hour % 12) * 60f + _beginExam.Minute);
                 _endAngle = 360f / (12f * 60f) * ((_endExam.Hour % 12) * 60f + _endExam.Minute);
                 _endAngle = (_startAngle > _endAngle) ? 360f - _startAngle + _endAngle : _endAngle - _startAngle;
-                e.Graphics.FillPie(MyDictionary.ClockPartOfTimeColor, _partOfTimeArea, -90f + _startAngle, _endAngle);
+                e.Graphics.FillPie(Helper.ClockPartOfTimeColor, _partOfTimeArea, -90f + _startAngle, _endAngle);
             }
             _timeNow = DateTime.Now;
 
@@ -52,7 +52,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
             {
                 if (i % 5 == 0) // Draw 5 minute line
                 {
-                    e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorScale, _thicknessClockScale),
+                    e.Graphics.DrawLine(new Pen(Helper.ClockColorScale, _thicknessClockScale),
                         _center.X + (float)(_radius / 1.50F * Math.Sin(i * 6 * Math.PI / 180)),
                         _center.Y - (float)(_radius / 1.50F * Math.Cos(i * 6 * Math.PI / 180)),
                         _center.X + (float)(_radius / 1.95F * Math.Sin(i * 6 * Math.PI / 180)),
@@ -60,7 +60,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 }
                 else  // draw 1 minute line
                 {
-                    e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorScale, _thicknessClockScale),
+                    e.Graphics.DrawLine(new Pen(Helper.ClockColorScale, _thicknessClockScale),
                         _center.X + (float)(_radius / 1.50F * Math.Sin(i * 6 * Math.PI / 180)),
                         _center.Y - (float)(_radius / 1.50F * Math.Cos(i * 6 * Math.PI / 180)),
                         _center.X + (float)(_radius / 1.65F * Math.Sin(i * 6 * Math.PI / 180)),
@@ -81,7 +81,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private void DrawLine(float thickness, float length,  float radians,PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.DrawLine(new Pen(MyDictionary.ClockColorHand, thickness),
+            e.Graphics.DrawLine(new Pen(Helper.ClockColorHand, thickness),
                 _center.X - (float)(length / 9 * Math.Sin(radians)),
                 _center.Y + (float)(length / 9 * Math.Cos(radians)),
                 _center.X + (float)(length * Math.Sin(radians)),
@@ -105,7 +105,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 new PointF((float) (_center.X - thickness * 4 * Math.Sin(radians)),
                     (float) (_center.Y + thickness * 4 * Math.Cos(radians)))
             };
-            e.Graphics.FillPolygon(new SolidBrush(MyDictionary.ClockColorHand), points);
+            e.Graphics.FillPolygon(new SolidBrush(Helper.ClockColorHand), points);
         }
     }
 

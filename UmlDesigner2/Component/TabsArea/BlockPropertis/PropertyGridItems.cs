@@ -27,19 +27,23 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public bool IsLocked
         {
             get { return _block.IsLocked; }
-            set { _block.IsLocked = value; }
+            set{_block.IsLocked = value;}
         }
 
         /// <summary>
         /// Property do pola AutoResize
         /// </summary>
         [Category("Parametry")]
-        [Description("Auto dopasowywanie rozmiaru tekstu do szerokości bloku")]
+        [Description("Auto dopasowywanie rozmiaru bloku do czcionki i tekstu")]
         [DisplayName("Auto dopasowywanie")]
         public bool AutoResize
         {
             get { return _block.AutoResize; }
-            set { _block.AutoResize = value; }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.AutoResize = value;
+            }
         }
 
         /// <summary>
@@ -51,7 +55,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public int FontSize
         {
             get { return _block.FontSize; }
-            set { _block.FontSize = value; }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.FontSize = value;
+            }
         }
 
         /// <summary>
@@ -63,7 +71,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Color FontColor
         {
             get { return _block.FontColor; }
-            set { _block.FontColor = value; }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.FontColor = value;
+            }
         }
 
         /// <summary>
@@ -75,7 +87,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Color BackColor
         {
             get { return _block.BackColorStorage; }
-            set { _block.BackColorStorage = value; }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.BackColorStorage = value;
+            }
         }
 
         /// <summary>
@@ -87,7 +103,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Point Location
         {
             get { return _block.Rect.Location; }
-            set { _block.Rect = new Rectangle(value, _block.Rect.Size); }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.Rect = new Rectangle(value, _block.Rect.Size);
+            }
         }
 
         /// <summary>
@@ -99,7 +119,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public Size Size
         {
             get { return _block.Rect.Size; }
-            set { _block.Rect = new Rectangle(_block.Rect.Location, value); }
+            set
+            {
+                if (!_block.IsLocked)
+                    _block.Rect = new Rectangle(_block.Rect.Location, value);
+            }
         }
 
     }

@@ -24,9 +24,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             for (int i = 0; i < 8; i++)
             {
                 Add(new UserControl());
-                this[i].BackColor = MyDictionary.RubberColor;
+                this[i].BackColor = Helper.RubberColor;
                 this[i].Visible = false;
-                this[i].Size = MyDictionary.RubberSize;
+                this[i].Size = Helper.RubberSize;
                 this[i].TabIndex = i;
                 this[i].MouseDown += Rubbers_MouseDown;
                 this[i].MouseMove += Rubbers_MouseMove;
@@ -77,13 +77,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (canvasObject.IsSelected)
             {
                 var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
-                              MyDictionary.RubberSize.Width / 2;
+                              Helper.RubberSize.Width / 2;
                 var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
-                              MyDictionary.RubberSize.Height / 2;
+                              Helper.RubberSize.Height / 2;
 
-                var left = canvasObject.Rect.Location.X - MyDictionary.RubberSize.Width;
+                var left = canvasObject.Rect.Location.X - Helper.RubberSize.Width;
                 var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-                var up = canvasObject.Rect.Location.Y - MyDictionary.RubberSize.Height;
+                var up = canvasObject.Rect.Location.Y - Helper.RubberSize.Height;
                 var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
 
                 var topLeft = new Point(left, up);

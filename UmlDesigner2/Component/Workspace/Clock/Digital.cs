@@ -19,7 +19,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 var tempText = new StringBuilder(DateTime.Now.ToLongTimeString() + Environment.NewLine +
                                                  DateTime.Now.ToLongTimeString());
                 Size = g.MeasureString(tempText.ToString(),
-                        FindMeasuredFont(g, tempText, new Size(MyDictionary.ClockSize, MyDictionary.ClockSize), f))
+                        FindMeasuredFont(g, tempText, new Size(Helper.ClockSize, Helper.ClockSize), f))
                     .ToSize();
             }
         }

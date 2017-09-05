@@ -29,7 +29,7 @@ namespace UmlDesigner2
         }
     }
 
-    public class MyDictionary
+    public class Helper
     {
         #region TabsArea
 
