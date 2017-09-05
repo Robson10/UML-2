@@ -40,7 +40,6 @@ namespace UmlDesigner2.Component.ToolStripArea
             //Default.Dock = DockStyle.None;
             this.ImageScalingSize = ButtonSize;
             //Default.RenderMode = ToolStripRenderMode.System;//usuwanie z rogów artefaktow
-
             //Default.ParentChanged += Default_ParentChanged;
             
         }
@@ -154,15 +153,7 @@ namespace UmlDesigner2.Component.ToolStripArea
       
         #endregion
     }
-    //Events
-    partial class MyToolStrip
-    {
-        private void Default_ParentChanged(object sender, EventArgs e)
-        {
-            //Blocks.MinimumSize = (ButtonSize);
-            //Default.MinimumSize = (ButtonSize);
-        }
-    }
+
     //Methoods
     partial class MyToolStrip
     {

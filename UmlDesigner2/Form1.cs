@@ -74,27 +74,51 @@ namespace UmlDesigner2
             if (e.Modifiers==Keys.Control )
                 switch (e.KeyCode)
                 {
-                    case Keys.C:
+                    case Keys.C://kopiowanie
                         canvas1.Copy();
                         break;
-                    case Keys.X:
+                    case Keys.X://wycinanie
                         canvas1.Cut();
                         break;
-                    case Keys.V:
+                    case Keys.V://wklejanie
                         canvas1.Paste();
                         break;
-                    case Keys.Z:
+                    case Keys.Z://cofanie
                         if (canvas1.Focused)
                         canvas1.Undo();
                         break;
-                    case Keys.Y:
+                    case Keys.Y://do przodu
                         if (canvas1.Focused)
                         canvas1.Redo();
+                        break;
+                    case Keys.S://Zapisz
+                        break;
+                    case Keys.N://Nowy Plik
+                        break;
+                    case Keys.O://otworz plik
                         break;
                     case Keys.ControlKey:
                         canvas1.IsMultiSelect = true;
                         break;
                 }
+            else if (e.Modifiers == Keys.Shift)
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.F5: //debug
+                        break;
+                }
+            }
+            else if (e.Modifiers==(Keys.Control |Keys.Shift))
+            {
+                switch (e.KeyCode)
+                {
+                    case Keys.S://zapisz jako
+                        break;
+                    case Keys.O: //otworz plik zdalny
+                        break;
+                }
+            }
             else
                 switch (e.KeyCode)
                 {
@@ -104,6 +128,8 @@ namespace UmlDesigner2
                     case Keys.Delete:
                         if (_properties != null && !_properties.ContainsFocus)
                         canvas1.Delete();
+                        break;
+                    case Keys.F5://start
                         break;
                 }
         }
