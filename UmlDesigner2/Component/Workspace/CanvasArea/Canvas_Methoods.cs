@@ -13,33 +13,48 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     partial class Canvas
     {
         private Rectangle SelectRect = Rectangle.Empty;
-
-        public void OnPropertiesChange()
+        protected virtual void OnHideBlockProperties()
         {
+            HideBlockPoperites?.Invoke(null, EventArgs.Empty);
+        }
+        public event EventHandler HideBlockPoperites;
+        protected virtual void OnShowBlockProperties()
+        {
+            ShowBlockPoperites?.Invoke(CanvObj[0], EventArgs.Empty);
+        }
+        public event EventHandler ShowBlockPoperites;
+
+        public void ClearCanvas()
+        {
+            // Metoda wywoływana podczas rozpoczęcia egzaminu - czyści wszystko w canvas
+            // moze być uzywana do tworzenia nowego pliku
+
+            CanvLines.Clear();
+            CanvObj.Clear();
+            Clipboard.Clear();
+            _rubbers.MyHideRubbers();
+            //wyczyszczenie historii ctrl z/y
+            Invalidate();
+        }
+
+        public void UpdatePropertiesSelectedBlock()
+        {
+            //Metoda służąca do zaktualizowania zaznaczonego bloku 
+            //z poziomu form1 które reaguje na event z BlockProperties
             CanvObj[0].UpdateRectSizeOnAutoresize();
             CanvLines.MyUpdate(ref CanvObj);
             _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
             Invalidate();
         }
+
         private void ShowProperties()
         {
             if (CanvObj.Count > 0)
-                if (CanvObj[0].IsSelected)
-                {
-                    if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
-                    {
-                        (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
-                        return;
-                    }
-                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(CanvObj[0]);
-                }
+                if (!CanvObj[0].IsSelected || (CanvObj.Count > 1 && CanvObj[1].IsSelected))
+                    OnHideBlockProperties();
                 else
-                    (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
-        }
-
-        private void RemoveProperties()
-        {
-            (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
+                    OnShowBlockProperties();
+                
         }
 
         private void HideSelectionRect()
@@ -126,7 +141,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     CanvLines.MyRemove(CanvObj[i].ID);
                     CanvObj.MyDelete(i);
                     _rubbers.MyHideRubbers();
-                    RemoveProperties();
+                    OnHideBlockProperties();
                 }
             }
             Invalidate();
@@ -154,6 +169,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Clipboard.SetDataObject(clips, true);
 
             _rubbers.MyHideRubbers();
+            OnHideBlockProperties();
             Invalidate();
         }
 
@@ -185,12 +201,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void Undo()
         {
+            //dodanie wyczyszczenia historii do metody ClearCanvas() -> rozpoczecie egzaminu
             throw new NotImplementedException();
+            OnHideBlockProperties();
         }
 
         public void Redo()
         {
             throw new NotImplementedException();
+            OnHideBlockProperties();
         }
 
         #endregion

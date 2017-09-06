@@ -8,18 +8,24 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 {
     
-    public partial class Properties : UserControl
+    public partial class BlockProperties : UserControl
     {
         private GroupBox _grLabel, _grCode;
         private TextBox _tbLabel, _tbCode;
         private PropertyGrid _pg;
         private MyBlock _block;
 
+        protected virtual void OnBlockPropertyChanged()
+        {
+            BlockPropertyChanged?.Invoke(this, EventArgs.Empty);
+        }
+        public event EventHandler BlockPropertyChanged;
+
         /// <summary>
         /// Konstruktor tworzący kontrolkę. Na podstawie MyBlock wyświetlane są wszystkie niezbędne pola dla użytkownika.
         /// </summary>
         /// <param name="block"></param>
-        public Properties(MyBlock block)
+        public BlockProperties(MyBlock block)
         {
             _block = block;
             PrepareControlView();
@@ -52,55 +58,64 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 
             if (_block.Shape != Helper.Shape.Start && _block.Shape != Helper.Shape.End)
             {
-                _grLabel = new GroupBox();
-                Controls.Add(_grLabel);
-                _grLabel.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                _grLabel.Text = "Etykieta";
-                _grLabel.Font = new Font("Arial", 13);
-                _grLabel.Location = new Point(5, 0);
-                _grLabel.Size = new Size(ClientRectangle.Width - 10, 70);
+                _grLabel = new GroupBox()
+                {
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Text = "Etykieta",
+                    Font = new Font("Arial", 13),
+                    Location = new Point(5, 0),
+                    Size = new Size(ClientRectangle.Width - 10, 70)
+                };
 
-                _tbLabel = new TextBox();
-                _grLabel.Controls.Add(_tbLabel);
-                _tbLabel.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                _tbLabel.Font = new Font("Arial", 12);
-                _tbLabel.Location = new Point(5, 20);
-                _tbLabel.Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25);
-                _tbLabel.Multiline = true;
-                _tbLabel.ScrollBars = ScrollBars.Vertical;
+                _tbLabel = new TextBox()
+                {
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Font = new Font("Arial", 12),
+                    Location = new Point(5, 20),
+                    Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Text = _block.Label
+                };
                 _tbLabel.KeyUp += TbLabel_KeyUp;
 
-                _grCode = new GroupBox();
-                Controls.Add(_grCode);
-                _grCode.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                _grCode.Text = "Kod";
-                _grCode.Font = new Font("Arial", 13);
-                _grCode.Location = new Point(_grLabel.Left, _grLabel.Bottom);
-                _grCode.Size = new Size(ClientRectangle.Width - 10, 100);
+                _grCode = new GroupBox()
+                {
+                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Text = "Kod",
+                    Font = new Font("Arial", 13),
+                    Location = new Point(_grLabel.Left, _grLabel.Bottom),
+                    Size = new Size(ClientRectangle.Width - 10, 100)
+                };
 
-                _tbCode = new TextBox();
-                _grCode.Controls.Add(_tbCode);
-                _tbCode.Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-                _tbCode.Font = new Font("Arial", 12);
-                _tbCode.Location = new Point(5, 20);
-                _tbCode.Size = new Size(_grCode.ClientRectangle.Width - 10, _grCode.ClientRectangle.Height - 25);
-                _tbCode.Multiline = true;
-                _tbCode.ScrollBars = ScrollBars.Vertical;
+                _tbCode = new TextBox()
+                {
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Font = new Font("Arial", 12),
+                    Location = new Point(5, 20),
+                    Size = new Size(_grCode.ClientRectangle.Width - 10, _grCode.ClientRectangle.Height - 25),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Text = _block.Code
+                };
                 _tbCode.KeyUp += TbCode_KeyUp;
 
-
-                _tbLabel.Text = _block.Label;
-                _tbCode.Text = _block.Code;
+                Controls.Add(_grLabel);
+                Controls.Add(_grCode);
+                _grLabel.Controls.Add(_tbLabel);
+                _grCode.Controls.Add(_tbCode);
             }
-
-            _pg = new PropertyGrid();
-            _pg.Location = new Point(_grCode?.Left ?? 0, _grCode?.Bottom ?? 0);
-            _pg.Anchor= AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            _pg.Size = new Size(ClientRectangle.Size.Width-10, 250);
-            Controls.Add(_pg);
-            _pg.PropertySort = PropertySort.NoSort;
+            _pg = new PropertyGrid()
+            {
+                Location = new Point(_grCode?.Left ?? 0, _grCode?.Bottom ?? 0),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                Size = new Size(ClientRectangle.Size.Width - 10, 250),
+                PropertySort = PropertySort.NoSort,
+            };
             SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
             _pg.PropertyValueChanged += Pg_PropertyValueChanged;
+
+            Controls.Add(_pg);
         }
 
         /// <summary>
@@ -108,7 +123,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// </summary>
         /// <param name="grid"></param>
         /// <param name="width"></param>
-        private static void SetPropertyLabelColumnWidth(PropertyGrid grid, int width)
+        private void SetPropertyLabelColumnWidth(PropertyGrid grid, int width)
         {
             width = 130;
             var memberInfo = grid.GetType().GetField("gridView", BindingFlags.Instance | BindingFlags.NonPublic);
@@ -130,7 +145,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         private void TbLabel_KeyUp(object sender, KeyEventArgs e)
         {
             _block.Label = _tbLabel.Text;
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
+            OnBlockPropertyChanged();
         }
 
         /// <summary>
@@ -151,7 +166,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// <param name="e"></param>
         private void Pg_PropertyValueChanged(object sender, PropertyValueChangedEventArgs e)
         {
-            (Parent.Parent.Parent.Parent.Parent as Form1)?.CanvasInvalidatebyInvalidateByProperties();
+            OnBlockPropertyChanged();
         }
 
         /// <summary>

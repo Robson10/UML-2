@@ -9,68 +9,68 @@ namespace UmlDesigner2
 {
     public partial class Form1 : Form
     {
-        //Workspace Canvas = new Workspace();
+        private static Component.Workspace.ResultComponent.Results _results = new Component.Workspace.ResultComponent.Results();
+        private BlockProperties _properties;
         public Form1()
         {
             InitializeComponent();
             WindowState = FormWindowState.Maximized;
             KeyPreview = true;
-            ToolStripPresets();
-            TabsPresets();
-            this.KeyDown += Form1_KeyDown;
-            this.KeyUp += Form1_KeyUp;
-            splitContainer2.Panel2.BackColor = System.Drawing.Color.White;
-            splitContainer3.Panel2.BackColor = System.Drawing.Color.Gray;
+            View();
+            AddEvents();
             splitContainer3.Panel2.Controls.Add(_results);
             _results.Size = splitContainer3.Panel2.ClientRectangle.Size;
-            clock1.EgzamStarted += Clock1_EgzamStarted;
-            clock1.EgzamEnded += Clock1_EgzamEnded; ; 
-        }
 
+        }
+        //todo zablokowanie wszystkiego procz kompilacji i zapisu pliku
         private void Clock1_EgzamEnded(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
+            //zablokowanie aplikacji procz kompilacji
+            throw new NotImplementedException();
         }
 
+        //todo zablokować wczytywanie pliku
         private void Clock1_EgzamStarted(object sender, EventArgs e)
         {
-            //throw new NotImplementedException();
+            canvas1.ClearCanvas();
         }
 
 
-
-
-        private static Component.Workspace.ResultComponent.Results _results = new Component.Workspace.ResultComponent.Results();
-
-        private static Component.TabsArea.BlockPropertis.Properties _properties;
-        public void MyCreateBlockProp(MyBlock temp2)
+        private void _properties_BlockPropertyChanged(object sender, EventArgs e)
         {
+            canvas1.UpdatePropertiesSelectedBlock();
+        }
 
+
+        private void Canvas1_ShowBlockPoperites(object sender, EventArgs e)
+        {
+            var temp = (sender as MyBlock);
             if (_properties != null)
-                if (_properties.ShouldRefresh(temp2))
+                if (_properties.ShouldRefresh(temp))
                 {
                     _properties.UpdateProperties();
                     return;
                 }
                 else
                     splitContainer2.Panel2.Controls.Remove(_properties);
-            _properties = new Component.TabsArea.BlockPropertis.Properties(temp2);
+
+            _properties = new BlockProperties(temp)
+            {
+                Width = splitContainer2.Panel2.Width,
+                Height = splitContainer2.Panel2.Height,
+                Location = new System.Drawing.Point(0, 0)
+            };
+
+            _properties.BlockPropertyChanged += _properties_BlockPropertyChanged;
             splitContainer2.Panel2.Controls.Add(_properties);
-            _properties.Width = splitContainer2.Panel2.Width;
-            _properties.Height = splitContainer2.Panel2.Height;
-            _properties.Location = new System.Drawing.Point(0, 0);
         }
 
-        public void MyRemoveBlockProp()
+        private void Canvas1_HideBlockPoperites(object sender, EventArgs e)
         {
             splitContainer2.Panel2.Controls.Remove(_properties);
             _properties = null;
         }
 
-        public void CanvasInvalidatebyInvalidateByProperties()
-        {
-            canvas1.OnPropertiesChange();
-        }
 
         private void Form1_KeyUp(object sender, KeyEventArgs e)
         {
@@ -81,10 +81,8 @@ namespace UmlDesigner2
                     break;
             }
         }
-
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-
             if (e.Modifiers==Keys.Control )
                 switch (e.KeyCode)
                 {
@@ -106,10 +104,13 @@ namespace UmlDesigner2
                         canvas1.Redo();
                         break;
                     case Keys.S://Zapisz
+                        SaveFile();
                         break;
                     case Keys.N://Nowy Plik
+                        NewFile();
                         break;
                     case Keys.O://otworz plik
+                        OpenFile();
                         break;
                     case Keys.ControlKey:
                         canvas1.IsMultiSelect = true;
@@ -120,6 +121,7 @@ namespace UmlDesigner2
                 switch (e.KeyCode)
                 {
                     case Keys.F5: //debug
+                        Debug();
                         break;
                 }
             }
@@ -128,8 +130,10 @@ namespace UmlDesigner2
                 switch (e.KeyCode)
                 {
                     case Keys.S://zapisz jako
+                        SaveFileAs();
                         break;
                     case Keys.O: //otworz plik zdalny
+                        OpenFileFromServer();
                         break;
                 }
             }

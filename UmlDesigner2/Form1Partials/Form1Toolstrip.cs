@@ -7,9 +7,9 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2
 {
-    partial class Form1:Form
+    partial class Form1
     {
-        private void ToolStripPresets()
+        private void ToolStripAddEvents()
         {
             myToolStrip1.NewFileClick += MyToolStripContainer_NewFile_Click;
             myToolStrip1.OpenFileClick += MyToolStripContainer_OpenFile_Click;
@@ -22,13 +22,11 @@ namespace UmlDesigner2
             myToolStrip1.OpenCloudFileClick += MyToolStripContainer_OpenCloudFile_Click;
             myToolStrip1.RunClick += MyToolStripContainer_Run_Click;
             myToolStrip1.DebugClick += MyToolStripContainer_Debug_Click;
-
-         
         }
        private void MyToolStripContainer_Debug_Click(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
+       {
+           Debug();
+       }
 
         private void MyToolStripContainer_Run_Click(object sender, EventArgs e)
         {
@@ -37,47 +35,47 @@ namespace UmlDesigner2
 
         private void MyToolStripContainer_OpenCloudFile_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            OpenFileFromServer();
         }
 
         private void MyToolStripContainer_LogIn_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            LogIn();
         }
 
         private void MyToolStripContainer_Options_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Options();
         }
 
         private void MyToolStripContainer_Redo_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            canvas1.Redo();
         }
 
         private void MyToolStripContainer_Undo_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            canvas1.Undo();
         }
 
         private void MyToolStripContainer_SaveFileAs_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            SaveFileAs();
         }
 
         private void MyToolStripContainer_SaveFile_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            SaveFile();
         }
 
         private void MyToolStripContainer_OpenFile_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            OpenFile();
         }
 
         private void MyToolStripContainer_NewFile_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            NewFile();
         }
 
     }

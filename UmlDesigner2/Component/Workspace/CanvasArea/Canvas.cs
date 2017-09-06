@@ -4,12 +4,10 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    sealed partial class Canvas : Panel
+    partial class Canvas : Panel
     {
-        //private readonly Clock.Clock _clock = new Clock.Clock();
         public static ListCanvasBlocks CanvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
-        public static ListCanvasLines CanvLines = new ListCanvasLines()
-            ; //lista blokow wyrysowanych na ekranie
+        public static ListCanvasLines CanvLines = new ListCanvasLines(); //lista blokow wyrysowanych na ekranie
 
         private readonly Rubbers _rubbers = new Rubbers(ref CanvObj);
 
@@ -33,7 +31,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             DoubleBuffered = true;
             BackColor = CanvasVariables.BgColor;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            //Controls.Add(_clock);
             ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
         }
@@ -113,7 +110,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            //_clock.Location = new Point(ClientRectangle.Width - _clock.Width , 0);
             e.Graphics.TranslateTransform(AutoScrollPosition.X,AutoScrollPosition.Y);
             
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -130,17 +126,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
             if (SelectRect != Rectangle.Empty)
                 e.Graphics.FillRectangle(CanvasVariables.SelectionRectBrush, SelectRect);
-        }
-
-        protected override void OnResize(EventArgs e)
-        {
-            base.OnResize(e);
-            //_clock.Update();
-        }
-
-        public void ClearOnClock()
-        {
-            
         }
     }
 

@@ -9,7 +9,7 @@ namespace UmlDesigner2
 {
     partial class Form1
     {
-        private void TabsPresets()
+        private void TabsAddEvents()
         {
             tabsArea1.BlocksListItemClick += tabsArea1_BlocksListItemClick;
             tabsArea1.BlocksListItemDoubleClick += tabsArea1_BlocksListItemDoubleClick;

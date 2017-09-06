@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    sealed partial class Canvas
+    partial class Canvas
     {
         private ContextMenuStrip _contextMenu;
         private void ContextMenuPresets()

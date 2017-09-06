@@ -62,13 +62,13 @@
     </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
-    <Compile Include="Component\TabsArea\BlockPropertis\Properties.cs">
+    <Compile Include="Component\TabsArea\BlockProp\BlockProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\BlockPropertis\Properties.Designer.cs">
-      <DependentUpon>Properties.cs</DependentUpon>
+    <Compile Include="Component\TabsArea\BlockProp\BlockProperties.Designer.cs">
+      <DependentUpon>BlockProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\TabsArea\BlockPropertis\PropertyGridItems.cs" />
+    <Compile Include="Component\TabsArea\BlockProp\PropertyGridItems.cs" />
     <Compile Include="Component\TabsArea\TabBlocks\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -124,8 +124,8 @@
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Component\TabsArea\BlockPropertis\Properties.resx">
-      <DependentUpon>Properties.cs</DependentUpon>
+    <EmbeddedResource Include="Component\TabsArea\BlockProp\BlockProperties.resx">
+      <DependentUpon>BlockProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
