@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace.Clock
 {
@@ -15,44 +16,59 @@ namespace UmlDesigner2.Component.Workspace.Clock
         private DateTime _beginExam;
         private DateTime _endExam;
         private ToolTip _toolTip;
-        private ContextMenuStrip _contextMenu;
+        
+        protected virtual void OnEgzamStarted()
+        {
+            EgzamStarted?.Invoke(true, EventArgs.Empty);
+        }
+        public event EventHandler EgzamStarted;
+
+        protected virtual void OnEgzamEnded()
+        {
+            EgzamEnded?.Invoke(true, EventArgs.Empty);
+        }
+        public event EventHandler EgzamEnded;
+
         public Clock()
         {
             DoubleBuffered = true;
-            //Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            ContextMenuStrip = CreateContextMenu();
             Update();
-            Start(); //bedzie wywolywane z zewnątrz
-            _contextMenu=new ContextMenuStrip();
-            _contextMenu.Items.Add("Zegar Analogowy");
-            _contextMenu.Items.Add("Zegar Cyfrowy #1");
-            _contextMenu.Items.Add("Zegar Cyfrowy #2");
-            _contextMenu.Items.Add("Wyłącz zegar");
-            _contextMenu.ItemClicked += _contextMenu_ItemClicked;
-            this.ContextMenuStrip = _contextMenu;
+            _timer.Start();
+            _timer.Tick += Timer_Tick;
+            _toolTip = new ToolTip { AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true };
         }
-        public void Start()//bedzie wywolywane z zewnątrz
+
+        private ContextMenuStrip CreateContextMenu()
+        {
+            var contextMenu = new ContextMenuStrip();
+            contextMenu.Items.Add("Zegar Analogowy");
+            contextMenu.Items.Add("Zegar Cyfrowy #1");
+            contextMenu.Items.Add("Zegar Cyfrowy #2");
+            contextMenu.Items.Add("Wyłącz zegar");
+            contextMenu.Items.Add("Rozpocznij Egzamin");
+            contextMenu.ItemClicked += _contextMenu_ItemClicked;
+            return contextMenu;
+        }
+
+        private void StartEgzam()
         {
             if (Helper.ClockIsRunnable)
             {
                 Helper.ClockIsRunning = true;
                 Helper.ClockIsRunnable = false;
-                _beginExam = new DateTime(DateTime.Now.Ticks);
+                _beginExam = DateTime.Now;
                 if (Math.Abs(Helper.ClockTimeForExam.TotalSeconds) > 0)
                     _endExam = _beginExam.Add(Helper.ClockTimeForExam);
-                if (_endExam != DateTime.MinValue)
-                {
-                    _timer.Start();
-                    _timer.Tick += Timer_Tick;
-                }
+                if (_endExam <= _beginExam)
+                    StopEgzam();
                 else
-                    Stop();
-
-                _toolTip = new ToolTip {AutoPopDelay = 3000, InitialDelay = 1000, ReshowDelay = 500, ShowAlways = true};
-                //Wyczyścić workSpace przed rozpoczęciem egzaminu
+                    OnEgzamStarted();
             }
         }
 
-        public void Stop()
+        private void StopEgzam()
         {
             if (!Helper.ClockIsRunnable)
             {
@@ -60,9 +76,10 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 Helper.ClockIsRunning = false;
                 Helper.ClockIsRunnable = true;
                 MessageBox.Show(Helper.ClockMessageWhenTimeIsOver);
-                //Wysłać event do workspace by zablokować wszelkie zmiany na nim
+                OnEgzamEnded();
             }
         }
+
         public new void Update()//metoda służąca do aktualizowania wrazie zmian.
         {
             base.Update();
@@ -103,21 +120,30 @@ namespace UmlDesigner2.Component.Workspace.Clock
             {
                 Dispose();
             }
+            else if (e.ClickedItem.Text.Equals("Rozpocznij Egzamin"))
+            {
+                StartEgzam();
+                OnEgzamStarted();
+            }
         }
 
         private void Timer_Tick(object sender, EventArgs e)
         {
             Invalidate();
-            if (Math.Abs(Helper.ClockTimeForExam.TotalSeconds) >= 0)
+            if (Helper.ClockIsRunnable == false)
+                Update();
+            else
             {
-                if (DateTime.Now >= _endExam)
+                if (Math.Abs(Helper.ClockTimeForExam.TotalSeconds) >= 0)
                 {
-                    Stop();
+                    if (DateTime.Now >= _endExam)
+                    {
+                        StopEgzam();
+                    }
                 }
             }
         }
 
-      
         protected override void OnMouseEnter(EventArgs e)
         {
             base.OnMouseEnter(e);
@@ -128,18 +154,22 @@ namespace UmlDesigner2.Component.Workspace.Clock
             }
             catch
             {
-                _toolTip.SetToolTip(this,
-                    Helper.ClockMessageWhenTimeIsOver);
+                if (Helper.ClockIsRunnable)
+                {
+                    _toolTip.SetToolTip(this, "Egzamin jeszcze się nie rozpoczął");
+                }
+                else
+                {
+                    _toolTip.SetToolTip(this,Helper.ClockMessageWhenTimeIsOver);
+                }
             }
         }
-       
-        
 
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
             if (Parent != null)
-                Location = new Point(this.Parent.Size.Width - this.Width, 0);
+                Location = new Point(Parent.ClientRectangle.Width - Width, 0);
         }
 
         //rysowanie odpowiedniego zegara na podstawie wybranej opcji

@@ -10,7 +10,7 @@ using System.Windows.Forms;
 namespace UmlDesigner2.Component.Workspace.Clock
 {
     //Analog Clock Class
-    sealed partial class Clock
+    partial class Clock
     {
 
         private DateTime _timeNow;

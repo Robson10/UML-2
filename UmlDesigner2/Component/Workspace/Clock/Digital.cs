@@ -9,7 +9,7 @@ using System.Windows.Forms;
 namespace UmlDesigner2.Component.Workspace.Clock
 {
     //Digital Clock Class
-    sealed partial class Clock
+    partial class Clock
     {
         private readonly StringBuilder _textForDigitalClock = new StringBuilder();
 
@@ -30,7 +30,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         {
             _textForDigitalClock.Clear();
             if (_endExam == DateTime.MinValue)
-                _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                _textForDigitalClock.Append(DateTime.Now.ToLongTimeString() + Environment.NewLine +
                                             new DateTime(0).ToLongTimeString());
             else if (DateTime.Now > _endExam)
                 _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
@@ -52,15 +52,15 @@ namespace UmlDesigner2.Component.Workspace.Clock
                 _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
                                             new DateTime(_endExam.Ticks - DateTime.Now.Ticks).ToLongTimeString());
                 e.Graphics.DrawString(_textForDigitalClock.ToString(),
-                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));
             }
             catch (ArgumentOutOfRangeException)
             {
-                _textForDigitalClock.Append(_beginExam.ToLongTimeString() + Environment.NewLine +
+                _textForDigitalClock.Append(DateTime.Now.ToLongTimeString() + Environment.NewLine +
                                             new DateTime(0).ToLongTimeString());
                 e.Graphics.DrawString(_textForDigitalClock.ToString(),
-                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, this.Size, new Font("Arial", 10)), Brushes.Black,
+                    DigitalFindMeasuredFont(e.Graphics, _textForDigitalClock, Size, new Font("Arial", 10)), Brushes.Black,
                     new PointF(0, 0));
             }
 

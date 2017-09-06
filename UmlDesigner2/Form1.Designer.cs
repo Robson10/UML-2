@@ -201,10 +201,11 @@ namespace UmlDesigner2
             // 
             // clock1
             // 
-            this.clock1.BackColor = System.Drawing.Color.Transparent;
-            this.clock1.Location = new System.Drawing.Point(1039, 0);
+            this.clock1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clock1.BackColor = System.Drawing.Color.White;
+            this.clock1.Location = new System.Drawing.Point(1050, 0);
             this.clock1.Name = "clock1";
-            this.clock1.Size = new System.Drawing.Size(81, 71);
+            this.clock1.Size = new System.Drawing.Size(70, 70);
             this.clock1.TabIndex = 13;
             // 
             // Form1

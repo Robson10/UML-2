@@ -23,7 +23,22 @@ namespace UmlDesigner2
             splitContainer3.Panel2.BackColor = System.Drawing.Color.Gray;
             splitContainer3.Panel2.Controls.Add(_results);
             _results.Size = splitContainer3.Panel2.ClientRectangle.Size;
+            clock1.EgzamStarted += Clock1_EgzamStarted;
+            clock1.EgzamEnded += Clock1_EgzamEnded; ; 
         }
+
+        private void Clock1_EgzamEnded(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+        private void Clock1_EgzamStarted(object sender, EventArgs e)
+        {
+            //throw new NotImplementedException();
+        }
+
+
+
 
         private static Component.Workspace.ResultComponent.Results _results = new Component.Workspace.ResultComponent.Results();
 

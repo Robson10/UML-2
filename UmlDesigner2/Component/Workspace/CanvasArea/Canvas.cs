@@ -6,7 +6,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     sealed partial class Canvas : Panel
     {
-        private readonly Clock.Clock _clock = new Clock.Clock();
+        //private readonly Clock.Clock _clock = new Clock.Clock();
         public static ListCanvasBlocks CanvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
         public static ListCanvasLines CanvLines = new ListCanvasLines()
             ; //lista blokow wyrysowanych na ekranie
@@ -33,7 +33,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             DoubleBuffered = true;
             BackColor = CanvasVariables.BgColor;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            Controls.Add(_clock);
+            //Controls.Add(_clock);
             ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
         }
@@ -43,7 +43,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             AutoScroll = false;
             AutoScrollMinSize = new Size(5000, 5000);
             AutoScroll = true;
-            _clock.Location = new Point(ClientRectangle.Width-_clock.Width-AutoScrollPosition.X,AutoScrollPosition.Y);
             if (Parent != null)
             {
                 Location = new Point(0, 0);
@@ -55,7 +54,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             base.OnMouseWheel(e);
             var y = -AutoScrollPosition.Y + e.Delta / 5;
             AutoScrollPosition = new Point(-AutoScrollPosition.X, (y<=0)?0:y);
-            _clock.Location = new Point(ClientRectangle.Width - _clock.Width - AutoScrollPosition.X, 0);
             Invalidate();
         }
 
@@ -115,6 +113,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            //_clock.Location = new Point(ClientRectangle.Width - _clock.Width , 0);
             e.Graphics.TranslateTransform(AutoScrollPosition.X,AutoScrollPosition.Y);
             
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
@@ -136,7 +135,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnResize(EventArgs e)
         {
             base.OnResize(e);
-            _clock.Update();
+            //_clock.Update();
+        }
+
+        public void ClearOnClock()
+        {
+            
         }
     }
 

@@ -13,5 +13,10 @@ namespace UmlDesigner2
         {
             Compile.Run(Canvas.CanvObj,Canvas.CanvLines);
         }
+
+        public void ClearCanvas()
+        {
+            canvas1.ClearOnClock();
+        }
     }
 }
