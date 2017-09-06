@@ -129,6 +129,7 @@ namespace UmlDesigner2
                         canvas1.Delete();
                         break;
                     case Keys.F5://start
+                        Run();
                         break;
                 }
         }

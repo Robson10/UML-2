@@ -22,11 +22,11 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
             FullRowSelect = true;
             MultiSelect = false;
             Compile.Results.TextChanged += Results_TextChanged;
-            Compile.Run();
         }
 
         private void Results_TextChanged(object sender, EventArgs e)
         {
+            Items.Clear();
             Items.Add(new ListViewItem(Compile.Results.Text));
         }
 

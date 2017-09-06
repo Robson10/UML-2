@@ -32,7 +32,7 @@ namespace UmlDesigner2
 
         private void MyToolStripContainer_Run_Click(object sender, EventArgs e)
         {
-            throw new NotImplementedException();
+            Run();
         }
 
         private void MyToolStripContainer_OpenCloudFile_Click(object sender, EventArgs e)

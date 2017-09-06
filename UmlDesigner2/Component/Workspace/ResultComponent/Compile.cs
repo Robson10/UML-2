@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.CSharp;
+using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace.ResultComponent
 {
@@ -26,58 +27,25 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
 
     public static void LookForErrors(string Code)
         {
-            //string language = "C++";
-            //CodeDomProvider provider= CodeDomProvider.CreateProvider(language);
-            //Process.Start("gcc.exe", "a.cpp");
-            //provider.CompileAssemblyFromSource(new CompilerParameters(), TestCode);
 
-            //// Check for a provider corresponding to the input language.   
-            //if (CodeDomProvider.IsDefinedLanguage(language))
-            //{
-            //    CompilerInfo langCompilerInfo = CodeDomProvider.GetCompilerInfo(language);
-            //    CompilerParameters langCompilerConfig = langCompilerInfo.CreateDefaultCompilerParameters();
-            //}
-            //else
-            //{
-            //    // Tell the user that the language provider was not found.
-            //    MessageBox.Show("There is no provider configured for input language " + language);
-            //}
-
-            //System.CodeDom.Compiler.CompilerParameters parameters = new CompilerParameters();
-            //parameters.GenerateExecutable = true;
-            //parameters.OutputAssembly = Output;
-            //System.CodeDom.Compiler.ICodeCompiler icc = codeProvider.CreateCompiler();
-            //CompilerResults results = icc.CompileAssemblyFromSource(parameters, Code);
-            //if (results.Errors.Count > 0)
-            //{
-            //    foreach (CompilerError CompErr in results.Errors)
-            //    {
-            //        Results.Text = Results.Text +
-            //                       "Line number " + CompErr.Line +
-            //                       ", Error Number: " + CompErr.ErrorNumber +
-            //                       ", '" + CompErr.ErrorText + ";" +
-            //                       Environment.NewLine + Environment.NewLine;
-            //    }
-            //}
-            //else
-            //{
-            //    Results.Text = "No Errors";
-            //    System.Diagnostics.Process.Start(Output);
-            //}
         }
 
-        public static void Debug()
+        public static void Debug(ListCanvasBlocks blocks, ListCanvasLines lines)
         {
-
+            ReadCodeFromBlocks(ref blocks, ref lines);
+            LookForErrors(TestCode);
         }
 
         public static void DebugNextStep()
         {
         }
 
-        public static void Run()
+        public static void Run(ListCanvasBlocks blocks, ListCanvasLines lines)
         {
+            //ReadCodeFromBlocks(ref blocks,ref lines);
             LookForErrors(TestCode);
+            //LookForErrors(TestCode);
+
         }
 
         public static void Build()
@@ -89,8 +57,44 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         {
             
         }
-        
 
-  
+        private static void ReadCodeFromBlocks(ref ListCanvasBlocks blocks, ref ListCanvasLines lines)
+        {
+            Results.Text = "";
+            var myBlock = blocks[0];
+            if (blocks.Count > 0 && lines.Count > 0)
+            {
+                myBlock = blocks.Find(x => x.Shape == Helper.Shape.Start);
+                if (myBlock == null) //sprawdzenie czy algorytm ma blok start
+                {
+                    Results.Text = "Błąd: algorytm musi posiadać " +
+                                   Helper.DefaultBlocksSettings[Helper.Shape.Start].Label;
+                    return;
+                }
+                Results.Text += myBlock.Label;
+
+                for (int i = 0; i < lines.Count; i++)
+                {
+                    var id = lines.Find(x => x.BeginId == myBlock.ID).EndId;
+                    myBlock = blocks.Find(x => x.ID == id);
+                    Results.Text += myBlock.Label;
+                    //sprawdzenie czy nie probujemy dołączać do algorytmu obiektów dodanych gdzieś na boku
+                    //nie będące połączone ze startem
+                    if (myBlock.Shape == Helper.Shape.End)
+                        break;
+                }
+
+                //jeżeli algorytm nie kończy się blokiem end jest on niepełny
+                if (myBlock.Shape == Helper.Shape.End)
+                    Results.Text += "Powodzenie";
+                else
+                    Results.Text += "Błąd: algorytm musi posiadać " +
+                                    Helper.DefaultBlocksSettings[Helper.Shape.End].Label;
+
+            }
+
+        }
+
+
     }
 }

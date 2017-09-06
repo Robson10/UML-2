@@ -57,6 +57,9 @@
     <Compile Include="Component\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="Form1Partials\Form1Methods.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="Helper.cs" />
     <Compile Include="Component\SettingsWindow.cs" />
     <Compile Include="Component\TabsArea\BlockPropertis\Properties.cs">
@@ -79,13 +82,13 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\CanvasArea\Canvas.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\CanvasArea\CanvasContextMenu.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\CanvasArea\Canvas_Methoods.cs">
-      <SubType>UserControl</SubType>
+      <SubType>Component</SubType>
     </Compile>
     <Compile Include="Component\Workspace\CanvasArea\ListCanvasBlocks.cs" />
     <Compile Include="Component\Workspace\CanvasArea\ListCanvasLines.cs" />

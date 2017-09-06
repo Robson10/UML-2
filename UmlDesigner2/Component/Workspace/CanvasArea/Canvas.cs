@@ -4,14 +4,14 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    sealed partial class Canvas : UserControl
+    sealed partial class Canvas : Panel
     {
         private readonly Clock.Clock _clock = new Clock.Clock();
-        private static ListCanvasBlocks _canvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
-        private static readonly ListCanvasLines _canvLines = new ListCanvasLines()
+        public static ListCanvasBlocks CanvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
+        public static ListCanvasLines CanvLines = new ListCanvasLines()
             ; //lista blokow wyrysowanych na ekranie
 
-        private readonly Rubbers _rubbers = new Rubbers(ref _canvObj);
+        private readonly Rubbers _rubbers = new Rubbers(ref CanvObj);
 
         public bool IsMultiSelect { get; set; }
         private Helper.Shape _shapeToDraw = Helper.Shape.Nothing;
@@ -28,7 +28,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private bool _ppm = true; //czy teraz resize czu moze menu kontekstowe
         private Point _mouseDownLocation;
-
         public Canvas()
         {
             DoubleBuffered = true;
@@ -37,9 +36,29 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Controls.Add(_clock);
             ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
-            
         }
         
+        protected override void OnSizeChanged(EventArgs e)
+        {
+            AutoScroll = false;
+            AutoScrollMinSize = new Size(5000, 5000);
+            AutoScroll = true;
+            _clock.Location = new Point(ClientRectangle.Width-_clock.Width-AutoScrollPosition.X,AutoScrollPosition.Y);
+            if (Parent != null)
+            {
+                Location = new Point(0, 0);
+                Size = new Size(Parent.ClientRectangle.Size.Width-10,Parent.ClientRectangle.Height);
+            }
+        }
+        protected override void OnMouseWheel(MouseEventArgs e)
+        {
+            base.OnMouseWheel(e);
+            var y = -AutoScrollPosition.Y + e.Delta / 5;
+            AutoScrollPosition = new Point(-AutoScrollPosition.X, (y<=0)?0:y);
+            _clock.Location = new Point(ClientRectangle.Width - _clock.Width - AutoScrollPosition.X, 0);
+            Invalidate();
+        }
+
         protected override void OnMouseClick(MouseEventArgs e)
         {
             //po kliknięciu ppm bez przesówania pojawia się menu kontekstowe a także przerywane jest dodawanie elementów do canvasa
@@ -53,7 +72,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnMouseDown(MouseEventArgs e)
         {
             //metoda dodająca obiekt do canvasu po LPM, zaznaczająca element jeżeli nie dodajemy obiektu. W przypadku PPM Zmienia cursor Na resize i sprawdza który obiekt bedzie resizowany.
-            if (!IsMultiSelect) _canvObj.My_IsSelectedSetForAll(false);
+            if (!IsMultiSelect) CanvObj.My_IsSelectedSetForAll(false);
 
             if (e.Button == MouseButtons.Left)
             {
@@ -62,9 +81,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
             else if (e.Button == MouseButtons.Right)
             {
-                PPM_SelectForResizinrOrContextMenu(e.Location);
+                PPM_SelectForResizeOrContextMenu(e.Location);
             }
-            _mouseDownLocation = e.Location;
+            _mouseDownLocation = new Point(e.Location.X+ -AutoScrollPosition.X,e.Location.Y+-AutoScrollPosition.Y);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -75,7 +94,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (e.Button == MouseButtons.Left)
                 {
                     if(SelectRect==Rectangle.Empty)
-                    _selectByRect = LPM_MoveObject(e.Location);
+                        _selectByRect = LPM_MoveObject(e.Location);
                     if (_selectByRect)
                         LPM_SelectObjectByRect(_mouseDownLocation,e.Location);
                 }
@@ -89,24 +108,26 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (ShapeToDraw != Helper.Shape.ConnectionLine)
                 Cursor = Cursors.Default;
-            HideSelectionRect();
 
+            HideSelectionRect();
             ShowProperties();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            e.Graphics.TranslateTransform(AutoScrollPosition.X,AutoScrollPosition.Y);
+            
             e.Graphics.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.AntiAlias;
-            for (int i = 0; i < _canvLines.Count; i++)
+            for (int i = 0; i < CanvLines.Count; i++)
             {
-                if (_canvLines[i].BackColor == Helper.DefaultBlocksSettings[Helper.Shape.ConnectionLine].BackColor)
-                    _canvLines[i].My_DrawConnectionLine(e.Graphics);
+                if (CanvLines[i].BackColor == Helper.DefaultBlocksSettings[Helper.Shape.ConnectionLine].BackColor)
+                    CanvLines[i].My_DrawConnectionLine(e.Graphics);
                 else
-                    _canvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);
+                    CanvLines[i].My_DrawConnectionLineForDecisionBlock(e.Graphics);
             }
 
-            for (int i = _canvObj.Count - 1; i >= 0; i--)
-                _canvObj[i].Draw(e.Graphics);
+            for (int i = CanvObj.Count - 1; i >= 0; i--)
+                CanvObj[i].Draw(e.Graphics);
 
             if (SelectRect != Rectangle.Empty)
                 e.Graphics.FillRectangle(CanvasVariables.SelectionRectBrush, SelectRect);

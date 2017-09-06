@@ -9,6 +9,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private ListCanvasBlocks _canvasBlocks;
         private Point MouseDownLocation_Rubbers;
+        private Point AutoScrollPosition;
 
         public Rubbers(ref ListCanvasBlocks _listCanvasBlocks)
         {
@@ -50,7 +51,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void Rubbers_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                MouseDownLocation_Rubbers = e.Location;
+                MouseDownLocation_Rubbers =e.Location;
         }
 
         /// <summary>
@@ -62,9 +63,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (e.Button == MouseButtons.Left)
             {
-                _canvasBlocks.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, e.Location,
+                var _scrolledPoint = e.Location;
+                _canvasBlocks.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, _scrolledPoint,
                     (sender as UserControl).TabIndex);
-                if (_canvasBlocks.Count > 0) ShowRubbers(_canvasBlocks[0]);
+                if (_canvasBlocks.Count > 0)
+                    ShowRubbers(_canvasBlocks[0],AutoScrollPosition);
                 this[0].Parent.Invalidate();
             }
         }
@@ -72,19 +75,20 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         /// <summary>
         /// Metoda aktualizująca(wyliczająca) położenie gumek po kliknięciu na blok oraz po zmianie jego rozmiaru. Dodatkowo wywołuje metodę odpowiedzialną za widoczność gumek.
         /// </summary>
-        public void ShowRubbers(MyBlock canvasObject)
+        public void ShowRubbers(MyBlock canvasObject,Point autoScrollPosition)
         {
+            AutoScrollPosition = autoScrollPosition;
             if (canvasObject.IsSelected)
             {
-                var centerX = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width / 2 -
+                var centerX = canvasObject.Rect.Location.X+ autoScrollPosition.X + canvasObject.Rect.Size.Width / 2 -
                               Helper.RubberSize.Width / 2;
-                var centerY = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height / 2 -
+                var centerY = canvasObject.Rect.Location.Y+ autoScrollPosition.Y + canvasObject.Rect.Size.Height / 2 -
                               Helper.RubberSize.Height / 2;
 
-                var left = canvasObject.Rect.Location.X - Helper.RubberSize.Width;
-                var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width;
-                var up = canvasObject.Rect.Location.Y - Helper.RubberSize.Height;
-                var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height;
+                var left = canvasObject.Rect.Location.X - Helper.RubberSize.Width+ autoScrollPosition.X;
+                var right = canvasObject.Rect.Location.X + canvasObject.Rect.Size.Width+ autoScrollPosition.X;
+                var up = canvasObject.Rect.Location.Y - Helper.RubberSize.Height+ autoScrollPosition.Y;
+                var down = canvasObject.Rect.Location.Y + canvasObject.Rect.Size.Height+ autoScrollPosition.Y;
 
                 var topLeft = new Point(left, up);
                 var topCenter = new Point(centerX, up);

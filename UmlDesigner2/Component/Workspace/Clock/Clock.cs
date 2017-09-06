@@ -19,7 +19,7 @@ namespace UmlDesigner2.Component.Workspace.Clock
         public Clock()
         {
             DoubleBuffered = true;
-            Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            //Anchor = AnchorStyles.Top | AnchorStyles.Right;
             Update();
             Start(); //bedzie wywolywane z zewnątrz
             _contextMenu=new ContextMenuStrip();

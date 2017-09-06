@@ -16,22 +16,22 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void OnPropertiesChange()
         {
-            _canvObj[0].UpdateRectSizeOnAutoresize();
-            _canvLines.MyUpdate(ref _canvObj);
-            _rubbers.ShowRubbers(_canvObj[0]);
+            CanvObj[0].UpdateRectSizeOnAutoresize();
+            CanvLines.MyUpdate(ref CanvObj);
+            _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
             Invalidate();
         }
         private void ShowProperties()
         {
-            if (_canvObj.Count > 0)
-                if (_canvObj[0].IsSelected)
+            if (CanvObj.Count > 0)
+                if (CanvObj[0].IsSelected)
                 {
-                    if (_canvObj.Count > 1 && _canvObj[1].IsSelected)
+                    if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
                     {
                         (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
                         return;
                     }
-                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(_canvObj[0]);
+                    (Parent.Parent.Parent.Parent.Parent as Form1).MyCreateBlockProp(CanvObj[0]);
                 }
                 else
                     (Parent.Parent.Parent.Parent.Parent as Form1).MyRemoveBlockProp();
@@ -56,11 +56,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (ShapeToDraw == Helper.Shape.Start)
                 {
                     if (!CheckIsStartExist())
-                        _canvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
+                        CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
                 }
                 else
                 {
-                    _canvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
+                    CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
                 }
                 ShapeToDraw = Helper.Shape.Nothing;
                 Invalidate();
@@ -83,8 +83,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private bool CheckIsStartExist()
         {
-            for (int i = 0; i < _canvObj.Count; i++)
-                if (_canvObj[i].Shape == Helper.Shape.Start)
+            for (int i = 0; i < CanvObj.Count; i++)
+                if (CanvObj[i].Shape == Helper.Shape.Start)
                 {
                     MessageBox.Show("Każdy schemat blokowy może posiadać tylko jeden początek (blok startu)");
                     Cursor = Cursors.Default;
@@ -98,20 +98,20 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (ShapeToDraw != Helper.Shape.Nothing)
             {
                 ShapeToDraw = Helper.Shape.Nothing;
-                _canvLines.MyAbortAdd(); //usuniecie 1 pkt lini (jeśli jest)
+                CanvLines.MyAbortAdd(); //usuniecie 1 pkt lini (jeśli jest)
                 _rubbers.MyHideRubbers();
             }
         }
 
         private void SetIsLockedForObject()
         {
-            _canvObj.MySetIsLockedForSelectedObj();
+            CanvObj.MySetIsLockedForSelectedObj();
             IsMultiSelect = false;
         }
 
         private void AutoResizeBlockToContent()
         {
-            _canvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
+            CanvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
             ShowProperties();
         }
 
@@ -119,12 +119,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void Delete()
         {
-            for (int i = _canvObj.Count - 1; i >= 0; i--)
+            for (int i = CanvObj.Count - 1; i >= 0; i--)
             {
-                if (_canvObj[i].IsSelected && !_canvObj[i].IsLocked)
+                if (CanvObj[i].IsSelected && !CanvObj[i].IsLocked)
                 {
-                    _canvLines.MyRemove(_canvObj[i].ID);
-                    _canvObj.MyDelete(i);
+                    CanvLines.MyRemove(CanvObj[i].ID);
+                    CanvObj.MyDelete(i);
                     _rubbers.MyHideRubbers();
                     RemoveProperties();
                 }
@@ -136,9 +136,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(Helper.BlockClipboardFormat, _canvObj.MyCopy(Helper.BlockClipboardFormat));
+            clips.SetData(Helper.BlockClipboardFormat, CanvObj.MyCopy(Helper.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(Helper.LineClipboardFormat, _canvLines.MyCopy(Helper.LineClipboardFormat, Helper.BlockClipboardFormat));
+            clips.SetData(Helper.LineClipboardFormat, CanvLines.MyCopy(Helper.LineClipboardFormat, Helper.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
         }
@@ -147,9 +147,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            clips.SetData(Helper.BlockClipboardFormat, _canvObj.MyCut(Helper.BlockClipboardFormat));
+            clips.SetData(Helper.BlockClipboardFormat, CanvObj.MyCut(Helper.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
-            clips.SetData(Helper.LineClipboardFormat, _canvLines.MyCut(Helper.LineClipboardFormat, Helper.BlockClipboardFormat));
+            clips.SetData(Helper.LineClipboardFormat, CanvLines.MyCut(Helper.LineClipboardFormat, Helper.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
 
@@ -159,7 +159,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void Paste()
         {
-            _canvObj.My_IsSelectedSetForAll(false);
+            CanvObj.My_IsSelectedSetForAll(false);
             _rubbers.MyHideRubbers();
             if (Clipboard.ContainsData(Helper.BlockClipboardFormat))
             {
@@ -170,14 +170,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
                         var oldId = blockTemp[i].ID;
-                        var newId = _canvObj.MyPaste(blockTemp[i]);
+                        var newId = CanvObj.MyPaste(blockTemp[i]);
                         if (lineTemp.Count > 0)
                         {
                             lineTemp.Where(w => w.BeginId == oldId).ToList().ForEach(f => f.BeginId = newId);
                             lineTemp.Where(w => w.EndId == oldId).ToList().ForEach(f => f.EndId = newId);
                         }
                     }
-                    _canvLines.MyPaste(lineTemp);
+                    CanvLines.MyPaste(lineTemp);
                 }
                 Invalidate();
             }
@@ -199,17 +199,18 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (ShapeToDraw != Helper.Shape.Nothing)
             {
+                var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
                 if (ShapeToDraw == Helper.Shape.ConnectionLine)
                 {
-                    _canvLines.MyAdd(e, ref _shapeToDraw, ref _canvObj);
-                    _canvObj.My_SelectObjectContainingPoint(e);
+                    CanvLines.MyAdd(_scrolledPoint, ref _shapeToDraw, ref CanvObj);
+                    CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
                 }
                 else
                 {
-                    _canvObj.MyAdd(e, ShapeToDraw);
+                    CanvObj.MyAdd(_scrolledPoint, ShapeToDraw);
                     ShapeToDraw = Helper.Shape.Nothing;
                 }
-                if (_canvObj.Count>0) _rubbers.ShowRubbers(_canvObj[0]);
+                if (CanvObj.Count>0) _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
                 ShowProperties();
                 Invalidate();
             }
@@ -218,22 +219,25 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void LPM_SelectObjectByClick(Point e)
         {
             if (ShapeToDraw == Helper.Shape.Nothing)
-                if (_canvObj.Count > 0)
+                if (CanvObj.Count > 0)
                 {
-                    _canvObj.My_SelectObjectContainingPoint(e);
-                    _rubbers.ShowRubbers(_canvObj[0]);
+                    var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+                    CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
+                    _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
                     Invalidate();
                 }
         }
 
         private bool LPM_MoveObject(Point e)
         {
-            if (_canvObj.My_MoveSelectedObjects(ref _mouseDownLocation, e))
+
+            var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+            if (CanvObj.My_MoveSelectedObjects(ref _mouseDownLocation, _scrolledPoint))
             {
-                _canvLines.MyUpdate(ref _canvObj);
-                if (_canvObj.Count > 0)
-                    _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
-                _mouseDownLocation = e;
+                CanvLines.MyUpdate(ref CanvObj);
+                if (CanvObj.Count > 0)
+                    _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition); //zawsze index 0 to to ostatni zaznaczony objekt
+                _mouseDownLocation = _scrolledPoint;
                 Invalidate();
                 return false;
             }
@@ -242,21 +246,22 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void LPM_SelectObjectByRect(Point mouseDown, Point e)
         {
+            var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
             int bufor;
-            if (e.X < mouseDown.X)
+            if (_scrolledPoint.X < mouseDown.X)
             {
-                bufor = e.X;
-                e.X = mouseDown.X;
+                bufor = _scrolledPoint.X;
+                _scrolledPoint.X = mouseDown.X;
                 mouseDown.X = bufor;
             }
-            if (e.Y < mouseDown.Y)
+            if (_scrolledPoint.Y < mouseDown.Y)
             {
-                bufor = e.Y;
-                e.Y = mouseDown.Y;
+                bufor = _scrolledPoint.Y;
+                _scrolledPoint.Y = mouseDown.Y;
                 mouseDown.Y = bufor;
             }
-            SelectRect = new Rectangle(mouseDown.X, mouseDown.Y, e.X - mouseDown.X, e.Y - mouseDown.Y);
-            _canvObj.MySelectObjectByRect(SelectRect);
+            SelectRect = new Rectangle(mouseDown.X, mouseDown.Y, _scrolledPoint.X - mouseDown.X, _scrolledPoint.Y - mouseDown.Y);
+            CanvObj.MySelectObjectByRect(SelectRect);
             Invalidate();
         }
 
@@ -267,18 +272,19 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void PPM_TryShowContextMenu(Point e)
         {
-            if (_canvObj.My_IsAnyObjectContainingPoint(e))
+            var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+            if (CanvObj.My_IsAnyObjectContainingPoint(_scrolledPoint))
             {
                 ShowContextMenu(e);
-                _rubbers.ShowRubbers(_canvObj[0]);
+                _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
             }
         }
 
-        private void PPM_SelectForResizinrOrContextMenu(Point e)
+        private void PPM_SelectForResizeOrContextMenu(Point e)
         {
             Cursor = Cursors.SizeAll;
-            _canvObj.My_SelectObjectContainingPoint(e);
-
+            var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+            CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
             _ppm = true;
             Invalidate();
         }
@@ -287,10 +293,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (ShapeToDraw != Helper.Shape.Nothing) return;
             _ppm = false;
-            _canvObj.My_ResizeSelectedObjects(ref _mouseDownLocation, e);
-            _canvLines.MyUpdate(ref _canvObj);
-            if (_canvObj.Count > 0)
-                _rubbers.ShowRubbers(_canvObj[0]); //zawsze index 0 to to ostatni zaznaczony objekt
+            CanvObj.My_ResizeSelectedObjects(ref _mouseDownLocation, e);
+            CanvLines.MyUpdate(ref CanvObj);
+            if (CanvObj.Count > 0)
+                _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition); //zawsze index 0 to to ostatni zaznaczony objekt
             _mouseDownLocation = e;
             Invalidate();
         }
