@@ -194,6 +194,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         }
                     }
                     CanvLines.MyPaste(lineTemp);
+                    if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
+                        OnHideBlockProperties();
+                    else
+                        OnShowBlockProperties();
                 }
                 Invalidate();
             }

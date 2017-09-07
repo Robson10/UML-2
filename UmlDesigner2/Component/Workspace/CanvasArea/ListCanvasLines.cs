@@ -5,10 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    class ListCanvasLines:List<MyLine>
+    public class ListCanvasLines:List<MyLine>
     {
         /// <summary>
         /// Metoda dodająca linię do listy
@@ -168,9 +169,22 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public Point EndPoint = Point.Empty;
         public int BeginId, EndId;
         public bool IsSelected = false; //czy jest zaznaczona
+        [XmlIgnore]
         public Color BackColor;
+        [XmlAttribute]
+        public string BackColorHTML
+        {
+            get { return ColorTranslator.ToHtml(BackColor); }
+            set { BackColor = ColorTranslator.FromHtml(value); }
+        }
         public bool IsTrue = true;
-
+        /// <summary>
+        /// for serialization
+        /// </summary>
+        public MyLine()
+        {
+            
+        }
         /// <summary>
         /// Konstruktor dla wszystkich lini z wyjątkiem lini wychodzących z bloku decyzyjnego
         /// </summary>

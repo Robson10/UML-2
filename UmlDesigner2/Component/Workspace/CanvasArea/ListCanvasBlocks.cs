@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
@@ -178,10 +179,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void MyAdd(Point e, Helper.Shape shapeToDraw)
         {
-            Insert(0, (new MyBlock(new Rectangle(e.X - Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Width / 2,
+            Insert(0, 
+                new MyBlock(new Rectangle(e.X - Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Width / 2,
                     e.Y - Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Height / 2, Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Width,
                     Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Height),
-                shapeToDraw, _id)));
+                shapeToDraw, _id));
             _id++;
         }
 
@@ -230,10 +232,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     [Serializable]
     public class MyBlock
     {
-        public Helper.Shape Shape { get; }
+        public Helper.Shape Shape;
         public string Label = "";
         public string Code  = "";
-        public bool IsSelected  = false;
+        public bool IsSelected = false;
         public bool IsLocked = false;
         public bool AutoResize  = false;
         public int ID;
@@ -260,11 +262,39 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
             }
         } //obszar dla figury 
-
-        public Color BackColor { get; set; }
+        [XmlIgnore]
+        public Color BackColor;
+        [XmlIgnore]
         public Color BackColorStorage;
+        [XmlIgnore]
         public Color FontColor;
+
+        [XmlAttribute]
+        public string BackColorHTML
+        {
+            get { return ColorTranslator.ToHtml(BackColor); }
+            set { BackColor = ColorTranslator.FromHtml(value); }
+        }
+        [XmlAttribute]
+        public string BackColorStorageHTML
+        {
+            get { return ColorTranslator.ToHtml(BackColorStorage); }
+            set { BackColorStorage = ColorTranslator.FromHtml(value); }
+        }
+        [XmlAttribute]
+        public string FontColorHTML
+        {
+            get { return ColorTranslator.ToHtml(FontColor); }
+            set { FontColor = ColorTranslator.FromHtml(value); }
+        }
         public int FontSize;
+        /// <summary>
+        /// only for serialization
+        /// </summary>
+        public MyBlock()
+        {
+            
+        }
         public MyBlock(Rectangle rect, Helper.Shape shape, int id)
         {
             Rect = rect;

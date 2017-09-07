@@ -125,6 +125,5 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
                     _block.Rect = new Rectangle(_block.Rect.Location, value);
             }
         }
-
     }
 }

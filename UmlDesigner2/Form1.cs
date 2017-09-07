@@ -144,8 +144,13 @@ namespace UmlDesigner2
                         canvas1.AbortAddingObject();
                         break;
                     case Keys.Delete:
-                        if (_properties != null && !_properties.ContainsFocus)
-                        canvas1.Delete();
+                        if (_properties != null)
+                        {
+                            if (!_properties.ContainsFocus)
+                                canvas1.Delete();
+                        }
+                        else
+                            canvas1.Delete();
                         break;
                     case Keys.F5://start
                         Run();
