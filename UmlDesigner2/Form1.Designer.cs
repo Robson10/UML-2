@@ -38,11 +38,11 @@ namespace UmlDesigner2
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
-            this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
             this.myToolStrip1 = new UmlDesigner2.Component.ToolStripArea.MyToolStrip();
             this.clock1 = new UmlDesigner2.Component.Workspace.Clock.Clock();
             this.MenuStrip.SuspendLayout();
@@ -112,7 +112,7 @@ namespace UmlDesigner2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer3);
             this.splitContainer1.Size = new System.Drawing.Size(1120, 451);
-            this.splitContainer1.SplitterDistance = 232;
+            this.splitContainer1.SplitterDistance = 270;
             this.splitContainer1.TabIndex = 12;
             // 
             // splitContainer2
@@ -125,9 +125,22 @@ namespace UmlDesigner2
             // splitContainer2.Panel1
             // 
             this.splitContainer2.Panel1.Controls.Add(this.tabsArea1);
-            this.splitContainer2.Size = new System.Drawing.Size(232, 451);
+            this.splitContainer2.Size = new System.Drawing.Size(270, 451);
             this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
+            // 
+            // tabsArea1
+            // 
+            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsArea1.Location = new System.Drawing.Point(0, 0);
+            this.tabsArea1.Multiline = true;
+            this.tabsArea1.Name = "tabsArea1";
+            this.tabsArea1.SelectedIndex = 0;
+            this.tabsArea1.Size = new System.Drawing.Size(188, 50);
+            this.tabsArea1.TabIndex = 0;
             // 
             // splitContainer3
             // 
@@ -139,9 +152,23 @@ namespace UmlDesigner2
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.canvas1);
-            this.splitContainer3.Size = new System.Drawing.Size(884, 451);
+            this.splitContainer3.Size = new System.Drawing.Size(846, 451);
             this.splitContainer3.SplitterDistance = 391;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // canvas1
+            // 
+            this.canvas1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.canvas1.AutoScroll = true;
+            this.canvas1.AutoScrollMinSize = new System.Drawing.Size(5000, 5000);
+            this.canvas1.BackColor = System.Drawing.Color.White;
+            this.canvas1.IsMultiSelect = false;
+            this.canvas1.Location = new System.Drawing.Point(0, 0);
+            this.canvas1.Name = "canvas1";
+            this.canvas1.Size = new System.Drawing.Size(836, 391);
+            this.canvas1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -164,31 +191,6 @@ namespace UmlDesigner2
             this.tabPage2.Text = "tabPage2";
             this.tabPage2.UseVisualStyleBackColor = true;
             this.tabPage2.Visible = false;
-            // 
-            // tabsArea1
-            // 
-            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsArea1.Location = new System.Drawing.Point(0, 0);
-            this.tabsArea1.Multiline = true;
-            this.tabsArea1.Name = "tabsArea1";
-            this.tabsArea1.SelectedIndex = 0;
-            this.tabsArea1.Size = new System.Drawing.Size(232, 193);
-            this.tabsArea1.TabIndex = 0;
-            // 
-            // canvas1
-            // 
-            this.canvas1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.canvas1.BackColor = System.Drawing.Color.White;
-            this.canvas1.IsMultiSelect = false;
-            this.canvas1.Location = new System.Drawing.Point(427, 200);
-            this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(200, 100);
-            this.canvas1.TabIndex = 0;
             // 
             // myToolStrip1
             // 

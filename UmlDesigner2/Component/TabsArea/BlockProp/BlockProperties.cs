@@ -7,7 +7,6 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.TabsArea.BlockPropertis
 {
-    
     public partial class BlockProperties : UserControl
     {
         private GroupBox _grLabel, _grCode;
@@ -38,7 +37,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         public void UpdateProperties()
         {
             _pg.SelectedObject= new PropertyGridItems(_block);
-            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
+            SetPropertyLabelColumnWidth(_pg);
         }
 
         /// <summary>
@@ -49,45 +48,27 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         {
             BackColor = Color.White;
             Location = new Point(0, 0);
-            AutoScroll = false;
-            VerticalScroll.Visible = true;
-            AutoScroll = true;
-            AutoScrollPosition = new Point(0, 0);
-            Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            HorizontalScroll.Maximum = 0;
+            Dock = DockStyle.Fill;
+            _pg = new PropertyGrid()
+            {
+                Location = new Point(_grCode?.Left ?? 0, _grCode?.Bottom ?? 0),
+                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                Size = new Size(ClientRectangle.Size.Width - 10, 220),
+                PropertySort = PropertySort.NoSort,
+            };
+            _pg.Dock = DockStyle.Top;
+            _pg.PropertyValueChanged += Pg_PropertyValueChanged;
+            Controls.Add(_pg);
 
             if (_block.Shape != Helper.Shape.Start && _block.Shape != Helper.Shape.End)
             {
-                _grLabel = new GroupBox()
-                {
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                    Text = "Etykieta",
-                    Font = new Font("Arial", 13),
-                    Location = new Point(5, 0),
-                    Size = new Size(ClientRectangle.Width - 10, 70)
-                };
-
-                _tbLabel = new TextBox()
-                {
-                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                    Font = new Font("Arial", 12),
-                    Location = new Point(5, 20),
-                    Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25),
-                    Multiline = true,
-                    ScrollBars = ScrollBars.Vertical,
-                    Text = _block.Label
-                };
-                _tbLabel.KeyUp += TbLabel_KeyUp;
-
                 _grCode = new GroupBox()
                 {
-                    Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
                     Text = "Kod",
                     Font = new Font("Arial", 13),
-                    Location = new Point(_grLabel.Left, _grLabel.Bottom),
-                    Size = new Size(ClientRectangle.Width - 10, 100)
+                    Size = new Size(ClientRectangle.Width - 10, 100),
+                    Dock = DockStyle.Top
                 };
-
                 _tbCode = new TextBox()
                 {
                     Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
@@ -100,22 +81,30 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
                 };
                 _tbCode.KeyUp += TbCode_KeyUp;
 
-                Controls.Add(_grLabel);
+                _grLabel = new GroupBox()
+                {
+                    Text = "Etykieta",
+                    Font = new Font("Arial", 13),
+                    Size = new Size(ClientRectangle.Width - 10, 70),
+                    Dock = DockStyle.Top
+                };
+                _tbLabel = new TextBox()
+                {
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Font = new Font("Arial", 12),
+                    Location = new Point(5, 20),
+                    Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Text = _block.Label
+                };
+                _tbLabel.KeyUp += TbLabel_KeyUp;
+
                 Controls.Add(_grCode);
+                Controls.Add(_grLabel);
                 _grLabel.Controls.Add(_tbLabel);
                 _grCode.Controls.Add(_tbCode);
             }
-            _pg = new PropertyGrid()
-            {
-                Location = new Point(_grCode?.Left ?? 0, _grCode?.Bottom ?? 0),
-                Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
-                Size = new Size(ClientRectangle.Size.Width - 10, 250),
-                PropertySort = PropertySort.NoSort,
-            };
-            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
-            _pg.PropertyValueChanged += Pg_PropertyValueChanged;
-
-            Controls.Add(_pg);
         }
 
         /// <summary>
@@ -123,9 +112,9 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// </summary>
         /// <param name="grid"></param>
         /// <param name="width"></param>
-        private void SetPropertyLabelColumnWidth(PropertyGrid grid, int width)
+        private void SetPropertyLabelColumnWidth(PropertyGrid grid)
         {
-            width = 130;
+            var width = 130;
             var memberInfo = grid.GetType().GetField("gridView", BindingFlags.Instance | BindingFlags.NonPublic);
             if (memberInfo != null)
             {
@@ -175,9 +164,8 @@ namespace UmlDesigner2.Component.TabsArea.BlockPropertis
         /// <param name="e"></param>
         protected override void OnResize(EventArgs e)
         {
-            _pg.Size = new Size(ClientRectangle.Size.Width - 10, 250);
-            SetPropertyLabelColumnWidth(_pg, _pg.Width * 60 / 100);
             AutoScroll = true;
+            SetPropertyLabelColumnWidth(_pg);
         }
 
         /// <summary>

@@ -26,13 +26,14 @@ namespace UmlDesigner2
         private void Clock1_EgzamEnded(object sender, EventArgs e)
         {
             //zablokowanie aplikacji procz kompilacji
-            throw new NotImplementedException();
+            myToolStrip1.BlockButtonsForEgzam();
         }
 
         //todo zablokować wczytywanie pliku
         private void Clock1_EgzamStarted(object sender, EventArgs e)
         {
             canvas1.ClearCanvas();
+            myToolStrip1.BlockButtonsForEgzam();
         }
 
 
@@ -83,81 +84,50 @@ namespace UmlDesigner2
         }
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Modifiers==Keys.Control )
-                switch (e.KeyCode)
-                {
-                    case Keys.C://kopiowanie
-                        canvas1.Copy();
-                        break;
-                    case Keys.X://wycinanie
-                        canvas1.Cut();
-                        break;
-                    case Keys.V://wklejanie
-                        canvas1.Paste();
-                        break;
-                    case Keys.Z://cofanie
-                        if (canvas1.Focused)
-                        canvas1.Undo();
-                        break;
-                    case Keys.Y://do przodu
-                        if (canvas1.Focused)
-                        canvas1.Redo();
-                        break;
-                    case Keys.S://Zapisz
-                        SaveFile();
-                        break;
-                    case Keys.N://Nowy Plik
-                        NewFile();
-                        break;
-                    case Keys.O://otworz plik
-                        OpenFile();
-                        break;
-                    case Keys.ControlKey:
-                        canvas1.IsMultiSelect = true;
-                        break;
-                }
-            else if (e.Modifiers == Keys.Shift)
+            if (e.Modifiers == Keys.Control)
             {
-                switch (e.KeyCode)
-                {
-                    case Keys.F5: //debug
-                        Debug();
-                        break;
-                }
+                if (e.KeyCode == Helper.KeyCopy)
+                    canvas1.Copy();
+                else if (e.KeyCode == Helper.KeyCut)
+                    canvas1.Cut();
+                else if (e.KeyCode == Helper.KeyPaste)
+                    canvas1.Paste();
+                else if (e.KeyCode == Helper.KeyUndo && canvas1.Focused)
+                    canvas1.Undo();
+                else if (e.KeyCode == Helper.KeyRedo && canvas1.Focused)
+                    canvas1.Redo();
+                else if (e.KeyCode == Helper.KeySaveFile)
+                    SaveFile();
+                else if (e.KeyCode == Helper.KeyNewFile)
+                    NewFile();
+                else if (e.KeyCode == Helper.KeyOpenFile)
+                    OpenFile();
+                else if (e.KeyCode == Helper.KeyMultiselect)
+                    canvas1.IsMultiSelect = true;
             }
-            else if (e.Modifiers==(Keys.Control |Keys.Shift))
+            else if (e.KeyCode == Keys.Escape)
+                canvas1.AbortAddingObject();
+            else if (e.KeyCode == Helper.KeyRun)
+                Run();
+            else if (e.KeyCode == Helper.KeyDebug)
+                Debug();
+            else if (e.KeyCode == Keys.Delete)
             {
-                switch (e.KeyCode)
+                if (_properties != null)
                 {
-                    case Keys.S://zapisz jako
-                        SaveFileAs();
-                        break;
-                    case Keys.O: //otworz plik zdalny
-                        OpenFileFromServer();
-                        break;
+                    if (!_properties.ContainsFocus)
+                        canvas1.Delete();
                 }
+                else
+                    canvas1.Delete();
             }
-            else
-                switch (e.KeyCode)
-                {
-                    case Keys.Escape:
-                        canvas1.AbortAddingObject();
-                        break;
-                    case Keys.Delete:
-                        if (_properties != null)
-                        {
-                            if (!_properties.ContainsFocus)
-                                canvas1.Delete();
-                        }
-                        else
-                            canvas1.Delete();
-                        break;
-                    case Keys.F5://start
-                        Run();
-                        break;
-                }
+            else if (e.Modifiers == (Keys.Control | Keys.Shift))
+            {
+                if (e.KeyCode == Helper.KeySaveFileAs)
+                    SaveFileAs();
+                else if (e.KeyCode == Helper.KeyOpenFileFromServer)
+                    OpenFileFromServer();
+            }
         }
-
-
     }
 }

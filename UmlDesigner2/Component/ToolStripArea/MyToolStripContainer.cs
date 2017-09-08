@@ -62,6 +62,12 @@ namespace UmlDesigner2.Component.ToolStripArea
             this.Items.Add(_debug);
         }
 
+        public void BlockButtonsForEgzam()
+        {
+            _newFile.Enabled = false;
+            _openFile.Enabled = false;
+        }
+
         #region eventHandlers
         public event EventHandler NewFileClick
         {

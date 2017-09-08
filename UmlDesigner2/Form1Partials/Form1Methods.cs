@@ -33,11 +33,7 @@ namespace UmlDesigner2
             ToolStripAddEvents();
             TabsAddEvents();
         }
-
-
-        //todo
-        #region metody dla skrótów i przycisków z paska narzedzi
-        //todo usunąć uchwyt do pliku by ctrl+s nie nadpisało starego pliku
+        
         private void NewFile()
         {
             ActualFilePath = string.Empty;
@@ -89,12 +85,7 @@ namespace UmlDesigner2
                 }
             }
         }
-
-        private void OpenFileFromServer()
-        {
-            
-        }
-
+        
         private void SaveFile()
         {
             if (ActualFilePath== string.Empty)
@@ -166,26 +157,38 @@ namespace UmlDesigner2
             }
         }
 
+
+        //todo
+        #region metody dla skrótów i przycisków z paska narzedzi
+        //todo save shortcuts to file
+        private void Options()
+        {
+            Settings.SettingWindow settings = new Settings.SettingWindow();
+            if (settings.ShowDialog() == DialogResult.OK)
+            {
+                Helper.SaveShortcuts();
+            }
+        }
+
+        private void OpenFileFromServer()
+        {
+
+        }
+
+        private void LogIn()
+        {
+
+        }
+
         private void Debug()
         {
-            
+
         }
 
         private void Run()
         {
             Compile.Run(Canvas.CanvObj, Canvas.CanvLines);
         }
-
-        private void LogIn()
-        {
-            
-        }
-
-        private void Options()
-        {
-            
-        }
-
         #endregion
     }
 }

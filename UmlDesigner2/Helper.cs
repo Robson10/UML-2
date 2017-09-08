@@ -54,8 +54,30 @@ namespace UmlDesigner2
 
         #region Shortcuts
 
-        public static Keys MultiselectKey = Keys.ControlKey;
+        public static void SaveShortcuts()
+        {
 
+        }
+        public static void LoadShortcuts()
+        {
+
+        }
+        public static Keys KeyMultiselect = Keys.ControlKey;
+        public static Keys KeyRun = Keys.F5;
+        // ctrl
+        public static Keys KeyCopy = Keys.C;
+        public static Keys KeyCut = Keys.X;
+        public static Keys KeyPaste = Keys.V;
+        public static Keys KeyUndo = Keys.Z;
+        public static Keys KeyRedo = Keys.Y;
+        public static Keys KeySaveFile = Keys.S;
+        public static Keys KeyNewFile = Keys.N;
+        public static Keys KeyOpenFile = Keys.O;
+        //shift
+        public static Keys KeyDebug = Keys.F5;
+        //ctrl shift
+        public static Keys KeySaveFileAs = Keys.S;
+        public static Keys KeyOpenFileFromServer = Keys.O;
         #endregion
 
         #region Clipboard
