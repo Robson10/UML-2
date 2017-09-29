@@ -32,32 +32,32 @@
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
+            this.CompileBT = new System.Windows.Forms.Button();
             this.label3 = new System.Windows.Forms.Label();
-            this.button13 = new System.Windows.Forms.Button();
+            this.DebugBT = new System.Windows.Forms.Button();
             this.label13 = new System.Windows.Forms.Label();
-            this.button12 = new System.Windows.Forms.Button();
+            this.SaveFileAsBT = new System.Windows.Forms.Button();
             this.label12 = new System.Windows.Forms.Label();
-            this.button11 = new System.Windows.Forms.Button();
+            this.SaveFileBT = new System.Windows.Forms.Button();
             this.label11 = new System.Windows.Forms.Label();
-            this.button10 = new System.Windows.Forms.Button();
+            this.OpenFileFromServerBT = new System.Windows.Forms.Button();
             this.label10 = new System.Windows.Forms.Label();
-            this.button9 = new System.Windows.Forms.Button();
+            this.OpenFileBT = new System.Windows.Forms.Button();
             this.label9 = new System.Windows.Forms.Label();
-            this.button8 = new System.Windows.Forms.Button();
+            this.NewFileBT = new System.Windows.Forms.Button();
             this.label8 = new System.Windows.Forms.Label();
-            this.button7 = new System.Windows.Forms.Button();
+            this.RedoBT = new System.Windows.Forms.Button();
             this.label7 = new System.Windows.Forms.Label();
-            this.button6 = new System.Windows.Forms.Button();
+            this.UndoBT = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
-            this.button5 = new System.Windows.Forms.Button();
+            this.CutBT = new System.Windows.Forms.Button();
             this.label5 = new System.Windows.Forms.Label();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
+            this.PasteBT = new System.Windows.Forms.Button();
+            this.CopyBT = new System.Windows.Forms.Button();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
+            this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabControl1.SuspendLayout();
             this.tabPage3.SuspendLayout();
             this.panel1.SuspendLayout();
@@ -109,55 +109,45 @@
             this.tabPage3.Text = "Skróty Klawiaturowe";
             this.tabPage3.UseVisualStyleBackColor = true;
             // 
-            // tabPage4
-            // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 22);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(381, 418);
-            this.tabPage4.TabIndex = 1;
-            this.tabPage4.Text = "Wygląd";
-            this.tabPage4.UseVisualStyleBackColor = true;
-            // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button3);
+            this.panel1.Controls.Add(this.CompileBT);
             this.panel1.Controls.Add(this.label3);
-            this.panel1.Controls.Add(this.button13);
+            this.panel1.Controls.Add(this.DebugBT);
             this.panel1.Controls.Add(this.label13);
-            this.panel1.Controls.Add(this.button12);
+            this.panel1.Controls.Add(this.SaveFileAsBT);
             this.panel1.Controls.Add(this.label12);
-            this.panel1.Controls.Add(this.button11);
+            this.panel1.Controls.Add(this.SaveFileBT);
             this.panel1.Controls.Add(this.label11);
-            this.panel1.Controls.Add(this.button10);
+            this.panel1.Controls.Add(this.OpenFileFromServerBT);
             this.panel1.Controls.Add(this.label10);
-            this.panel1.Controls.Add(this.button9);
+            this.panel1.Controls.Add(this.OpenFileBT);
             this.panel1.Controls.Add(this.label9);
-            this.panel1.Controls.Add(this.button8);
+            this.panel1.Controls.Add(this.NewFileBT);
             this.panel1.Controls.Add(this.label8);
-            this.panel1.Controls.Add(this.button7);
+            this.panel1.Controls.Add(this.RedoBT);
             this.panel1.Controls.Add(this.label7);
-            this.panel1.Controls.Add(this.button6);
+            this.panel1.Controls.Add(this.UndoBT);
             this.panel1.Controls.Add(this.label6);
-            this.panel1.Controls.Add(this.button5);
+            this.panel1.Controls.Add(this.CutBT);
             this.panel1.Controls.Add(this.label5);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.PasteBT);
+            this.panel1.Controls.Add(this.CopyBT);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
             this.panel1.Location = new System.Drawing.Point(84, 6);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(208, 405);
+            this.panel1.Size = new System.Drawing.Size(255, 405);
             this.panel1.TabIndex = 0;
             // 
-            // button3
+            // CompileBT
             // 
-            this.button3.Location = new System.Drawing.Point(116, 92);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(75, 23);
-            this.button3.TabIndex = 51;
-            this.button3.Text = "button3";
-            this.button3.UseVisualStyleBackColor = true;
+            this.CompileBT.Location = new System.Drawing.Point(116, 92);
+            this.CompileBT.Name = "CompileBT";
+            this.CompileBT.Size = new System.Drawing.Size(136, 23);
+            this.CompileBT.TabIndex = 51;
+            this.CompileBT.Text = "button3";
+            this.CompileBT.UseVisualStyleBackColor = true;
             // 
             // label3
             // 
@@ -168,14 +158,14 @@
             this.label3.TabIndex = 50;
             this.label3.Text = "Kompiluj";
             // 
-            // button13
+            // DebugBT
             // 
-            this.button13.Location = new System.Drawing.Point(116, 121);
-            this.button13.Name = "button13";
-            this.button13.Size = new System.Drawing.Size(75, 23);
-            this.button13.TabIndex = 49;
-            this.button13.Text = "button13";
-            this.button13.UseVisualStyleBackColor = true;
+            this.DebugBT.Location = new System.Drawing.Point(116, 121);
+            this.DebugBT.Name = "DebugBT";
+            this.DebugBT.Size = new System.Drawing.Size(136, 23);
+            this.DebugBT.TabIndex = 49;
+            this.DebugBT.Text = "button13";
+            this.DebugBT.UseVisualStyleBackColor = true;
             // 
             // label13
             // 
@@ -186,14 +176,14 @@
             this.label13.TabIndex = 48;
             this.label13.Text = "Debuguj";
             // 
-            // button12
+            // SaveFileAsBT
             // 
-            this.button12.Location = new System.Drawing.Point(116, 324);
-            this.button12.Name = "button12";
-            this.button12.Size = new System.Drawing.Size(75, 23);
-            this.button12.TabIndex = 47;
-            this.button12.Text = "button12";
-            this.button12.UseVisualStyleBackColor = true;
+            this.SaveFileAsBT.Location = new System.Drawing.Point(116, 324);
+            this.SaveFileAsBT.Name = "SaveFileAsBT";
+            this.SaveFileAsBT.Size = new System.Drawing.Size(136, 23);
+            this.SaveFileAsBT.TabIndex = 47;
+            this.SaveFileAsBT.Text = "button12";
+            this.SaveFileAsBT.UseVisualStyleBackColor = true;
             // 
             // label12
             // 
@@ -204,14 +194,14 @@
             this.label12.TabIndex = 46;
             this.label12.Text = "Otworz plik z serwera";
             // 
-            // button11
+            // SaveFileBT
             // 
-            this.button11.Location = new System.Drawing.Point(116, 295);
-            this.button11.Name = "button11";
-            this.button11.Size = new System.Drawing.Size(75, 23);
-            this.button11.TabIndex = 45;
-            this.button11.Text = "button11";
-            this.button11.UseVisualStyleBackColor = true;
+            this.SaveFileBT.Location = new System.Drawing.Point(116, 295);
+            this.SaveFileBT.Name = "SaveFileBT";
+            this.SaveFileBT.Size = new System.Drawing.Size(136, 23);
+            this.SaveFileBT.TabIndex = 45;
+            this.SaveFileBT.Text = "button11";
+            this.SaveFileBT.UseVisualStyleBackColor = true;
             // 
             // label11
             // 
@@ -222,14 +212,14 @@
             this.label11.TabIndex = 44;
             this.label11.Text = "Nowy plik";
             // 
-            // button10
+            // OpenFileFromServerBT
             // 
-            this.button10.Location = new System.Drawing.Point(116, 266);
-            this.button10.Name = "button10";
-            this.button10.Size = new System.Drawing.Size(75, 23);
-            this.button10.TabIndex = 43;
-            this.button10.Text = "button10";
-            this.button10.UseVisualStyleBackColor = true;
+            this.OpenFileFromServerBT.Location = new System.Drawing.Point(116, 266);
+            this.OpenFileFromServerBT.Name = "OpenFileFromServerBT";
+            this.OpenFileFromServerBT.Size = new System.Drawing.Size(136, 23);
+            this.OpenFileFromServerBT.TabIndex = 43;
+            this.OpenFileFromServerBT.Text = "button10";
+            this.OpenFileFromServerBT.UseVisualStyleBackColor = true;
             // 
             // label10
             // 
@@ -240,14 +230,14 @@
             this.label10.TabIndex = 42;
             this.label10.Text = "Otwórz plik";
             // 
-            // button9
+            // OpenFileBT
             // 
-            this.button9.Location = new System.Drawing.Point(116, 237);
-            this.button9.Name = "button9";
-            this.button9.Size = new System.Drawing.Size(75, 23);
-            this.button9.TabIndex = 41;
-            this.button9.Text = "button9";
-            this.button9.UseVisualStyleBackColor = true;
+            this.OpenFileBT.Location = new System.Drawing.Point(116, 237);
+            this.OpenFileBT.Name = "OpenFileBT";
+            this.OpenFileBT.Size = new System.Drawing.Size(136, 23);
+            this.OpenFileBT.TabIndex = 41;
+            this.OpenFileBT.Text = "button9";
+            this.OpenFileBT.UseVisualStyleBackColor = true;
             // 
             // label9
             // 
@@ -258,14 +248,14 @@
             this.label9.TabIndex = 40;
             this.label9.Text = "Zapisz plik jako";
             // 
-            // button8
+            // NewFileBT
             // 
-            this.button8.Location = new System.Drawing.Point(116, 208);
-            this.button8.Name = "button8";
-            this.button8.Size = new System.Drawing.Size(75, 23);
-            this.button8.TabIndex = 39;
-            this.button8.Text = "button8";
-            this.button8.UseVisualStyleBackColor = true;
+            this.NewFileBT.Location = new System.Drawing.Point(116, 208);
+            this.NewFileBT.Name = "NewFileBT";
+            this.NewFileBT.Size = new System.Drawing.Size(136, 23);
+            this.NewFileBT.TabIndex = 39;
+            this.NewFileBT.Text = "button8";
+            this.NewFileBT.UseVisualStyleBackColor = true;
             // 
             // label8
             // 
@@ -276,14 +266,14 @@
             this.label8.TabIndex = 38;
             this.label8.Text = "Zapisz plik";
             // 
-            // button7
+            // RedoBT
             // 
-            this.button7.Location = new System.Drawing.Point(116, 179);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(75, 23);
-            this.button7.TabIndex = 37;
-            this.button7.Text = "Przywróć";
-            this.button7.UseVisualStyleBackColor = true;
+            this.RedoBT.Location = new System.Drawing.Point(116, 179);
+            this.RedoBT.Name = "RedoBT";
+            this.RedoBT.Size = new System.Drawing.Size(136, 23);
+            this.RedoBT.TabIndex = 37;
+            this.RedoBT.Text = "Przywróć";
+            this.RedoBT.UseVisualStyleBackColor = true;
             // 
             // label7
             // 
@@ -294,14 +284,14 @@
             this.label7.TabIndex = 36;
             this.label7.Text = "Przywróć";
             // 
-            // button6
+            // UndoBT
             // 
-            this.button6.Location = new System.Drawing.Point(116, 150);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(75, 23);
-            this.button6.TabIndex = 35;
-            this.button6.Text = "button6";
-            this.button6.UseVisualStyleBackColor = true;
+            this.UndoBT.Location = new System.Drawing.Point(116, 150);
+            this.UndoBT.Name = "UndoBT";
+            this.UndoBT.Size = new System.Drawing.Size(136, 23);
+            this.UndoBT.TabIndex = 35;
+            this.UndoBT.Text = "button6";
+            this.UndoBT.UseVisualStyleBackColor = true;
             // 
             // label6
             // 
@@ -312,14 +302,14 @@
             this.label6.TabIndex = 34;
             this.label6.Text = "Cofnij";
             // 
-            // button5
+            // CutBT
             // 
-            this.button5.Location = new System.Drawing.Point(116, 63);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(75, 23);
-            this.button5.TabIndex = 33;
-            this.button5.Text = "button5";
-            this.button5.UseVisualStyleBackColor = true;
+            this.CutBT.Location = new System.Drawing.Point(116, 63);
+            this.CutBT.Name = "CutBT";
+            this.CutBT.Size = new System.Drawing.Size(136, 23);
+            this.CutBT.TabIndex = 33;
+            this.CutBT.Text = "button5";
+            this.CutBT.UseVisualStyleBackColor = true;
             // 
             // label5
             // 
@@ -330,23 +320,23 @@
             this.label5.TabIndex = 32;
             this.label5.Text = "Wytnij";
             // 
-            // button2
+            // PasteBT
             // 
-            this.button2.Location = new System.Drawing.Point(116, 34);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 31;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.PasteBT.Location = new System.Drawing.Point(116, 34);
+            this.PasteBT.Name = "PasteBT";
+            this.PasteBT.Size = new System.Drawing.Size(136, 23);
+            this.PasteBT.TabIndex = 31;
+            this.PasteBT.Text = "button2";
+            this.PasteBT.UseVisualStyleBackColor = true;
             // 
-            // button1
+            // CopyBT
             // 
-            this.button1.Location = new System.Drawing.Point(116, 5);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 30;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.CopyBT.Location = new System.Drawing.Point(116, 5);
+            this.CopyBT.Name = "CopyBT";
+            this.CopyBT.Size = new System.Drawing.Size(136, 23);
+            this.CopyBT.TabIndex = 30;
+            this.CopyBT.Text = "button1";
+            this.CopyBT.UseVisualStyleBackColor = true;
             // 
             // label2
             // 
@@ -365,6 +355,16 @@
             this.label1.Size = new System.Drawing.Size(36, 13);
             this.label1.TabIndex = 28;
             this.label1.Text = "Kopiuj";
+            // 
+            // tabPage4
+            // 
+            this.tabPage4.Location = new System.Drawing.Point(4, 22);
+            this.tabPage4.Name = "tabPage4";
+            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage4.Size = new System.Drawing.Size(381, 418);
+            this.tabPage4.TabIndex = 1;
+            this.tabPage4.Text = "Wygląd";
+            this.tabPage4.UseVisualStyleBackColor = true;
             // 
             // SettingWindow
             // 
@@ -390,28 +390,28 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button CompileBT;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button DebugBT;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button button12;
+        private System.Windows.Forms.Button SaveFileAsBT;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button button11;
+        private System.Windows.Forms.Button SaveFileBT;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button button10;
+        private System.Windows.Forms.Button OpenFileFromServerBT;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button button9;
+        private System.Windows.Forms.Button OpenFileBT;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button button8;
+        private System.Windows.Forms.Button NewFileBT;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button RedoBT;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.Button UndoBT;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button CutBT;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button PasteBT;
+        private System.Windows.Forms.Button CopyBT;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

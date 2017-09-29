@@ -9,8 +9,11 @@ namespace UmlDesigner2
 {
     public partial class Form1 : Form
     {
-        private static Component.Workspace.ResultComponent.Results _results = new Component.Workspace.ResultComponent.Results();
+        private static Component.Workspace.ResultComponent.Results _results =
+            new Component.Workspace.ResultComponent.Results();
+
         private BlockProperties _properties;
+
         public Form1()
         {
             InitializeComponent();
@@ -22,6 +25,7 @@ namespace UmlDesigner2
             _results.Size = splitContainer3.Panel2.ClientRectangle.Size;
 
         }
+
         //todo zablokowanie wszystkiego procz kompilacji i zapisu pliku
         private void Clock1_EgzamEnded(object sender, EventArgs e)
         {
@@ -82,36 +86,85 @@ namespace UmlDesigner2
                     break;
             }
         }
+
+        //private void Form1_KeyDown(object sender, KeyEventArgs e)
+        //{
+        //    if (e.Modifiers == Keys.Control)
+        //    {
+        //        if (e.KeyCode == Helper.KeyCopy)
+        //            canvas1.Copy();
+        //        else if (e.KeyCode == Helper.KeyCut)
+        //            canvas1.Cut();
+        //        else if (e.KeyCode == Helper.KeyPaste)
+        //            canvas1.Paste();
+        //        else if (e.KeyCode == Helper.KeyUndo && canvas1.Focused)
+        //            canvas1.Undo();
+        //        else if (e.KeyCode == Helper.KeyRedo && canvas1.Focused)
+        //            canvas1.Redo();
+        //        else if (e.KeyCode == Helper.KeySaveFile)
+        //            SaveFile();
+        //        else if (e.KeyCode == Helper.KeyNewFile)
+        //            NewFile();
+        //        else if (e.KeyCode == Helper.KeyOpenFile)
+        //            OpenFile();
+        //        else if (e.KeyCode == Helper.KeyMultiselect)
+        //            canvas1.IsMultiSelect = true;
+        //    }
+        //    else if (e.KeyCode == Keys.Escape)
+        //        canvas1.AbortAddingObject();
+        //    else if (e.KeyCode == Helper.KeyRun)
+        //        Run();
+        //    else if (e.KeyCode == Helper.KeyDebug)
+        //        Debug();
+        //    else if (e.KeyCode == Keys.Delete)
+        //    {
+        //        if (_properties != null)
+        //        {
+        //            if (!_properties.ContainsFocus)
+        //                canvas1.Delete();
+        //        }
+        //        else
+        //            canvas1.Delete();
+        //    }
+        //    else if (e.Modifiers == (Keys.Control | Keys.Shift))
+        //    {
+        //        if (e.KeyCode == Helper.KeySaveFileAs)
+        //            SaveFileAs();
+        //        else if (e.KeyCode == Helper.KeyOpenFileFromServer)
+        //            OpenFileFromServer();
+        //    }
+        //}
         private void Form1_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.Modifiers == Keys.Control)
-            {
-                if (e.KeyCode == Helper.KeyCopy)
-                    canvas1.Copy();
-                else if (e.KeyCode == Helper.KeyCut)
-                    canvas1.Cut();
-                else if (e.KeyCode == Helper.KeyPaste)
-                    canvas1.Paste();
-                else if (e.KeyCode == Helper.KeyUndo && canvas1.Focused)
-                    canvas1.Undo();
-                else if (e.KeyCode == Helper.KeyRedo && canvas1.Focused)
-                    canvas1.Redo();
-                else if (e.KeyCode == Helper.KeySaveFile)
-                    SaveFile();
-                else if (e.KeyCode == Helper.KeyNewFile)
-                    NewFile();
-                else if (e.KeyCode == Helper.KeyOpenFile)
-                    OpenFile();
-                else if (e.KeyCode == Helper.KeyMultiselect)
-                    canvas1.IsMultiSelect = true;
-            }
-            else if (e.KeyCode == Keys.Escape)
-                canvas1.AbortAddingObject();
-            else if (e.KeyCode == Helper.KeyRun)
+            if ((e.Modifiers | e.KeyCode) == (Helper.KeyMultiselect))
+                canvas1.IsMultiSelect = true;
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyRun))
                 Run();
-            else if (e.KeyCode == Helper.KeyDebug)
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyCopy))
+                canvas1.Copy();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyCut))
+                canvas1.Cut();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyPaste))
+                canvas1.Paste();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyUndo))
+                canvas1.Undo();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyRedo))
+                canvas1.Redo();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeySaveFile))
+                SaveFile();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyNewFile))
+                NewFile();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFile))
+                OpenFile();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyDebug))
                 Debug();
-            else if (e.KeyCode == Keys.Delete)
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeySaveFileAs))
+                SaveFileAs();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFileFromServer))
+                OpenFileFromServer();
+            else if ((e.Modifiers | e.KeyCode) == (Keys.None | Keys.Escape))
+                canvas1.AbortAddingObject();
+            else if ((e.Modifiers | e.KeyCode) == (Keys.None | Keys.Delete))
             {
                 if (_properties != null)
                 {
@@ -120,13 +173,6 @@ namespace UmlDesigner2
                 }
                 else
                     canvas1.Delete();
-            }
-            else if (e.Modifiers == (Keys.Control | Keys.Shift))
-            {
-                if (e.KeyCode == Helper.KeySaveFileAs)
-                    SaveFileAs();
-                else if (e.KeyCode == Helper.KeyOpenFileFromServer)
-                    OpenFileFromServer();
             }
         }
     }

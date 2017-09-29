@@ -198,10 +198,10 @@ namespace UmlDesigner2.Settings
         [Category("Zegar")]
         [Description("Kolor wycinka koła na zegarze jaki jest przeznaczony na egzamin")]
         [DisplayName("Kolor egzaminu")]
-        public Brush ClockPartOfTimeColor
+        public Color ClockPartOfTimeColor
         {
-            get { return Helper.ClockPartOfTimeColor; }
-            set { Helper.ClockPartOfTimeColor = value; }
+            get { return (Helper.ClockPartOfTimeColor as SolidBrush).Color; }
+            set { Helper.ClockPartOfTimeColor =new SolidBrush(value); }
         }
         #endregion
 

@@ -62,22 +62,39 @@ namespace UmlDesigner2
         {
 
         }
-        public static Keys KeyMultiselect = Keys.ControlKey;
+
+        public static Keys KeyMultiselect = Keys.Control|Keys.ControlKey;
         public static Keys KeyRun = Keys.F5;
         // ctrl
-        public static Keys KeyCopy = Keys.C;
-        public static Keys KeyCut = Keys.X;
-        public static Keys KeyPaste = Keys.V;
-        public static Keys KeyUndo = Keys.Z;
-        public static Keys KeyRedo = Keys.Y;
-        public static Keys KeySaveFile = Keys.S;
-        public static Keys KeyNewFile = Keys.N;
-        public static Keys KeyOpenFile = Keys.O;
+        public static Keys KeyCopy = Keys.Control|Keys.C;
+        public static Keys KeyCut = Keys.Control | Keys.X;
+        public static Keys KeyPaste = Keys.Control | Keys.V;
+        public static Keys KeyUndo = Keys.Control | Keys.Z;
+        public static Keys KeyRedo = Keys.Control | Keys.Y;
+        public static Keys KeySaveFile = Keys.Control | Keys.S;
+        public static Keys KeyNewFile = Keys.Control | Keys.N;
+        public static Keys KeyOpenFile = Keys.Control | Keys.O;
         //shift
-        public static Keys KeyDebug = Keys.F5;
+        public static Keys KeyDebug = Keys.Shift | Keys.F5;
         //ctrl shift
-        public static Keys KeySaveFileAs = Keys.S;
-        public static Keys KeyOpenFileFromServer = Keys.O;
+        public static Keys KeySaveFileAs = Keys.Control | Keys.Shift | Keys.S;
+        public static Keys KeyOpenFileFromServer = Keys.Control | Keys.Shift | Keys.O;
+        //public static Keys KeyMultiselect = Keys.ControlKey;
+        //public static Keys KeyRun = Keys.F5;
+        //// ctrl
+        //public static Keys KeyCopy = Keys.C;
+        //public static Keys KeyCut = Keys.X;
+        //public static Keys KeyPaste = Keys.V;
+        //public static Keys KeyUndo = Keys.Z;
+        //public static Keys KeyRedo = Keys.Y;
+        //public static Keys KeySaveFile = Keys.S;
+        //public static Keys KeyNewFile = Keys.N;
+        //public static Keys KeyOpenFile = Keys.O;
+        ////shift
+        //public static Keys KeyDebug = Keys.F5;
+        ////ctrl shift
+        //public static Keys KeySaveFileAs = Keys.S;
+        //public static Keys KeyOpenFileFromServer = Keys.O;
         #endregion
 
         #region Clipboard
