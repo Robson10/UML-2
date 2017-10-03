@@ -80,7 +80,7 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
                 _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(Helper.SchematsPath + @"\","").Replace(Helper.SchematsExtension, "")));
             
             _listViewOfSchemats.Items.Add(new ListViewItem("Importuj"){ForeColor=Color.Blue});
-            _listViewOfSchemats.RedrawItems(0, 3, true);
+            _listViewOfSchemats.RedrawItems(0, _listViewOfSchemats.Items.Count-1, true);
             _listViewOfSchemats.Invalidate();
         }
 

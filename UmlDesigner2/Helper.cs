@@ -43,8 +43,7 @@ namespace UmlDesigner2
 
         public static string SchematsTabText = "Schematy";
 
-        public static string SchematsPath = "Z:\\Programowanie\\UmlDesigner2\\UmlDesigner2\\bin\\Debug\\Schemats"
-            ; // System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";
+        public static string SchematsPath =  System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";//@"E:\Programming\GitRepo\UmlDesigner2\bin\Debug\Schemats";
 
         public static string SchematsExtension = ".txt";
 

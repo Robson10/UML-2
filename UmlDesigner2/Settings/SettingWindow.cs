@@ -6,7 +6,6 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace UmlDesigner2.Settings
@@ -45,13 +44,44 @@ namespace UmlDesigner2.Settings
         public void SetTextButtons(Button bt,Keys key)
         {
             //podzielic jakos keya na fragmenty np cotrol + C
-            string temp = "";
-            //var keyArr = key.ToString().Split(',').ToList();
-            //var index = keyArr.FindIndex(x=>x.Equals("Control"));
-            //temp+=keyArr[index];
-            //keyArr.RemoveAt(index);
+            string temp = string.Empty;
+            int index=-1;
+            List<string> keyArr = key.ToString().Split(',').ToList();
+            {
+                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Control.ToString()));                
+                if (index != -1)
+                {
+                    if (!temp.Equals(string.Empty))
+                        temp += " +";
+                    temp += keyArr[index];
+                    keyArr.RemoveAt(index);
+                }
 
-            temp += key.ToString();
+                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Alt.ToString()));
+                if (index != -1)
+                {
+                    if (!temp.Equals(string.Empty))
+                        temp += " +";
+                    temp += keyArr[index];
+                    keyArr.RemoveAt(index);
+                }
+
+                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Shift.ToString()));
+                if (index != -1)
+                {
+                    if (!temp.Equals(string.Empty))
+                        temp += " +";
+                    temp += keyArr[index];
+                    keyArr.RemoveAt(index);
+                }
+                for (int i = 0; i < keyArr.Count; i++)
+                {
+                    if (!temp.Equals(string.Empty))
+                        temp += " + ";
+                    temp += keyArr[i];
+                }
+            }
+            //temp += temp.ToString();
 
             bt.Text = temp;
         }
