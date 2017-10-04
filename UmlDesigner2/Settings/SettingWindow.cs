@@ -41,49 +41,35 @@ namespace UmlDesigner2.Settings
 
         }
 
-        public void SetTextButtons(Button bt,Keys key)
+        public void SetTextButtons(Button bt, Keys key)
         {
             //podzielic jakos keya na fragmenty np cotrol + C
-            string temp = string.Empty;
-            int index=-1;
-            List<string> keyArr = key.ToString().Split(',').ToList();
+            var text = string.Empty;
+            var index = -1;
+            var keyArr = key.ToString().Split(',').ToList();
+
+            findKey(Keys.Control, ref text, ref keyArr);
+            findKey(Keys.Shift, ref text, ref keyArr);
+            findKey(Keys.Alt, ref text, ref keyArr);
+            for (int i = 0; i < keyArr.Count; i++)
             {
-                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Control.ToString()));                
-                if (index != -1)
-                {
-                    if (!temp.Equals(string.Empty))
-                        temp += " +";
-                    temp += keyArr[index];
-                    keyArr.RemoveAt(index);
-                }
-
-                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Alt.ToString()));
-                if (index != -1)
-                {
-                    if (!temp.Equals(string.Empty))
-                        temp += " +";
-                    temp += keyArr[index];
-                    keyArr.RemoveAt(index);
-                }
-
-                index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(Keys.Shift.ToString()));
-                if (index != -1)
-                {
-                    if (!temp.Equals(string.Empty))
-                        temp += " +";
-                    temp += keyArr[index];
-                    keyArr.RemoveAt(index);
-                }
-                for (int i = 0; i < keyArr.Count; i++)
-                {
-                    if (!temp.Equals(string.Empty))
-                        temp += " + ";
-                    temp += keyArr[i];
-                }
+                if (!text.Equals(string.Empty))
+                    text += " + ";
+                text += keyArr[i];
             }
-            //temp += temp.ToString();
 
-            bt.Text = temp;
+            bt.Text = text;
+        }
+        private void findKey(Keys key,ref string text,ref List<string> keyArr)
+        {
+            var index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(key.ToString()));
+            if (index != -1)
+            {
+                if (!text.Equals(string.Empty))
+                    text += " +";
+                text += keyArr[index];
+                keyArr.RemoveAt(index);
+            }
         }
     }
 }
