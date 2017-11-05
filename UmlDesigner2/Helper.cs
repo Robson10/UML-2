@@ -166,33 +166,33 @@ namespace UmlDesigner2
         public static Color DefaultSelectionColor = Color.DarkOrange;
         public static Color TrueLineBackColor = Color.Green;
         public static Color FalseLineBackColor = Color.Red;
-        public static bool DefaultBlockAutoresize = true;
+        public static bool DefaultBlockAutoresize = false;
 
         public static Dictionary<Shape, DictionaryBlock> DefaultBlocksSettings = new Dictionary<Shape, DictionaryBlock>()
         {
             {
                 Shape.Start,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Startu",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Start",
                     "UmlDesigner2.Icons.Start.jpg")
             },
             {
                 Shape.End,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Końca",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "End",
                     "UmlDesigner2.Icons.End.jpg")
             },
             {
                 Shape.Input,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Wprowadzania",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Wprowadzania",
                     "UmlDesigner2.Icons.Input.jpg")
             },
             {
                 Shape.Execution,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Wykonawczy",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Wykonawczy",
                     "UmlDesigner2.Icons.Execution.jpg")
             },
             {
                 Shape.Decision,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Decyzyjny",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Warunkowy",
                     "UmlDesigner2.Icons.Decision.jpg")
             },
             {

@@ -9,7 +9,7 @@ namespace UmlDesigner2.Settings
 {
     public partial class SettingWindow : Form
     {
-
+        //todo zapisać i odczytywac ustawienia np blokow -  zrobilem tylko skoty klawiaturowe
         private PropertyGrid _pg;
         private List<KeyboardKey> KeyList = new List<KeyboardKey>();
         public SettingWindow()

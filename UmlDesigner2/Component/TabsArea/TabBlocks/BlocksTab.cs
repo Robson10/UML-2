@@ -61,7 +61,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
         private ImageList LoadImageList()
         {
             var imageList1 = new ImageList();
-            imageList1.ImageSize = new Size(40, 40);
+            imageList1.ImageSize = new Size(60, 30);
             imageList1.TransparentColor = Color.Transparent;
             for (int i = 1; i <= Enum.GetValues(typeof(Helper.Shape)).Cast<int>().Max(); i++)
             {

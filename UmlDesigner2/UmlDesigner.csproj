@@ -58,6 +58,7 @@
     <Compile Include="Component\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="HelperMethods.cs" />
     <Compile Include="MainWindow\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
