@@ -2,7 +2,7 @@
 using System.Runtime.InteropServices;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Component.TabsArea
+namespace UmlDesigner2.Component.TabsArea.TabBlocks
 {
     /// <summary>
     /// downloaded from https://www.codeproject.com/Articles/7630/ListView-with-Image-on-SubItems

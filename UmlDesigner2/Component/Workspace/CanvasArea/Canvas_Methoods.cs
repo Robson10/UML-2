@@ -5,7 +5,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using UmlDesigner2.Component.TabsArea.BlockPropertis;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
@@ -183,6 +182,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     var blockTemp = (List<MyBlock>) Clipboard.GetData(Helper.BlockClipboardFormat);
                     var lineTemp = (List<MyLine>) Clipboard.GetData(Helper.LineClipboardFormat);
+                    if (blockTemp.Count == 0) return;//jezeli nie ma nic do wklejenia to pomiń
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
                         var oldId = blockTemp[i].ID;
@@ -197,7 +197,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
                         OnHideBlockProperties();
                     else
+                    {
                         OnShowBlockProperties();
+                    }
                 }
                 Invalidate();
             }

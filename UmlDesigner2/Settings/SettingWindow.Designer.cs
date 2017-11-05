@@ -1,4 +1,6 @@
-﻿namespace UmlDesigner2.Settings
+﻿using UmlDesigner2.Settings.SetShortcut.Keyboard;
+
+namespace UmlDesigner2.Settings
 {
     partial class SettingWindow
     {
@@ -33,28 +35,28 @@
             this.tabControl1 = new System.Windows.Forms.TabControl();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.CompileBT = new System.Windows.Forms.Button();
+            this.CompileBT = new KeyboardKey();
             this.label3 = new System.Windows.Forms.Label();
-            this.DebugBT = new System.Windows.Forms.Button();
+            this.DebugBT = new KeyboardKey();
             this.label13 = new System.Windows.Forms.Label();
-            this.SaveFileAsBT = new System.Windows.Forms.Button();
+            this.SaveFileAsBT = new KeyboardKey();
             this.label12 = new System.Windows.Forms.Label();
-            this.SaveFileBT = new System.Windows.Forms.Button();
+            this.SaveFileBT = new KeyboardKey();
             this.label11 = new System.Windows.Forms.Label();
-            this.OpenFileFromServerBT = new System.Windows.Forms.Button();
+            this.OpenFileFromServerBT = new KeyboardKey();
             this.label10 = new System.Windows.Forms.Label();
-            this.OpenFileBT = new System.Windows.Forms.Button();
+            this.OpenFileBT = new KeyboardKey();
             this.label9 = new System.Windows.Forms.Label();
-            this.NewFileBT = new System.Windows.Forms.Button();
+            this.NewFileBT = new KeyboardKey();
             this.label8 = new System.Windows.Forms.Label();
-            this.RedoBT = new System.Windows.Forms.Button();
+            this.RedoBT = new KeyboardKey();
             this.label7 = new System.Windows.Forms.Label();
-            this.UndoBT = new System.Windows.Forms.Button();
+            this.UndoBT = new KeyboardKey();
             this.label6 = new System.Windows.Forms.Label();
-            this.CutBT = new System.Windows.Forms.Button();
+            this.CutBT = new KeyboardKey();
             this.label5 = new System.Windows.Forms.Label();
-            this.PasteBT = new System.Windows.Forms.Button();
-            this.CopyBT = new System.Windows.Forms.Button();
+            this.PasteBT = new KeyboardKey();
+            this.CopyBT = new KeyboardKey();
             this.label2 = new System.Windows.Forms.Label();
             this.label1 = new System.Windows.Forms.Label();
             this.tabPage4 = new System.Windows.Forms.TabPage();
@@ -92,10 +94,10 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabControl1.Controls.Add(this.tabPage3);
             this.tabControl1.Controls.Add(this.tabPage4);
-            this.tabControl1.Location = new System.Drawing.Point(13, 13);
+            this.tabControl1.Location = new System.Drawing.Point(13, 12);
             this.tabControl1.Name = "tabControl1";
             this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(389, 444);
+            this.tabControl1.Size = new System.Drawing.Size(386, 448);
             this.tabControl1.TabIndex = 0;
             // 
             // tabPage3
@@ -104,7 +106,7 @@
             this.tabPage3.Location = new System.Drawing.Point(4, 22);
             this.tabPage3.Name = "tabPage3";
             this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(381, 418);
+            this.tabPage3.Size = new System.Drawing.Size(378, 422);
             this.tabPage3.TabIndex = 0;
             this.tabPage3.Text = "Skróty Klawiaturowe";
             this.tabPage3.UseVisualStyleBackColor = true;
@@ -135,7 +137,7 @@
             this.panel1.Controls.Add(this.CopyBT);
             this.panel1.Controls.Add(this.label2);
             this.panel1.Controls.Add(this.label1);
-            this.panel1.Location = new System.Drawing.Point(84, 6);
+            this.panel1.Location = new System.Drawing.Point(66, 6);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(255, 405);
             this.panel1.TabIndex = 0;
@@ -148,6 +150,7 @@
             this.CompileBT.TabIndex = 51;
             this.CompileBT.Text = "button3";
             this.CompileBT.UseVisualStyleBackColor = true;
+            this.CompileBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label3
             // 
@@ -166,6 +169,7 @@
             this.DebugBT.TabIndex = 49;
             this.DebugBT.Text = "button13";
             this.DebugBT.UseVisualStyleBackColor = true;
+            this.DebugBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label13
             // 
@@ -184,6 +188,7 @@
             this.SaveFileAsBT.TabIndex = 47;
             this.SaveFileAsBT.Text = "button12";
             this.SaveFileAsBT.UseVisualStyleBackColor = true;
+            this.SaveFileAsBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label12
             // 
@@ -202,6 +207,7 @@
             this.SaveFileBT.TabIndex = 45;
             this.SaveFileBT.Text = "button11";
             this.SaveFileBT.UseVisualStyleBackColor = true;
+            this.SaveFileBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label11
             // 
@@ -220,6 +226,7 @@
             this.OpenFileFromServerBT.TabIndex = 43;
             this.OpenFileFromServerBT.Text = "button10";
             this.OpenFileFromServerBT.UseVisualStyleBackColor = true;
+            this.OpenFileFromServerBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label10
             // 
@@ -238,6 +245,7 @@
             this.OpenFileBT.TabIndex = 41;
             this.OpenFileBT.Text = "button9";
             this.OpenFileBT.UseVisualStyleBackColor = true;
+            this.OpenFileBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label9
             // 
@@ -256,6 +264,7 @@
             this.NewFileBT.TabIndex = 39;
             this.NewFileBT.Text = "button8";
             this.NewFileBT.UseVisualStyleBackColor = true;
+            this.NewFileBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label8
             // 
@@ -274,6 +283,7 @@
             this.RedoBT.TabIndex = 37;
             this.RedoBT.Text = "Przywróć";
             this.RedoBT.UseVisualStyleBackColor = true;
+            this.RedoBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label7
             // 
@@ -292,6 +302,7 @@
             this.UndoBT.TabIndex = 35;
             this.UndoBT.Text = "button6";
             this.UndoBT.UseVisualStyleBackColor = true;
+            this.UndoBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label6
             // 
@@ -310,6 +321,7 @@
             this.CutBT.TabIndex = 33;
             this.CutBT.Text = "button5";
             this.CutBT.UseVisualStyleBackColor = true;
+            this.CutBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label5
             // 
@@ -328,6 +340,7 @@
             this.PasteBT.TabIndex = 31;
             this.PasteBT.Text = "button2";
             this.PasteBT.UseVisualStyleBackColor = true;
+            this.PasteBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // CopyBT
             // 
@@ -337,6 +350,7 @@
             this.CopyBT.TabIndex = 30;
             this.CopyBT.Text = "button1";
             this.CopyBT.UseVisualStyleBackColor = true;
+            this.CopyBT.Click += new System.EventHandler(this.changeShortcut);
             // 
             // label2
             // 
@@ -361,7 +375,7 @@
             this.tabPage4.Location = new System.Drawing.Point(4, 22);
             this.tabPage4.Name = "tabPage4";
             this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(381, 418);
+            this.tabPage4.Size = new System.Drawing.Size(378, 422);
             this.tabPage4.TabIndex = 1;
             this.tabPage4.Text = "Wygląd";
             this.tabPage4.UseVisualStyleBackColor = true;
@@ -373,7 +387,7 @@
             this.ClientSize = new System.Drawing.Size(411, 472);
             this.Controls.Add(this.tabControl1);
             this.Name = "SettingWindow";
-            this.Text = "SettingWindow";
+            this.Text = "Ustawienia";
             this.tabControl1.ResumeLayout(false);
             this.tabPage3.ResumeLayout(false);
             this.panel1.ResumeLayout(false);
@@ -390,28 +404,28 @@
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button CompileBT;
+        private KeyboardKey CompileBT;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Button DebugBT;
+        private KeyboardKey DebugBT;
         private System.Windows.Forms.Label label13;
-        private System.Windows.Forms.Button SaveFileAsBT;
+        private KeyboardKey SaveFileAsBT;
         private System.Windows.Forms.Label label12;
-        private System.Windows.Forms.Button SaveFileBT;
+        private KeyboardKey SaveFileBT;
         private System.Windows.Forms.Label label11;
-        private System.Windows.Forms.Button OpenFileFromServerBT;
+        private KeyboardKey OpenFileFromServerBT;
         private System.Windows.Forms.Label label10;
-        private System.Windows.Forms.Button OpenFileBT;
+        private KeyboardKey OpenFileBT;
         private System.Windows.Forms.Label label9;
-        private System.Windows.Forms.Button NewFileBT;
+        private KeyboardKey NewFileBT;
         private System.Windows.Forms.Label label8;
-        private System.Windows.Forms.Button RedoBT;
+        private KeyboardKey RedoBT;
         private System.Windows.Forms.Label label7;
-        private System.Windows.Forms.Button UndoBT;
+        private KeyboardKey UndoBT;
         private System.Windows.Forms.Label label6;
-        private System.Windows.Forms.Button CutBT;
+        private KeyboardKey CutBT;
         private System.Windows.Forms.Label label5;
-        private System.Windows.Forms.Button PasteBT;
-        private System.Windows.Forms.Button CopyBT;
+        private KeyboardKey PasteBT;
+        private KeyboardKey CopyBT;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Label label1;
     }

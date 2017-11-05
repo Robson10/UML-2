@@ -2,10 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml.Serialization;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2
@@ -31,6 +33,13 @@ namespace UmlDesigner2
 
     public class Helper
     {
+        #region View
+        public static Color BackColor = Color.FromArgb(47, 47, 47);
+        public static Color ButtonColor = Color.Gray;
+        public static Color ButtonSelectedColor = Color.FromArgb(229, 130, 0);
+        public static Color TextColor = Color.White;
+        #endregion
+
         #region TabsArea
 
         #region Blocks
@@ -52,14 +61,56 @@ namespace UmlDesigner2
         #endregion
 
         #region Shortcuts
+        private static string ConfigFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"/Configuration";
+        private static string ShortcutsPath = AppDomain.CurrentDomain.BaseDirectory + @"/Configuration/Shortcuts.xml";
 
         public static void SaveShortcuts()
         {
+            List<Keys> keys = new List<Keys>();
+            keys.Add(KeyRun);
+            keys.Add(KeyCopy);
+            keys.Add(KeyCut);
+            keys.Add(KeyPaste);
+            keys.Add(KeyUndo);
+            keys.Add(KeyRedo);
+            keys.Add(KeySaveFile);
+            keys.Add(KeyNewFile);
+            keys.Add(KeyOpenFile);
+            keys.Add(KeyDebug);
+            keys.Add(KeySaveFileAs);
+            keys.Add(KeyOpenFileFromServer);
 
+            if (!Directory.Exists(ConfigFolderPath))
+                Directory.CreateDirectory(ConfigFolderPath);
+            XmlSerializer xs = new XmlSerializer(typeof(List<Keys>));
+            TextWriter tw = new StreamWriter(ShortcutsPath);
+            xs.Serialize(tw, keys);
+            tw.Close();
         }
         public static void LoadShortcuts()
         {
-
+            List<Keys> x=new List<Keys>();
+            if (Directory.Exists(ConfigFolderPath) && File.Exists(ShortcutsPath))
+            {
+                using (var sr = new StreamReader(ShortcutsPath))
+                {
+                    XmlSerializer xs = new XmlSerializer(typeof(List<Keys>));
+                    x = (List<Keys>) xs.Deserialize(sr);
+                    sr.Close();
+                }
+                KeyRun = x[0];
+                KeyCopy = x[1];
+                KeyCut = x[2];
+                KeyPaste = x[3];
+                KeyUndo = x[4];
+                KeyRedo = x[5];
+                KeySaveFile = x[6];
+                KeyNewFile = x[7];
+                KeyOpenFile = x[8];
+                KeyDebug = x[9];
+                KeySaveFileAs = x[10];
+                KeyOpenFileFromServer = x[11];
+            }
         }
 
         public static Keys KeyMultiselect = Keys.Control|Keys.ControlKey;
@@ -78,22 +129,6 @@ namespace UmlDesigner2
         //ctrl shift
         public static Keys KeySaveFileAs = Keys.Control | Keys.Shift | Keys.S;
         public static Keys KeyOpenFileFromServer = Keys.Control | Keys.Shift | Keys.O;
-        //public static Keys KeyMultiselect = Keys.ControlKey;
-        //public static Keys KeyRun = Keys.F5;
-        //// ctrl
-        //public static Keys KeyCopy = Keys.C;
-        //public static Keys KeyCut = Keys.X;
-        //public static Keys KeyPaste = Keys.V;
-        //public static Keys KeyUndo = Keys.Z;
-        //public static Keys KeyRedo = Keys.Y;
-        //public static Keys KeySaveFile = Keys.S;
-        //public static Keys KeyNewFile = Keys.N;
-        //public static Keys KeyOpenFile = Keys.O;
-        ////shift
-        //public static Keys KeyDebug = Keys.F5;
-        ////ctrl shift
-        //public static Keys KeySaveFileAs = Keys.S;
-        //public static Keys KeyOpenFileFromServer = Keys.O;
         #endregion
 
         #region Clipboard
@@ -103,6 +138,11 @@ namespace UmlDesigner2
 
         #endregion
 
+        #region Canvas
+        public static Color CanvasBgColor { get; set; } = Color.White;
+        public static SolidBrush CanvasSelectionRectBrush { get; set; } = new SolidBrush(Color.FromArgb(70, Color.Blue));
+
+        #endregion
         #region Rubbers
 
         public static Size RubberSize = new Size(10, 10);
@@ -126,37 +166,38 @@ namespace UmlDesigner2
         public static Color DefaultSelectionColor = Color.DarkOrange;
         public static Color TrueLineBackColor = Color.Green;
         public static Color FalseLineBackColor = Color.Red;
+        public static bool DefaultBlockAutoresize = true;
 
         public static Dictionary<Shape, DictionaryBlock> DefaultBlocksSettings = new Dictionary<Shape, DictionaryBlock>()
         {
             {
                 Shape.Start,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 21, "Blok Startu",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Startu",
                     "UmlDesigner2.Icons.Start.jpg")
             },
             {
                 Shape.End,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 21, "Blok Końca",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Końca",
                     "UmlDesigner2.Icons.End.jpg")
             },
             {
                 Shape.Input,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 21, "Blok Wprowadzania",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Wprowadzania",
                     "UmlDesigner2.Icons.Input.jpg")
             },
             {
                 Shape.Execution,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 21, "Blok Wykonawczy",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Wykonawczy",
                     "UmlDesigner2.Icons.Execution.jpg")
             },
             {
                 Shape.Decision,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 21, "Blok Decyzyjny",
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Blok Decyzyjny",
                     "UmlDesigner2.Icons.Decision.jpg")
             },
             {
                 Shape.ConnectionLine,
-                new DictionaryBlock(Color.FromArgb(255, 0, 0, 0), Color.Wheat, 21, "Linia łącząca",
+                new DictionaryBlock(Color.FromArgb(255, 0, 0, 0), Color.Wheat, 10, "Linia łącząca",
                     "UmlDesigner2.Icons.ConnectionLine.jpg")
             },
             {

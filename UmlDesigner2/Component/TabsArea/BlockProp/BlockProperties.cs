@@ -1,11 +1,10 @@
 ﻿using System;
-using System.ComponentModel;
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
-namespace UmlDesigner2.Component.TabsArea.BlockPropertis
+namespace UmlDesigner2.Component.TabsArea.BlockProp
 {
     public partial class BlockProperties : UserControl
     {

@@ -19,11 +19,12 @@ namespace UmlDesigner2.Component.TabsArea
         /// </summary>
         public TabsArea()
         {
-            Alignment= TabAlignment.Left;
+            Alignment = TabAlignment.Left;
             TabPages.Add(_blocksTab);
             TabPages.Add(_schematsTab);
             Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top|AnchorStyles.Right);
         }
+
 
         /// <summary>
         /// Eventhandler do pojedynczego kliknięcia na element listy bloków
@@ -68,8 +69,11 @@ namespace UmlDesigner2.Component.TabsArea
         protected override void OnHandleCreated(EventArgs e)
         {
             base.OnHandleCreated(e);
-            Location = new System.Drawing.Point(0, 0);
-            Size = new System.Drawing.Size(Parent.Width, Parent.Height);
+            if (Parent != null)
+            {
+                Location = new System.Drawing.Point(0, 0);
+                Size = new System.Drawing.Size(Parent.Width, Parent.Height);
+            }
         }
 
         /// <summary>

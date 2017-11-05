@@ -46,22 +46,22 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
         private void _listViewOfSchemats_DrawItem(object sender, DrawListViewItemEventArgs e)
         {
 
-            TextFormatFlags flags;
-            if (e.Item.Index == (sender as ListView).Items.Count - 1)
-            {
-                e.DrawFocusRectangle();
-                flags = TextFormatFlags.HorizontalCenter;
-            }
-            else
-            {
-                if (e.Item.Selected)
-                {
-                    e.Item.BackColor = Color.Orange;
-                    e.DrawBackground();
-                }
-                 flags= TextFormatFlags.Left;
-            }
-            e.DrawText(flags);
+            //TextFormatFlags flags;
+            //if (e.Item.Index == (sender as ListView).Items.Count - 1)
+            //{
+            //    e.DrawFocusRectangle();
+            //    flags = TextFormatFlags.HorizontalCenter;
+            //}
+            //else
+            //{
+            //    if (e.Item.Selected)
+            //    {
+            //        e.Item.BackColor = Color.Orange;
+            //        e.DrawBackground();
+            //    }
+            //     flags= TextFormatFlags.Left;
+            //}
+            //e.DrawText(flags);
         }
 
         /// <summary>
@@ -71,17 +71,17 @@ namespace UmlDesigner2.Component.TabsArea.TabSchemats
         /// </summary>
         private void LoadElementsToList()
         {
-            if (!System.IO.Directory.Exists(Helper.SchematsPath))
-                System.IO.Directory.CreateDirectory(Helper.SchematsPath);
+            //if (!System.IO.Directory.Exists(Helper.SchematsPath))
+            //    System.IO.Directory.CreateDirectory(Helper.SchematsPath);
             
-            var filesPaths = System.IO.Directory.GetFiles(Helper.SchematsPath, "*"+ Helper.SchematsExtension);
+            //var filesPaths = System.IO.Directory.GetFiles(Helper.SchematsPath, "*"+ Helper.SchematsExtension);
 
-            for (int i = 0; i < filesPaths.Length; i++)
-                _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(Helper.SchematsPath + @"\","").Replace(Helper.SchematsExtension, "")));
+            //for (int i = 0; i < filesPaths.Length; i++)
+            //    _listViewOfSchemats.Items.Add(new ListViewItem(filesPaths[i].Replace(Helper.SchematsPath + @"\","").Replace(Helper.SchematsExtension, "")));
             
-            _listViewOfSchemats.Items.Add(new ListViewItem("Importuj"){ForeColor=Color.Blue});
-            _listViewOfSchemats.RedrawItems(0, _listViewOfSchemats.Items.Count-1, true);
-            _listViewOfSchemats.Invalidate();
+            //_listViewOfSchemats.Items.Add(new ListViewItem("Importuj"){ForeColor=Color.Blue});
+            //_listViewOfSchemats.RedrawItems(0, _listViewOfSchemats.Items.Count-1, true);
+            //_listViewOfSchemats.Invalidate();
         }
 
         /// <summary>

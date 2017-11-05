@@ -2,7 +2,7 @@
 using System.Drawing;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
-namespace UmlDesigner2.Component.TabsArea.BlockPropertis
+namespace UmlDesigner2.Component.TabsArea.BlockProp
 {
     class PropertyGridItems
     {

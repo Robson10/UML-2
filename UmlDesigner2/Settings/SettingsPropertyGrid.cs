@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Settings
 {
     class SettingsPropertyGrid
     {
 
-            public SettingsPropertyGrid()
-            {
-                ////dla kazdego bloku
-                //Helper.DefaultBlocksSettings[Helper.Shape.Start].BackColor;
-                //Helper.DefaultBlocksSettings[Helper.Shape.Start].FontColor;
-                //Helper.DefaultBlocksSettings[Helper.Shape.Start].Label;
-        }
         #region Bloki
         [Category("B. Startu")]
         [Description("Domyślny kolor tła bloku.Działa tylko na nowe bloki")]

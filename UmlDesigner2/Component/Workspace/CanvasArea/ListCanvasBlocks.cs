@@ -305,6 +305,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             BackColorStorage= Helper.DefaultBlocksSettings[Shape].BackColor;
             FontColor = Helper.DefaultBlocksSettings[Shape].FontColor;
             FontSize = Helper.DefaultBlocksSettings[Shape].FontSize;
+            AutoResize = Helper.DefaultBlockAutoresize;
+            UpdateRectSizeOnAutoresize();
         }
 
         public void UpdateRectSizeOnAutoresize()
@@ -318,9 +320,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     var stringSize = g.MeasureString(Label, font).ToSize();
                     if (Shape == Helper.Shape.Decision)
                         Rect = new Rectangle(Rect.Location,
-                            new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
+                            new Size((int) (stringSize.Width * 1.7), stringSize.Height * 3));
                     else
-                        Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height));
+                        Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height*3));
                 }
             }
         }
@@ -436,7 +438,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         private void DrawDecision(Graphics g)
         {
-
             var x = new System.Drawing.Drawing2D.GraphicsPath();
             x.AddLine(new Point(Rect.Location.X, Rect.Location.Y + Rect.Height / 2),
                 new Point(Rect.Location.X + Rect.Width / 2, Rect.Location.Y));
@@ -445,11 +446,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             g.FillPath(new SolidBrush(BackColor), x);
             DrawLabel(g);
         }
-
+        
         private void DrawLabel(Graphics g)
         {
             Font font;
             Size stringSize;
+            StringFormat strFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
             var maxWidth = Math.Abs((Shape == Helper.Shape.Decision)? (int) (Rect.Width * 0.7f): Rect.Width);
             if (!AutoResize)
             {
@@ -460,20 +462,18 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     stringSize = g.MeasureString(Label, font).ToSize();
                     fontSize--;
                 } while ((stringSize.Width > maxWidth && fontSize > 2));
-                g.DrawString(Label, font, new SolidBrush(FontColor), Rect,
-                    CanvasVariables.BlockStringFormat);
             }
             else
             {
                 font = new Font(FontFamily.GenericSansSerif, FontSize, FontStyle.Bold);
                 stringSize = g.MeasureString(Label, font).ToSize();
                 if (Shape == Helper.Shape.Decision)
-                    Rect =new Rectangle(Rect.Location, new Size((int) (stringSize.Width * 1.7), stringSize.Height * 2));
+                    Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.7), stringSize.Height * 3));
                 else
-                    Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height));
-                g.DrawString(Label, font, new SolidBrush(FontColor), Rect,
-                    CanvasVariables.BlockStringFormat);
+                    Rect = new Rectangle(Rect.Location, new Size((int)(stringSize.Width * 1.1), stringSize.Height * 3));
             }
+          
+            g.DrawString(Label, font, new SolidBrush(FontColor), Rect, strFormat);
         }
 
         #endregion

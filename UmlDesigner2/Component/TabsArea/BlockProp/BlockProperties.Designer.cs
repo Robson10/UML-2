@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Component.TabsArea.BlockPropertis
+﻿namespace UmlDesigner2.Component.TabsArea.BlockProp
 {
     partial class BlockProperties
     {

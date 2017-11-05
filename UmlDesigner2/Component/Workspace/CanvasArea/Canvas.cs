@@ -29,7 +29,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public Canvas()
         {
             DoubleBuffered = true;
-            BackColor = CanvasVariables.BgColor;
+            BackColor = Helper.CanvasBgColor;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
@@ -43,7 +43,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             if (Parent != null)
             {
                 Location = new Point(0, 0);
-                Size = new Size(Parent.ClientRectangle.Size.Width-10,Parent.ClientRectangle.Height);
+                Size = new Size(Parent.ClientRectangle.Size.Width,Parent.ClientRectangle.Height);
             }
         }
         protected override void OnMouseWheel(MouseEventArgs e)
@@ -125,18 +125,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 CanvObj[i].Draw(e.Graphics);
 
             if (SelectRect != Rectangle.Empty)
-                e.Graphics.FillRectangle(CanvasVariables.SelectionRectBrush, SelectRect);
+                e.Graphics.FillRectangle(Helper.CanvasSelectionRectBrush, SelectRect);
         }
-    }
-
-    public static class CanvasVariables
-    {
-        public static Color BgColor = Color.White;
-        public static Color SelectionBgColor = Color.DarkOrange;
-        public static Color DefaultBgColor = Color.Gray;
-        public static Keys MultiselectKey = Keys.ControlKey;
-        public static SolidBrush SelectionRectBrush = new SolidBrush(Color.FromArgb(70, Color.Blue));
-
-        public static StringFormat BlockStringFormat = new StringFormat() { LineAlignment = StringAlignment.Center, Alignment = StringAlignment.Center };
     }
 }
