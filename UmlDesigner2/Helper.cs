@@ -31,7 +31,7 @@ namespace UmlDesigner2
         }
     }
 
-    public class Helper
+    public partial class Helper
     {
         #region View
         public static Color BackColor = Color.FromArgb(47, 47, 47);
@@ -52,7 +52,7 @@ namespace UmlDesigner2
 
         public static string SchematsTabText = "Schematy";
 
-        public static string SchematsPath =  System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";//@"E:\Programming\GitRepo\UmlDesigner2\bin\Debug\Schemats";
+        public static string SchematsPath =  System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";
 
         public static string SchematsExtension = ".txt";
 
@@ -63,55 +63,6 @@ namespace UmlDesigner2
         #region Shortcuts
         private static string ConfigFolderPath = AppDomain.CurrentDomain.BaseDirectory + @"/Configuration";
         private static string ShortcutsPath = AppDomain.CurrentDomain.BaseDirectory + @"/Configuration/Shortcuts.xml";
-
-        public static void SaveShortcuts()
-        {
-            List<Keys> keys = new List<Keys>();
-            keys.Add(KeyRun);
-            keys.Add(KeyCopy);
-            keys.Add(KeyCut);
-            keys.Add(KeyPaste);
-            keys.Add(KeyUndo);
-            keys.Add(KeyRedo);
-            keys.Add(KeySaveFile);
-            keys.Add(KeyNewFile);
-            keys.Add(KeyOpenFile);
-            keys.Add(KeyDebug);
-            keys.Add(KeySaveFileAs);
-            keys.Add(KeyOpenFileFromServer);
-
-            if (!Directory.Exists(ConfigFolderPath))
-                Directory.CreateDirectory(ConfigFolderPath);
-            XmlSerializer xs = new XmlSerializer(typeof(List<Keys>));
-            TextWriter tw = new StreamWriter(ShortcutsPath);
-            xs.Serialize(tw, keys);
-            tw.Close();
-        }
-        public static void LoadShortcuts()
-        {
-            List<Keys> x=new List<Keys>();
-            if (Directory.Exists(ConfigFolderPath) && File.Exists(ShortcutsPath))
-            {
-                using (var sr = new StreamReader(ShortcutsPath))
-                {
-                    XmlSerializer xs = new XmlSerializer(typeof(List<Keys>));
-                    x = (List<Keys>) xs.Deserialize(sr);
-                    sr.Close();
-                }
-                KeyRun = x[0];
-                KeyCopy = x[1];
-                KeyCut = x[2];
-                KeyPaste = x[3];
-                KeyUndo = x[4];
-                KeyRedo = x[5];
-                KeySaveFile = x[6];
-                KeyNewFile = x[7];
-                KeyOpenFile = x[8];
-                KeyDebug = x[9];
-                KeySaveFileAs = x[10];
-                KeyOpenFileFromServer = x[11];
-            }
-        }
 
         public static Keys KeyMultiselect = Keys.Control|Keys.ControlKey;
         public static Keys KeyRun = Keys.F5;
@@ -143,6 +94,7 @@ namespace UmlDesigner2
         public static SolidBrush CanvasSelectionRectBrush { get; set; } = new SolidBrush(Color.FromArgb(70, Color.Blue));
 
         #endregion
+
         #region Rubbers
 
         public static Size RubberSize = new Size(10, 10);
