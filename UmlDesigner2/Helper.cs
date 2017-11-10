@@ -165,7 +165,7 @@ namespace UmlDesigner2
 
         public static bool ClockIsRunnable { get; set; } = true;
         public static bool ClockIsRunning { get; set; } = false;
-        public static Color ClockBackColor { get; set; } = Color.White;
+        public static Color ClockBackColor { get; set; } = Control.DefaultBackColor;
 
         public enum ClockType
         {

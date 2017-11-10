@@ -7,50 +7,84 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace
 {
-    class History:List<List<HistoryItem>>
+    class TestHistory
     {
-        private int ID = -1;
-        public void Add(MyAction myAction, List<MyBlock> block, List<MyLine> line)
+        //łapać historie edycji bloku z poziomu properties po zmianie aktywnego bloku lub zamkniecie properties
+        //lub dodac event przy textboxach aby nie zapisywać zmiany kazdej literki w TB
+        private static Stack<List<HistoryItem>> cofnij = new Stack<List<HistoryItem>>();
+        private static Stack<List<HistoryItem>>  doPrzodu = new Stack<List<HistoryItem>>();
+
+        public static void Clear()
         {
-            ID++;
-            if (!(ID < Count))
-                base.Add(new List<HistoryItem>());
-            else
-                this[ID].Clear();
-            for (int i = 0; i < block.Count; i++)
-                base[0].Add(new HistoryItem(myAction, block[i]));
-            for (int i = 0; i < line.Count; i++)
-                base[0].Add(new HistoryItem(myAction, line[i]));
-            for (int i = ID+1; i < Count; i++)//usuwanie krokow nastepnych (rozpoczecie nowej historii)
-                this.RemoveAt(i);
+            cofnij.Clear();
+            doPrzodu.Clear();
         }
-        public void Undo()
+        public static void Push(List<HistoryItem> value)
         {
-            if (ID - 1 < 0) return;
-            ID--;
-            List<HistoryItem> temp = this[ID];
-            switch (temp[0].MyActionType)
+            for (int i = 0; i < value.Count; i++)
             {
-                case MyAction.Add: break;
-                case MyAction.Cut: break;
-                case MyAction.Paste: break;
-                case MyAction.DeleteBlock: break;
-                case MyAction.DeleteLine: break;
-                case MyAction.Move: break;
-                case MyAction.Edit: break;
+                value[i].Block.Rect =
+                    new System.Drawing.Rectangle(value[i].Block.Rect.Location, value[i].Block.Rect.Size);
             }
+            cofnij.Push(value);
+            doPrzodu.Clear();
+        }
+        public static List<HistoryItem> Cofnij()
+        {
+            if (cofnij.Count == 0) return null;
+            var temp = cofnij.Pop();
+            doPrzodu.Push(temp);
+            return temp;
         }
 
-        public void UndoPaste()
+        public static List<HistoryItem> DoPrzodu()
         {
-            
+            if (doPrzodu.Count == 0) return null;
+            var temp=doPrzodu.Pop();
+            cofnij.Push(temp);
+            return temp;
         }
 
-        public void Redo()
+        public static List<HistoryItem> ConvertToHistoryItems(List<MyBlock> value,MyAction action)
         {
-            if (ID + 1 >= this.Count) return;
-            ID++;
-            List<HistoryItem> temp = this[ID];
+            List<HistoryItem> temp = new List<HistoryItem>();
+            for (int i = 0; i < value.Count; i++)
+            {
+                temp.Add(new HistoryItem(action, new MyBlock(){Shape=value[i].Shape, Rect= value[i].Rect,ID=value[i].ID}));
+            }
+            return temp;
+        }
+        public static List<HistoryItem> ConvertToHistoryItems(List<MyLine> value, MyAction action)
+        {
+            List<HistoryItem> temp = new List<HistoryItem>();
+            for (int i = 0; i < value.Count; i++)
+            {
+                temp.Add(new HistoryItem(action, value[i]));
+            }
+            return temp;
+        }
+
+        public static bool compareWithLastPush(List<HistoryItem> value)
+        {
+            if (cofnij.Count > 0 && value.Count > 0)
+            {
+                
+                if (value[0].MyActionType == MyAction.EditSize)
+                {
+                    var temp = cofnij.ToList()[1];
+                    for (int i = 0; i < temp.Count; i++)
+                    {
+                        if (value[i].Block.Rect != temp[i].Block.Rect) return false;
+                    }
+                }
+            }
+                return true;
+        }
+
+        public static void DeleteLast()
+        {
+            if (cofnij.Count > 0)
+                cofnij.Pop();
         }
     }
 
@@ -75,10 +109,11 @@ namespace UmlDesigner2.Component.Workspace
     {
         Add,
         Cut,
-        Paste,
+        PasteCopy,
+        PasteCut,
         DeleteBlock,
         DeleteLine,
-        Move,
-        Edit
+        Edit,
+        EditSize
     }
 }

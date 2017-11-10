@@ -37,6 +37,7 @@ namespace UmlDesigner2.MainWindow
             this.wstawToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
@@ -44,26 +45,26 @@ namespace UmlDesigner2.MainWindow
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.clock1 = new UmlDesigner2.Component.Workspace.Clock.Clock();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
             this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
             this.myToolStrip1 = new UmlDesigner2.Component.ToolStripArea.MyToolStrip();
+            this.clock1 = new UmlDesigner2.Component.Workspace.Clock.Clock();
             this.MenuStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
-            this.splitContainer3.Panel1.SuspendLayout();
-            this.splitContainer3.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).BeginInit();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).BeginInit();
+            this.splitContainer3.Panel1.SuspendLayout();
+            this.splitContainer3.SuspendLayout();
             this.SuspendLayout();
             // 
             // MenuStrip
             // 
+            this.MenuStrip.BackColor = System.Drawing.SystemColors.Control;
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.plikToolStripMenuItem,
             this.widokToolStripMenuItem,
@@ -118,6 +119,20 @@ namespace UmlDesigner2.MainWindow
             this.splitContainer1.Size = new System.Drawing.Size(1120, 451);
             this.splitContainer1.SplitterDistance = 270;
             this.splitContainer1.TabIndex = 12;
+            // 
+            // splitContainer2
+            // 
+            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
+            this.splitContainer2.Name = "splitContainer2";
+            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
+            // 
+            // splitContainer2.Panel1
+            // 
+            this.splitContainer2.Panel1.Controls.Add(this.tabsArea1);
+            this.splitContainer2.Size = new System.Drawing.Size(270, 451);
+            this.splitContainer2.SplitterDistance = 193;
+            this.splitContainer2.TabIndex = 0;
             // 
             // splitContainer3
             // 
@@ -199,29 +214,6 @@ namespace UmlDesigner2.MainWindow
             this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Visible = false;
             // 
-            // clock1
-            // 
-            this.clock1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.clock1.BackColor = System.Drawing.Color.White;
-            this.clock1.Location = new System.Drawing.Point(1050, 0);
-            this.clock1.Name = "clock1";
-            this.clock1.Size = new System.Drawing.Size(70, 70);
-            this.clock1.TabIndex = 13;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this.tabsArea1);
-            this.splitContainer2.Size = new System.Drawing.Size(270, 451);
-            this.splitContainer2.SplitterDistance = 193;
-            this.splitContainer2.TabIndex = 0;
-            // 
             // tabsArea1
             // 
             this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
@@ -232,7 +224,7 @@ namespace UmlDesigner2.MainWindow
             this.tabsArea1.Multiline = true;
             this.tabsArea1.Name = "tabsArea1";
             this.tabsArea1.SelectedIndex = 0;
-            this.tabsArea1.Size = new System.Drawing.Size(267, 190);
+            this.tabsArea1.Size = new System.Drawing.Size(270, 193);
             this.tabsArea1.TabIndex = 0;
             // 
             // canvas1
@@ -246,17 +238,27 @@ namespace UmlDesigner2.MainWindow
             this.canvas1.IsMultiSelect = false;
             this.canvas1.Location = new System.Drawing.Point(0, 0);
             this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(836, 391);
+            this.canvas1.Size = new System.Drawing.Size(846, 391);
             this.canvas1.TabIndex = 0;
             // 
             // myToolStrip1
             // 
+            this.myToolStrip1.BackColor = System.Drawing.SystemColors.Control;
             this.myToolStrip1.ImageScalingSize = new System.Drawing.Size(40, 40);
             this.myToolStrip1.Location = new System.Drawing.Point(0, 24);
             this.myToolStrip1.Name = "myToolStrip1";
             this.myToolStrip1.Size = new System.Drawing.Size(1120, 47);
             this.myToolStrip1.TabIndex = 1;
             this.myToolStrip1.Text = "myToolStrip1";
+            // 
+            // clock1
+            // 
+            this.clock1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clock1.BackColor = System.Drawing.SystemColors.Control;
+            this.clock1.Location = new System.Drawing.Point(1049, 0);
+            this.clock1.Name = "clock1";
+            this.clock1.Size = new System.Drawing.Size(70, 70);
+            this.clock1.TabIndex = 13;
             // 
             // Form1
             // 
@@ -277,12 +279,12 @@ namespace UmlDesigner2.MainWindow
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
-            this.splitContainer3.Panel1.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
-            this.splitContainer3.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer2)).EndInit();
             this.splitContainer2.ResumeLayout(false);
+            this.splitContainer3.Panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer3)).EndInit();
+            this.splitContainer3.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -302,12 +304,12 @@ namespace UmlDesigner2.MainWindow
         private System.Windows.Forms.TabPage tabPage1;
         private System.Windows.Forms.TabPage tabPage2;
         private Canvas canvas1;
-        private Component.Workspace.Clock.Clock clock1;
         private System.Windows.Forms.TabPage tabPage3;
         private System.Windows.Forms.TabPage tabPage4;
         private Component.TabsArea.TabsArea tabsArea1;
         private System.Windows.Forms.TabPage tabPage5;
         private System.Windows.Forms.TabPage tabPage6;
+        private Component.Workspace.Clock.Clock clock1;
     }
 }
 

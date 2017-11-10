@@ -195,6 +195,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void MySetIsLockedForSelectedObj()
         {
+            //var temp = new List<HistoryItem>();
             for (int i = 0; i < Count; i++)
                 if (this[i].IsSelected)
                     this[i].IsLocked = !this[i].IsLocked;
@@ -203,6 +204,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void MyDelete(int i)
         {
             this.RemoveAt(i);
+        }
+
+        public void MyDeleteByID(int id)
+        {
+            var index= this.FindIndex(x => x.ID == id);
+            MyDelete(index);
         }
 
         public List<MyBlock> MyCopy(string clipboardFormat)
@@ -227,6 +234,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Insert(0, block);
             return _id - 1;
         }
+
+        public List<MyBlock> GetSelectedItems()
+        {
+            return this.FindAll(x => x.IsSelected);
+        }
     }
 
     [Serializable]
@@ -243,6 +255,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public Point PointInput{ get; set; }
         public Point PointOutput1, PointOutput2;
 
+        
         private Rectangle _rect;
         public Rectangle Rect
         {

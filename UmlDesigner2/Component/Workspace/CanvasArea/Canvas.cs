@@ -103,7 +103,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (ShapeToDraw != Helper.Shape.ConnectionLine)
                 Cursor = Cursors.Default;
+            if (e.Button==MouseButtons.Right )
+            {
+                if (sizeChanged)
+                {
+                    TestHistory.Push(TestHistory.ConvertToHistoryItems(CanvObj.GetSelectedItems(), MyAction.EditSize));
+                    sizeChanged = false;
+                }
+                if(TestHistory.compareWithLastPush(TestHistory.ConvertToHistoryItems(CanvObj.GetSelectedItems(), MyAction.EditSize)))
+                TestHistory.DeleteLast();
 
+            }
             HideSelectionRect();
             ShowProperties();
         }
