@@ -141,8 +141,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         #region ShortcutsMethods
 
+        //todo V
         public void Delete()
         {
+            TestHistory.Push(CanvObj.ToListHistory(MyAction.Delete));
             for (int i = CanvObj.Count - 1; i >= 0; i--)
             {
                 if (CanvObj[i].IsSelected && !CanvObj[i].IsLocked)
@@ -156,6 +158,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Invalidate();
         }
 
+        //V przy paste sie zrobilo 
         public void Copy()
         {
             Clipboard.Clear();
@@ -167,12 +170,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Clipboard.SetDataObject(clips, true);
         }
 
+        //todo V
         public void Cut()
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
+            TestHistory.Push(CanvObj.ToListHistory(MyAction.Cut));
             clips.SetData(Helper.BlockClipboardFormat, CanvObj.MyCut(Helper.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
+
             clips.SetData(Helper.LineClipboardFormat, CanvLines.MyCut(Helper.LineClipboardFormat, Helper.BlockClipboardFormat));
             Clipboard.Clear();
             Clipboard.SetDataObject(clips, true);
@@ -182,6 +188,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Invalidate();
         }
 
+        //todo V
         public void Paste()
         {
             CanvObj.My_IsSelectedSetForAll(false);
@@ -204,6 +211,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         }
                     }
                     CanvLines.MyPaste(lineTemp);
+                    TestHistory.Push(CanvObj.ToListHistory(MyAction.Add));
                     if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
                         OnHideBlockProperties();
                     else
@@ -218,6 +226,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Undo()
         {
             var temp = TestHistory.Cofnij();
+            temp = (temp?[0].MyActionType == MyAction.EditSize) ? TestHistory.Cofnij():temp;//podwojny pop na EditSize.NWM czemu
             if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -229,9 +238,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     }
                     else if (temp[i].MyActionType == MyAction.EditSize)
                     {
-                        temp = TestHistory.Cofnij();
+                       // temp = TestHistory.Cofnij();
                         var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
                         CanvObj[index].Rect = temp[i].Block.Rect;
+                    }
+                    else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
+                    {
+                        CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
+                    }
+                    if (temp[i].MyActionType == MyAction.Delete)
+                    {
+                        CanvObj.Add(temp[i].Block);
                     }
                 }
                 else//linia
@@ -248,6 +265,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Redo()
         {
             var temp = TestHistory.DoPrzodu();
+            temp = (temp?[0].MyActionType == MyAction.EditSize) ? TestHistory.DoPrzodu() : temp;
             if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -259,9 +277,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     }
                     else if (temp[i].MyActionType == MyAction.EditSize)
                     {
-                        temp = TestHistory.DoPrzodu();
                         var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
                         CanvObj[index].Rect = temp[i].Block.Rect;
+                    }
+                    if (temp[i].MyActionType == MyAction.Cut)
+                    {
+                        CanvObj.MyDeleteByID(temp[i].Block.ID);
+                    }
+                    if (temp[i].MyActionType == MyAction.Delete)
+                    {
+                        CanvObj.MyDeleteByID(temp[i].Block.ID);
                     }
                 }
                 else//linia
@@ -305,13 +330,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
                     CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
                     _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
+
+                    //TestHistory.temporary=TestHistory.(CanvObj.GetSelectedItems(), MyAction.EditSize);
                     Invalidate();
                 }
         }
-
+        bool isMoved = false;
         private bool LPM_MoveObject(Point e)
         {
-
             var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
             if (CanvObj.My_MoveSelectedObjects(ref _mouseDownLocation, _scrolledPoint))
             {
@@ -319,6 +345,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 if (CanvObj.Count > 0)
                     _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition); //zawsze index 0 to to ostatni zaznaczony objekt
                 _mouseDownLocation = _scrolledPoint;
+                isMoved = true;
                 Invalidate();
                 return false;
             }
@@ -371,7 +398,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
             CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
             _ppm = true;
-            TestHistory.Push(TestHistory.ConvertToHistoryItems(CanvObj.GetSelectedItems(), MyAction.EditSize));
+            TestHistory.Push(CanvObj.ToListHistory(MyAction.EditSize));
             Invalidate();
         }
         bool sizeChanged = false;// zmienna służąca do rozpoznania czy rozmiar jakieś kontrolki został zmieniony

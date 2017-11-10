@@ -9,11 +9,14 @@ namespace UmlDesigner2.Component.Workspace
 {
     class TestHistory
     {
+        //textbox nie ma ctrlZ/Y wiec zaskakuje moja historia - nalezy jednak edycje tekstu takze dorzucic do mojej historii
+        //todo move, oraz okno propertisów 
+
         //łapać historie edycji bloku z poziomu properties po zmianie aktywnego bloku lub zamkniecie properties
         //lub dodac event przy textboxach aby nie zapisywać zmiany kazdej literki w TB
         private static Stack<List<HistoryItem>> cofnij = new Stack<List<HistoryItem>>();
         private static Stack<List<HistoryItem>>  doPrzodu = new Stack<List<HistoryItem>>();
-
+        public  static List<HistoryItem> temporary = new List<HistoryItem>();
         public static void Clear()
         {
             cofnij.Clear();
@@ -21,11 +24,6 @@ namespace UmlDesigner2.Component.Workspace
         }
         public static void Push(List<HistoryItem> value)
         {
-            for (int i = 0; i < value.Count; i++)
-            {
-                value[i].Block.Rect =
-                    new System.Drawing.Rectangle(value[i].Block.Rect.Location, value[i].Block.Rect.Size);
-            }
             cofnij.Push(value);
             doPrzodu.Clear();
         }
@@ -45,36 +43,16 @@ namespace UmlDesigner2.Component.Workspace
             return temp;
         }
 
-        public static List<HistoryItem> ConvertToHistoryItems(List<MyBlock> value,MyAction action)
-        {
-            List<HistoryItem> temp = new List<HistoryItem>();
-            for (int i = 0; i < value.Count; i++)
-            {
-                temp.Add(new HistoryItem(action, new MyBlock(){Shape=value[i].Shape, Rect= value[i].Rect,ID=value[i].ID}));
-            }
-            return temp;
-        }
-        public static List<HistoryItem> ConvertToHistoryItems(List<MyLine> value, MyAction action)
-        {
-            List<HistoryItem> temp = new List<HistoryItem>();
-            for (int i = 0; i < value.Count; i++)
-            {
-                temp.Add(new HistoryItem(action, value[i]));
-            }
-            return temp;
-        }
-
-        public static bool compareWithLastPush(List<HistoryItem> value)
+        public static bool compareWithLastPush(List<HistoryItem> value,MyAction action)
         {
             if (cofnij.Count > 0 && value.Count > 0)
             {
-                
                 if (value[0].MyActionType == MyAction.EditSize)
                 {
-                    var temp = cofnij.ToList()[1];
-                    for (int i = 0; i < temp.Count; i++)
+                    var temp1 = cofnij.ToList()[1];
+                    for (int i = 0; i < temp1.Count; i++)
                     {
-                        if (value[i].Block.Rect != temp[i].Block.Rect) return false;
+                        if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
                     }
                 }
             }
@@ -88,7 +66,7 @@ namespace UmlDesigner2.Component.Workspace
         }
     }
 
-    class HistoryItem
+    public class HistoryItem
     {
         public HistoryItem(MyAction myAction,MyLine line)
         {
@@ -109,10 +87,8 @@ namespace UmlDesigner2.Component.Workspace
     {
         Add,
         Cut,
-        PasteCopy,
-        PasteCut,
-        DeleteBlock,
-        DeleteLine,
+        Paste,
+        Delete,
         Edit,
         EditSize
     }

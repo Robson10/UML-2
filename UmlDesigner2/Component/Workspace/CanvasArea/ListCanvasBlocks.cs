@@ -13,6 +13,38 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private static int _id = 0;
 
+        public List<HistoryItem> ToListHistory(MyAction action)
+        {
+            List<HistoryItem> temp = new List<HistoryItem>();
+            for (int i = 0; i < this.Count; i++)
+            {
+                if (this[i].IsSelected)
+                {
+                    temp.Add(new HistoryItem(action, new MyBlock()
+                    {
+                        AutoResize = this[i].AutoResize,
+                        Code = this[i].Code,
+                        FontColor = this[i].FontColor,
+                        FontColorHTML = this[i].FontColorHTML,
+                        FontSize = this[i].FontSize,
+                        IsLocked = this[i].IsLocked,
+                        IsSelected = this[i].IsSelected,
+                        Label = this[i].Label,
+                        BackColor = this[i].BackColor,
+                        BackColorHTML = this[i].BackColorHTML,
+                        BackColorStorage = this[i].BackColorStorage,
+                        BackColorStorageHTML = this[i].BackColorStorageHTML,
+                        PointOutput1 = this[i].PointOutput1,
+                        PointOutput2 = this[i].PointOutput2,
+                        PointInput = this[i].PointInput,
+                        Shape = this[i].Shape,
+                        Rect = this[i].Rect,
+                        ID = this[i].ID
+                    }));
+                }
+            }
+            return temp;
+        }
         public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < Count; i++)

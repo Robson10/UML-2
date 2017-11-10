@@ -107,10 +107,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 if (sizeChanged)
                 {
-                    TestHistory.Push(TestHistory.ConvertToHistoryItems(CanvObj.GetSelectedItems(), MyAction.EditSize));
+                    TestHistory.Push(CanvObj.ToListHistory(MyAction.EditSize));
                     sizeChanged = false;
                 }
-                if(TestHistory.compareWithLastPush(TestHistory.ConvertToHistoryItems(CanvObj.GetSelectedItems(), MyAction.EditSize)))
+                if(TestHistory.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
                 TestHistory.DeleteLast();
 
             }

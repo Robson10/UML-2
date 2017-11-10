@@ -38,15 +38,15 @@ namespace UmlDesigner2.MainWindow
             this.pomocToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
+            this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.tabsArea1 = new UmlDesigner2.Component.TabsArea.TabsArea();
-            this.canvas1 = new UmlDesigner2.Component.Workspace.CanvasArea.Canvas();
             this.myToolStrip1 = new UmlDesigner2.Component.ToolStripArea.MyToolStrip();
             this.clock1 = new UmlDesigner2.Component.Workspace.Clock.Clock();
             this.MenuStrip.SuspendLayout();
@@ -134,6 +134,19 @@ namespace UmlDesigner2.MainWindow
             this.splitContainer2.SplitterDistance = 193;
             this.splitContainer2.TabIndex = 0;
             // 
+            // tabsArea1
+            // 
+            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
+            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.tabsArea1.Location = new System.Drawing.Point(0, 0);
+            this.tabsArea1.Multiline = true;
+            this.tabsArea1.Name = "tabsArea1";
+            this.tabsArea1.SelectedIndex = 0;
+            this.tabsArea1.Size = new System.Drawing.Size(267, 190);
+            this.tabsArea1.TabIndex = 0;
+            // 
             // splitContainer3
             // 
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -147,6 +160,20 @@ namespace UmlDesigner2.MainWindow
             this.splitContainer3.Size = new System.Drawing.Size(846, 451);
             this.splitContainer3.SplitterDistance = 391;
             this.splitContainer3.TabIndex = 0;
+            // 
+            // canvas1
+            // 
+            this.canvas1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.canvas1.AutoScroll = true;
+            this.canvas1.AutoScrollMinSize = new System.Drawing.Size(5000, 5000);
+            this.canvas1.BackColor = System.Drawing.Color.White;
+            this.canvas1.IsMultiSelect = false;
+            this.canvas1.Location = new System.Drawing.Point(0, 0);
+            this.canvas1.Name = "canvas1";
+            this.canvas1.Size = new System.Drawing.Size(846, 391);
+            this.canvas1.TabIndex = 0;
             // 
             // tabPage1
             // 
@@ -214,33 +241,6 @@ namespace UmlDesigner2.MainWindow
             this.tabPage6.UseVisualStyleBackColor = true;
             this.tabPage6.Visible = false;
             // 
-            // tabsArea1
-            // 
-            this.tabsArea1.Alignment = System.Windows.Forms.TabAlignment.Left;
-            this.tabsArea1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.tabsArea1.Location = new System.Drawing.Point(0, 0);
-            this.tabsArea1.Multiline = true;
-            this.tabsArea1.Name = "tabsArea1";
-            this.tabsArea1.SelectedIndex = 0;
-            this.tabsArea1.Size = new System.Drawing.Size(270, 193);
-            this.tabsArea1.TabIndex = 0;
-            // 
-            // canvas1
-            // 
-            this.canvas1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.canvas1.AutoScroll = true;
-            this.canvas1.AutoScrollMinSize = new System.Drawing.Size(5000, 5000);
-            this.canvas1.BackColor = System.Drawing.Color.White;
-            this.canvas1.IsMultiSelect = false;
-            this.canvas1.Location = new System.Drawing.Point(0, 0);
-            this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(846, 391);
-            this.canvas1.TabIndex = 0;
-            // 
             // myToolStrip1
             // 
             this.myToolStrip1.BackColor = System.Drawing.SystemColors.Control;
@@ -272,7 +272,7 @@ namespace UmlDesigner2.MainWindow
             this.Controls.Add(this.MenuStrip);
             this.MainMenuStrip = this.MenuStrip;
             this.Name = "Form1";
-            this.Text = "spli";
+            this.Text = "SbWin2017";
             this.MenuStrip.ResumeLayout(false);
             this.MenuStrip.PerformLayout();
             this.splitContainer1.Panel1.ResumeLayout(false);
