@@ -55,6 +55,14 @@ namespace UmlDesigner2.Component.Workspace
                         if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
                     }
                 }
+                //if (value[0].MyActionType == MyAction.Move)
+                //{
+                //    var temp1 = cofnij.ToList()[1];
+                //    for (int i = 0; i < temp1.Count; i++)
+                //    {
+                //        if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
+                //    }
+                //}
             }
                 return true;
         }
@@ -90,6 +98,7 @@ namespace UmlDesigner2.Component.Workspace
         Paste,
         Delete,
         Edit,
-        EditSize
+        EditSize,
+        Move
     }
 }

@@ -31,6 +31,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 this[i].TabIndex = i;
                 this[i].MouseDown += Rubbers_MouseDown;
                 this[i].MouseMove += Rubbers_MouseMove;
+                this[i].MouseUp += Rubbers_MouseUp;
             }
             this[0].Cursor = Cursors.SizeNWSE;
             this[1].Cursor = Cursors.SizeNS;
@@ -42,6 +43,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             this[7].Cursor = Cursors.SizeWE;
         }
 
+        private void Rubbers_MouseUp(object sender, MouseEventArgs e)
+        {
+            if(e.Button==MouseButtons.Left)
+            TestHistory.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+        }
+
 
         /// <summary>
         /// Metoda służąca do zapisania miejsca wcisniecia LPM na 1z8 gumek
@@ -51,7 +58,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void Rubbers_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
-                MouseDownLocation_Rubbers =e.Location;
+            {
+                TestHistory.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+                MouseDownLocation_Rubbers = e.Location;
+            }
         }
 
         /// <summary>

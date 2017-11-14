@@ -45,6 +45,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
             return temp;
         }
+
         public void My_SelectObjectContainingPoint(Point location)
         {
             for (int i = 0; i < Count; i++)
@@ -227,15 +228,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void MySetIsLockedForSelectedObj()
         {
-            //var temp = new List<HistoryItem>();
             for (int i = 0; i < Count; i++)
                 if (this[i].IsSelected)
                     this[i].IsLocked = !this[i].IsLocked;
         }
 
-        public void MyDelete(int i)
+        public void MyDelete(int index)
         {
-            this.RemoveAt(i);
+            this.RemoveAt(index);
         }
 
         public void MyDeleteByID(int id)

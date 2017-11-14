@@ -90,7 +90,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     if(SelectRect==Rectangle.Empty)
                         _selectByRect = LPM_MoveObject(e.Location);
-                    if (_selectByRect)
+                    if (_selectByRect && !isMoved)
                         LPM_SelectObjectByRect(_mouseDownLocation,e.Location);
                 }
                 else if (e.Button == MouseButtons.Right)
@@ -111,8 +111,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     sizeChanged = false;
                 }
                 if(TestHistory.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
-                TestHistory.DeleteLast();
-
+                    TestHistory.DeleteLast();
+            }
+            if (e.Button == MouseButtons.Left)
+            {
+                if (isMoved)
+                {
+                    TestHistory.Push(CanvObj.ToListHistory(MyAction.Move));
+                    isMoved = false;
+                }
             }
             HideSelectionRect();
             ShowProperties();

@@ -226,7 +226,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Undo()
         {
             var temp = TestHistory.Cofnij();
-            temp = (temp?[0].MyActionType == MyAction.EditSize) ? TestHistory.Cofnij():temp;//podwojny pop na EditSize.NWM czemu
+            temp = (temp?[0].MyActionType == MyAction.EditSize|| temp?[0].MyActionType == MyAction.Move) ? TestHistory.Cofnij():temp;//podwojny pop na EditSize.NWM czemu
             if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -238,7 +238,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     }
                     else if (temp[i].MyActionType == MyAction.EditSize)
                     {
-                       // temp = TestHistory.Cofnij();
                         var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
                         CanvObj[index].Rect = temp[i].Block.Rect;
                     }
@@ -246,10 +245,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
                     }
-                    if (temp[i].MyActionType == MyAction.Delete)
+                    else if (temp[i].MyActionType == MyAction.Delete)
                     {
                         CanvObj.Add(temp[i].Block);
                     }
+                    else if (temp[i].MyActionType == MyAction.Move)
+                    {
+                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
+                        CanvObj[index].Rect= temp[i].Block.Rect;
+                    }
+
                 }
                 else//linia
                 {
@@ -265,7 +270,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Redo()
         {
             var temp = TestHistory.DoPrzodu();
-            temp = (temp?[0].MyActionType == MyAction.EditSize) ? TestHistory.DoPrzodu() : temp;
+            temp = (temp?[0].MyActionType == MyAction.EditSize|| temp?[0].MyActionType == MyAction.Move) ? TestHistory.DoPrzodu() : temp;
             if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -280,13 +285,18 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
                         CanvObj[index].Rect = temp[i].Block.Rect;
                     }
-                    if (temp[i].MyActionType == MyAction.Cut)
+                    else if (temp[i].MyActionType == MyAction.Cut)
                     {
                         CanvObj.MyDeleteByID(temp[i].Block.ID);
                     }
-                    if (temp[i].MyActionType == MyAction.Delete)
+                    else if (temp[i].MyActionType == MyAction.Delete)
                     {
                         CanvObj.MyDeleteByID(temp[i].Block.ID);
+                    }
+                    else if (temp[i].MyActionType == MyAction.Move)
+                    {
+                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
+                        CanvObj[index].Rect = temp[i].Block.Rect;
                     }
                 }
                 else//linia
@@ -321,7 +331,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 Invalidate();
             }
         }
-        
         private void LPM_SelectObjectByClick(Point e)
         {
             if (ShapeToDraw == Helper.Shape.Nothing)
@@ -330,8 +339,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
                     CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
                     _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
-
-                    //TestHistory.temporary=TestHistory.(CanvObj.GetSelectedItems(), MyAction.EditSize);
                     Invalidate();
                 }
         }
@@ -339,13 +346,18 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private bool LPM_MoveObject(Point e)
         {
             var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
-            if (CanvObj.My_MoveSelectedObjects(ref _mouseDownLocation, _scrolledPoint))
+            if (CanvObj.GetSelectedItems().Count>0)
             {
+               if (!isMoved)
+                {
+                    TestHistory.Push(CanvObj.ToListHistory(MyAction.Move));
+                    isMoved = true;
+                }
+                CanvObj.My_MoveSelectedObjects(ref _mouseDownLocation, _scrolledPoint);
                 CanvLines.MyUpdate(ref CanvObj);
                 if (CanvObj.Count > 0)
                     _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition); //zawsze index 0 to to ostatni zaznaczony objekt
                 _mouseDownLocation = _scrolledPoint;
-                isMoved = true;
                 Invalidate();
                 return false;
             }
@@ -401,6 +413,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             TestHistory.Push(CanvObj.ToListHistory(MyAction.EditSize));
             Invalidate();
         }
+
         bool sizeChanged = false;// zmienna służąca do rozpoznania czy rozmiar jakieś kontrolki został zmieniony
         //V
         private void PPM_ResizeObject(Point e)
