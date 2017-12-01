@@ -7,7 +7,7 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace
 {
-    class TestHistory
+    class History
     {
         //textbox nie ma ctrlZ/Y wiec zaskakuje moja historia - nalezy jednak edycje tekstu takze dorzucic do mojej historii
         //todo move, oraz okno propertisów 

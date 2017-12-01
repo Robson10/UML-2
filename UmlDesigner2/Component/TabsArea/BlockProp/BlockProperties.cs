@@ -2,6 +2,7 @@
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
+using UmlDesigner2.Component.Workspace;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.TabsArea.BlockProp
@@ -132,8 +133,10 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         /// <param name="e"></param>
         private void TbLabel_KeyUp(object sender, KeyEventArgs e)
         {
+            addChangesToHistory();
             _block.Label = _tbLabel.Text;
             OnBlockPropertyChanged();
+            addChangesToHistory();
         }
 
         /// <summary>
@@ -143,7 +146,9 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         /// <param name="e"></param>
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
+            addChangesToHistory();
             _block.Code = _tbCode.Text;
+            addChangesToHistory();
         }
 
         /// <summary>
@@ -176,6 +181,25 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         public bool ShouldRefresh(MyBlock newBlock)
         {
             return (newBlock == _block);
+        }
+        private void addChangesToHistory()
+        {
+            History.Push(new System.Collections.Generic.List<HistoryItem>() { new HistoryItem(MyAction.Edit, 
+                new MyBlock() { AutoResize = _block.AutoResize,
+                        Code = _block.Code,
+                        FontColor = _block.FontColor,
+                        FontSize = _block.FontSize,
+                        IsLocked = _block.IsLocked,
+                        IsSelected = _block.IsSelected,
+                        Label = _block.Label,
+                        BackColor = _block.BackColor,
+                        BackColorStorage = _block.BackColorStorage,
+                        PointOutput1 = _block.PointOutput1,
+                        PointOutput2 = _block.PointOutput2,
+                        PointInput = _block.PointInput,
+                        Shape = _block.Shape,
+                        Rect = _block.Rect,
+                        ID = _block.ID}) });
         }
     }
 }

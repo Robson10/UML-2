@@ -314,6 +314,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         [XmlIgnore]
         public Color FontColor;
 
+        //zmienne potrzebne tylko do zapisu i odczytu pliku. Bazują na zmiennych bez "HTML"
         [XmlAttribute]
         public string BackColorHTML
         {

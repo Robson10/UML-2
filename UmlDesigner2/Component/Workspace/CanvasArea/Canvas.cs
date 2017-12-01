@@ -107,17 +107,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 if (sizeChanged)
                 {
-                    TestHistory.Push(CanvObj.ToListHistory(MyAction.EditSize));
+                    History.Push(CanvObj.ToListHistory(MyAction.EditSize));
                     sizeChanged = false;
                 }
-                if(TestHistory.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
-                    TestHistory.DeleteLast();
+                if(History.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
+                    History.DeleteLast();
             }
             if (e.Button == MouseButtons.Left)
             {
                 if (isMoved)
                 {
-                    TestHistory.Push(CanvObj.ToListHistory(MyAction.Move));
+                    History.Push(CanvObj.ToListHistory(MyAction.Move));
                     isMoved = false;
                 }
             }

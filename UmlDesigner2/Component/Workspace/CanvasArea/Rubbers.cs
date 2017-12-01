@@ -46,7 +46,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void Rubbers_MouseUp(object sender, MouseEventArgs e)
         {
             if(e.Button==MouseButtons.Left)
-            TestHistory.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+            History.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
         }
 
 
@@ -59,7 +59,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (e.Button == MouseButtons.Left)
             {
-                TestHistory.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+                History.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
                 MouseDownLocation_Rubbers = e.Location;
             }
         }

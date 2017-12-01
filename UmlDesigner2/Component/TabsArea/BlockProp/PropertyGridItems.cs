@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
+using UmlDesigner2.Component.Workspace;
 using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.TabsArea.BlockProp
@@ -27,7 +28,12 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         public bool IsLocked
         {
             get { return _block.IsLocked; }
-            set{_block.IsLocked = value;}
+            set
+            {
+                addChangesToHistory();
+                _block.IsLocked = value;
+                addChangesToHistory();
+            }
         }
 
         /// <summary>
@@ -42,7 +48,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+                    addChangesToHistory();
                     _block.AutoResize = value;
+                    addChangesToHistory();
+                }
             }
         }
 
@@ -58,7 +68,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+                    addChangesToHistory();
                     _block.FontSize = value;
+                    addChangesToHistory();
+                }
             }
         }
 
@@ -74,7 +88,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+                    addChangesToHistory();
                     _block.FontColor = value;
+                    addChangesToHistory();
+                }
             }
         }
 
@@ -90,7 +108,12 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+
+                    addChangesToHistory();
                     _block.BackColorStorage = value;
+                    addChangesToHistory();
+                }
             }
         }
 
@@ -106,7 +129,11 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+                    addChangesToHistory();
                     _block.Rect = new Rectangle(value, _block.Rect.Size);
+                    addChangesToHistory();
+                }
             }
         }
 
@@ -122,8 +149,31 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             set
             {
                 if (!_block.IsLocked)
+                {
+                    addChangesToHistory();
                     _block.Rect = new Rectangle(_block.Rect.Location, value);
+                    addChangesToHistory();
+                }
             }
         }
+        private void addChangesToHistory()
+        {
+            History.Push(new System.Collections.Generic.List<HistoryItem>() { new HistoryItem(MyAction.Edit,
+                new MyBlock() { AutoResize = _block.AutoResize,
+                        Code = _block.Code,
+                        FontColor = _block.FontColor,
+                        FontSize = _block.FontSize,
+                        IsLocked = _block.IsLocked,
+                        IsSelected = _block.IsSelected,
+                        Label = _block.Label,
+                        BackColor = _block.BackColor,
+                        BackColorStorage = _block.BackColorStorage,
+                        PointOutput1 = _block.PointOutput1,
+                        PointOutput2 = _block.PointOutput2,
+                        PointInput = _block.PointInput,
+                        Shape = _block.Shape,
+                        Rect = _block.Rect,
+                        ID = _block.ID}) });
+    }
     }
 }
