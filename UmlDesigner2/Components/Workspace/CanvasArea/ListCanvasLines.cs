@@ -86,6 +86,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 for (int i = 0; i < Count; i++)
                 {
                     var temp1 = listBlocks.TryGetElementWithId(this[i].BeginId);
+                    var temp2 = listBlocks.TryGetElementWithId(this[i].EndId);
+                    //if (temp1 == null || temp2==null)
+                    //{
+                    //    this.RemoveAt(i);
+                    //    i--;
+                    //    continue;
+                    //}
                     if (temp1.Shape == Helper.Shape.Decision)
                     {
                         this[i].BeginPoint = (this[i].IsTrue)?temp1.PointOutput1:temp1.PointOutput2;
@@ -94,7 +101,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         this[i].BeginPoint = temp1.PointOutput1;
                     }
-                    var temp2 = listBlocks.TryGetElementWithId(this[i].EndId);
                     this[i].EndPoint = temp2.PointInput;
                 }
             }

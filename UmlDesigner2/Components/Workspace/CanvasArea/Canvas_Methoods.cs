@@ -11,6 +11,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     //zaznaczanie przez rect i przesuwanie bez ctrl???
     partial class Canvas
     {
+        //po cofnieciu utworzenia bloku musze także sprawdzić czy linia nie straciła pkt przyłączenia jak tak usuwamy ją.(przy przywracaniu lini zebym nie miał 2 lini na raz)
         private Rectangle SelectRect = Rectangle.Empty;
         protected virtual void OnHideBlockProperties()
         {
@@ -35,7 +36,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Invalidate();
         }
 
-        //todo X - AllPropertues
+        //todo X - AllProperties
         public void UpdatePropertiesSelectedBlock()
         {
             //Metoda służąca do zaktualizowania zaznaczonego bloku 
@@ -136,7 +137,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         private void AutoResizeBlockToContent()
         {
             CanvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
+            for (int i = 0; i < CanvObj.Count; i++)
+            {
+                CanvObj[i].UpdateRectSizeOnAutoresize();
+            }
+            CanvLines.MyUpdate(ref CanvObj);
+            _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
+
+            History.Push(CanvObj.ToListHistory(MyAction.Edit));
             ShowProperties();
+            Invalidate();
         }
 
         #region ShortcutsMethods
@@ -443,15 +453,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         }
 
         //V
-        private void PPM_TryShowContextMenu(Point e)
-        {
-            var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
-            if (CanvObj.My_IsAnyObjectContainingPoint(_scrolledPoint))
-            {
-                ShowContextMenu(e);
-                _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
-            }
-        }
+        //private void PPM_TryShowContextMenu(Point e)
+        //{
+        //    var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+        //    if (CanvObj.My_IsAnyObjectContainingPoint(_scrolledPoint))
+        //    {
+        //        ShowContextMenu(e);
+        //        _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
+        //    }
+        //}
 
         //todo - EditSize +linie
         private void PPM_SelectForResizeOrContextMenu(Point e)

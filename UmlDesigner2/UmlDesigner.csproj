@@ -50,12 +50,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Component\ToolStripArea\MyToolStripButton.cs">
+    <Compile Include="Components\ToolStripArea\MyToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\History.cs" />
-    <Compile Include="Component\Workspace\ResultComponent\Compile.cs" />
-    <Compile Include="Component\Workspace\ResultComponent\Results.cs">
+    <Compile Include="Components\Workspace\History.cs" />
+    <Compile Include="Components\Workspace\ResultComponent\Compile.cs" />
+    <Compile Include="Components\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="HelperMethods.cs" />
@@ -69,53 +69,51 @@
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="Helper.cs" />
-    <Compile Include="Component\TabsArea\BlockProp\BlockProperties.cs">
+    <Compile Include="Components\TabsArea\BlockProp\BlockProperties.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\BlockProp\BlockProperties.Designer.cs">
+    <Compile Include="Components\TabsArea\BlockProp\BlockProperties.Designer.cs">
       <DependentUpon>BlockProperties.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\TabsArea\BlockProp\PropertyGridItems.cs" />
-    <Compile Include="Component\TabsArea\TabBlocks\OAKListView.cs">
+    <Compile Include="Components\TabsArea\BlockProp\PropertyGridItems.cs" />
+    <Compile Include="Components\TabsArea\TabBlocks\OAKListView.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabBlocks\BlocksTab.cs">
+    <Compile Include="Components\TabsArea\TabBlocks\BlocksTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabSchemats\SchematsTab.cs">
+    <Compile Include="Components\TabsArea\TabSchemats\SchematsTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\TabsArea\TabsArea.cs">
+    <Compile Include="Components\TabsArea\TabsArea.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\Canvas.cs">
+    <Compile Include="Components\Workspace\CanvasArea\Canvas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\CanvasContextMenu.cs">
+    <Compile Include="Components\Workspace\CanvasArea\CanvasContextMenu.cs" />
+    <Compile Include="Components\Workspace\CanvasArea\Canvas_Methoods.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\Canvas_Methoods.cs">
+    <Compile Include="Components\Workspace\CanvasArea\ListCanvasBlocks.cs" />
+    <Compile Include="Components\Workspace\CanvasArea\ListCanvasLines.cs" />
+    <Compile Include="Components\Workspace\CanvasArea\Rubbers.cs" />
+    <Compile Include="Components\Workspace\Clock\Analog.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\CanvasArea\ListCanvasBlocks.cs" />
-    <Compile Include="Component\Workspace\CanvasArea\ListCanvasLines.cs" />
-    <Compile Include="Component\Workspace\CanvasArea\Rubbers.cs" />
-    <Compile Include="Component\Workspace\Clock\Analog.cs">
+    <Compile Include="Components\Workspace\Clock\Clock.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\Clock\Clock.cs">
+    <Compile Include="Components\Workspace\Clock\Digital.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\Workspace\Clock\Digital.cs">
+    <Compile Include="Components\ToolStripArea\MyToolStripContainer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Component\ToolStripArea\MyToolStripContainer.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Component\ToolStripArea\MyToolStripContainer.Designer.cs">
+    <Compile Include="Components\ToolStripArea\MyToolStripContainer.Designer.cs">
       <DependentUpon>MyToolStripContainer.cs</DependentUpon>
     </Compile>
-    <Compile Include="Component\ToolStripArea\HelperToolStripButton.cs" />
+    <Compile Include="Components\ToolStripArea\HelperToolStripButton.cs" />
     <Compile Include="MainWindow\Form1Toolstrip.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -147,7 +145,7 @@
     <Compile Include="Settings\SettingWindow.Designer.cs">
       <DependentUpon>SettingWindow.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Component\TabsArea\BlockProp\BlockProperties.resx">
+    <EmbeddedResource Include="Components\TabsArea\BlockProp\BlockProperties.resx">
       <DependentUpon>BlockProperties.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MainWindow\Form1.resx">
@@ -172,6 +170,7 @@
     <EmbeddedResource Include="Settings\SettingWindow.resx">
       <DependentUpon>SettingWindow.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="AppClassDiagram.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -245,7 +244,7 @@
     <EmbeddedResource Include="Icons\Start.jpg" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Component\MenuStrip\" />
+    <Folder Include="Components\MenuStrip\" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Icons\ConnectionLine.jpg" />

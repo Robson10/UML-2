@@ -1,0 +1,186 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="UmlDesigner2.Component.TabsArea.BlockProp.BlockProperties" Collapsed="true">
+    <Position X="14" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAABAASAAAIAAQAGAAEACAgAEQAGQAAAAAAAQgCA=</HashCode>
+      <FileName>Components\TabsArea\BlockProp\BlockProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.TabsArea.BlockProp.PropertyGridItems" Collapsed="true">
+    <Position X="14.5" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>ABgACIAAAAAAgIAAAAIAAgAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Components\TabsArea\BlockProp\PropertyGridItems.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.TabsArea.TabBlocks.BlocksTab" Collapsed="true">
+    <Position X="14" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAABCAIAAAAAAAAQAAAACAAAA=</HashCode>
+      <FileName>Components\TabsArea\TabBlocks\BlocksTab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.TabsArea.TabBlocks.OAKListView" Collapsed="true">
+    <Position X="14.5" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JgAgAAAAAAECAgAAACAAAAAAACAgAAAAAAAAAAACBEQ=</HashCode>
+      <FileName>Components\TabsArea\TabBlocks\OAKListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.TabsArea.TabsArea" Collapsed="true">
+    <Position X="13.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAgAgCAAQAAAAAAAIAAAAAAQAAQA=</HashCode>
+      <FileName>Components\TabsArea\TabsArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.ToolStripArea.ToolStripButtonParameters" Collapsed="true">
+    <Position X="17" Y="11.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>ABAAAAAAAgAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ToolStripArea\HelperToolStripButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.ToolStripArea.MyToolStripButton" Collapsed="true">
+    <Position X="17" Y="10.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ToolStripArea\MyToolStripButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.ToolStripArea.MyToolStrip" Collapsed="true">
+    <Position X="16.5" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAIAAASAAQAAgASWAAAkDCAEAgAASpCRAAAIgAAA=</HashCode>
+      <FileName>Components\ToolStripArea\MyToolStripContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.Canvas" Collapsed="true">
+    <Position X="11" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QASWJAAACWADFAKBIQBAAKAhJhkgAAAicgADABCiAAE=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\Canvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.ListCanvasBlocks" Collapsed="true">
+    <Position X="11.25" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAIAAQAAEQAACSIABAAwAAAAAAAgAEAAAQAAQgEIA=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\ListCanvasBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.MyBlock" Collapsed="true">
+    <Position X="11.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAFCMCAkAACmwAAAAAgAgAAACLIAAAAABQAAAABAAg=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\ListCanvasBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.ListCanvasLines" Collapsed="true">
+    <Position X="11.25" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAQIAAAAAAAACAAAgAAAAAAgAAAEAA=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\ListCanvasLines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.MyLine" Collapsed="true">
+    <Position X="11.75" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIAAQAEAAUAkAAAIAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\ListCanvasLines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.Rubbers" Collapsed="true">
+    <Position X="11.25" Y="11.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAQAAAEAgAAAAAAAAAAAAAAAAQQAABIAAAgQA=</HashCode>
+      <FileName>Components\Workspace\CanvasArea\Rubbers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.Clock.Clock" Collapsed="true">
+    <Position X="6" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CASQolABAEAgAARAZAJAAiAAAALCAAAIAEAAiwMAiSA=</HashCode>
+      <FileName>Components\Workspace\Clock\Analog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.History" Collapsed="true">
+    <Position X="16.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAACAAAAAAEAAAABAAAAAgkAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Components\Workspace\History.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Component.Workspace.HistoryItem" Collapsed="true">
+    <Position X="17" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAA=</HashCode>
+      <FileName>Components\Workspace\History.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.DictionaryBlock" Collapsed="true">
+    <Position X="6.25" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAIAAEAAAAAAAAAAAAgIAAAAAAAAAAAAAACABAAA=</HashCode>
+      <FileName>Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Helper" Collapsed="true">
+    <Position X="6" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAACEBQIgAEgVSIOACoSDAggEEVBBAEQCISAAMBEIA=</HashCode>
+      <FileName>Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.MainWindow.Form1" Collapsed="true">
+    <Position X="6" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EACAjDAAADBAUchEAICyYAAqASABk1UCBBQCAiDBgEo=</HashCode>
+      <FileName>MainWindow\Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Settings.SetShortcut.Keyboard.Keyboard" Collapsed="true">
+    <Position X="8.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACGA+QcCECAAAAIBAACAAMECAMw6gEIwAIABYCAQASA=</HashCode>
+      <FileName>Settings\SetShortcut\Keyboard\Keyboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Settings.SetShortcut.Keyboard.KeyboardKey" Collapsed="true">
+    <Position X="9" Y="10" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQQAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Settings\SetShortcut\Keyboard\KeyboardKey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Settings.SetShortcut.SetShortcutWindow" Collapsed="true">
+    <Position X="8.5" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAIACAAAgAAAACAAAACBAABAAAAAAABAAAQAAA=</HashCode>
+      <FileName>Settings\SetShortcut\SetShortcutWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Settings.SettingsPropertyGrid" Collapsed="true">
+    <Position X="8.5" Y="10.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAABAAQEAgBACQABAAgAAgIAJAAAEAgBAACAAUAI=</HashCode>
+      <FileName>Settings\SettingsPropertyGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="UmlDesigner2.Settings.SettingWindow" Collapsed="true">
+    <Position X="8.25" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>+BGAACIAACCAQhAABECAACgCAIBAAAACAEAAAUABRGA=</HashCode>
+      <FileName>Settings\SettingWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="UmlDesigner2.Component.Workspace.MyAction" Collapsed="true">
+    <Position X="17" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgYABAAAAIAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Workspace\History.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

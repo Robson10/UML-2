@@ -52,7 +52,13 @@ namespace UmlDesigner2.Component.Workspace
                     var temp1 = cofnij.ToList()[1];
                     for (int i = 0; i < temp1.Count; i++)
                     {
-                        if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
+                        try
+                        {
+                            if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
+                        }
+                        catch
+                        {
+                        }
                     }
                 }
                 //if (value[0].MyActionType == MyAction.Move)

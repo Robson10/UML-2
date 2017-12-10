@@ -31,7 +31,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             DoubleBuffered = true;
             BackColor = Helper.CanvasBgColor;
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            ContextMenuPresets();
+            //ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
         }
         
@@ -57,10 +57,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         protected override void OnMouseClick(MouseEventArgs e)
         {
             //po kliknięciu ppm bez przesówania pojawia się menu kontekstowe a także przerywane jest dodawanie elementów do canvasa
-            if (e.Button == MouseButtons.Right && _ppm == true)
+            if (e.Button == MouseButtons.Right && _ppm)
             {
                 PPM_TryAbortAddingObject();
-                PPM_TryShowContextMenu(e.Location);
+                //PPM_TryShowContextMenu(e.Location);
             }
         }
         bool _selectByRect = false; //true jeżeli mamy zaznaczać
