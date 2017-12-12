@@ -59,7 +59,7 @@
   <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.Canvas" Collapsed="true">
     <Position X="11" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>QASWJAAACWADFAKBIQBAAKAhJhkgAAAicgADABCiAAE=</HashCode>
+      <HashCode>QASWJAAACUADFACBIQBAAKABIhEgAAAicgADABCiAAE=</HashCode>
       <FileName>Components\Workspace\CanvasArea\Canvas.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -80,7 +80,7 @@
   <Class Name="UmlDesigner2.Component.Workspace.CanvasArea.ListCanvasLines" Collapsed="true">
     <Position X="11.25" Y="10" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAAAIAAAAAAAAAAQIAAAAAAAACAAAgAAAAAAgAAAEAA=</HashCode>
+      <HashCode>AAAAIAAAAAAAAAAQIAAAAQAAACAAAgAAAAAAgAAAEAA=</HashCode>
       <FileName>Components\Workspace\CanvasArea\ListCanvasLines.cs</FileName>
     </TypeIdentifier>
   </Class>
@@ -108,7 +108,7 @@
   <Class Name="UmlDesigner2.Component.Workspace.History" Collapsed="true">
     <Position X="16.5" Y="7.75" Width="1.5" />
     <TypeIdentifier>
-      <HashCode>AAIAAAACAAAAAAEAAAABAAAAAgkAAAAAAAAAAABACAA=</HashCode>
+      <HashCode>AAIAAAACAAAAAAEAAAABAAAAAAkAAAAAAAAAAABACAA=</HashCode>
       <FileName>Components\Workspace\History.cs</FileName>
     </TypeIdentifier>
   </Class>

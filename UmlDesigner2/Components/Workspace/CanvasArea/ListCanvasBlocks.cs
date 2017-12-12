@@ -40,7 +40,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         Shape = this[i].Shape,
                         Rect = this[i].Rect,
                         ID = this[i].ID
-                    }));
+                    }, null));
                 }
             }
             return temp;

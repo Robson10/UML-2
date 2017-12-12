@@ -11,6 +11,40 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
     public class ListCanvasLines:List<MyLine>
     {
+        public MyLine ToListHistory(int i)
+        {
+                //List<MyLine> temp = new List<MyLine>();
+                //for (int i = 0; i < this.Count; i++)
+                //{
+                //    if (this[i].IsSelected)
+                //    {
+                       return new MyLine(){
+                            BackColor=this[i].BackColor,
+                            BackColorHTML= this[i].BackColorHTML,
+                            BeginId= this[i].BeginId,
+                            BeginPoint= this[i].BeginPoint,
+                            EndId= this[i].EndId,
+                            EndPoint= this[i].EndPoint,
+                            IsSelected= this[i].IsSelected,
+                            IsTrue= this[i].IsTrue
+                        };
+                //    }
+                //}
+        }
+
+        public List<MyLine> GetLineByID(int blockId)
+        {
+            List<MyLine> temp;
+            try
+            {
+                temp = FindAll(x => x.BeginId == blockId || x.EndId == blockId);
+                return temp;
+            }
+            catch
+            {
+                return null;
+            }
+        }
         /// <summary>
         /// Metoda dodająca linię do listy
         /// </summary>
@@ -32,6 +66,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         this[0].EndPoint = temp.PointInput;
                         this[0].EndId = temp.ID;
+                        History.Push(new List<HistoryItem>()
+                        {
+                            new HistoryItem(MyAction.Add, null, this.ToListHistory(0))
+                        });
                         shapeToDraw = Helper.Shape.Nothing;
                     }
                 }
@@ -51,6 +89,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                                     RemoveAt(i);
                             }
                             Insert(0, new MyLine(temp.PointOutput1, temp.ID, true));
+
                         }
                         else if (dialogResult == DialogResult.No)
                         {
@@ -60,6 +99,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                                     RemoveAt(i);
                             }
                             Insert(0, new MyLine(temp.PointOutput2, temp.ID, false));
+
                         }
                     }
                     else
@@ -70,6 +110,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                                 RemoveAt(i);
                         }
                         Insert(0, new MyLine(temp.PointOutput1, temp.ID));
+
                     }
                 }
             }

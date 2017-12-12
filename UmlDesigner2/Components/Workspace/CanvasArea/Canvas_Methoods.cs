@@ -75,13 +75,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     if (!CheckIsStartExist())
                     {
                         CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
-                        History.Push(new List<HistoryItem>(){new HistoryItem(MyAction.Add,CanvObj[0])});
+                        History.Push(new List<HistoryItem>(){new HistoryItem(MyAction.Add,CanvObj[0], null) });
                     }
                 }
                 else
                 {
                     CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
-                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0]) });
+                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0], null) });
                 }
                 ShapeToDraw = Helper.Shape.Nothing;
                 Invalidate();
@@ -127,34 +127,50 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        //todo X - Edit - Locked
-        private void SetIsLockedForObject()
-        {
-            CanvObj.MySetIsLockedForSelectedObj();
-            IsMultiSelect = false;
-        }
+        ////todo X - Edit - Locked
+        //private void SetIsLockedForObject()
+        //{
+        //    CanvObj.MySetIsLockedForSelectedObj();
+        //    IsMultiSelect = false;
+        //}
         //todo X - Edit -Autoresize
-        private void AutoResizeBlockToContent()
-        {
-            CanvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
-            for (int i = 0; i < CanvObj.Count; i++)
-            {
-                CanvObj[i].UpdateRectSizeOnAutoresize();
-            }
-            CanvLines.MyUpdate(ref CanvObj);
-            _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
+        //private void AutoResizeBlockToContent()
+        //{
+        //    CanvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
+        //    for (int i = 0; i < CanvObj.Count; i++)
+        //    {
+        //        CanvObj[i].UpdateRectSizeOnAutoresize();
+        //    }
+        //    CanvLines.MyUpdate(ref CanvObj);
+        //    _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
 
-            History.Push(CanvObj.ToListHistory(MyAction.Edit));
-            ShowProperties();
-            Invalidate();
-        }
+        //    History.Push(CanvObj.ToListHistory(MyAction.Edit));
+        //    ShowProperties();
+        //    Invalidate();
+        //}
 
         #region ShortcutsMethods
 
         //todo V
         public void Delete()
         {
-            History.Push(CanvObj.ToListHistory(MyAction.Delete));
+            var ListHistoryItem = CanvObj.ToListHistory(MyAction.Delete);
+            for (int i = 0; i < CanvObj.Count; i++)
+            {
+                if (CanvObj[i].IsSelected)
+                {
+                    var temp = CanvLines.GetLineByID(CanvObj[i].ID);
+                    if (temp != null)
+                    {
+                        for (int j = 0; j < temp.Count; j++)
+                        {
+                            ListHistoryItem.Add(new HistoryItem(MyAction.Delete, null, temp[j]));
+                        }
+                        
+                    }
+                }
+            }
+            History.Push(ListHistoryItem);
             for (int i = CanvObj.Count - 1; i >= 0; i--)
             {
                 if (CanvObj[i].IsSelected && !CanvObj[i].IsLocked)
@@ -233,140 +249,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        public void Undo()
-        {
-            bool showProperties = false;
-            var temp = History.Cofnij();
-            temp = (temp?[0].MyActionType == MyAction.EditSize || 
-                temp?[0].MyActionType == MyAction.Move ||
-                temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij():temp;//podwojny pop na EditSize.NWM czemu
-            if (temp == null) return;
-            for (int i = 0; i < temp.Count; i++)
-            {
-                if (temp[i].Block != null)//blok
-                {
-                    if (temp[i].MyActionType == MyAction.Add)//został dodany wiec usuń blok
-                    {
-                        CanvObj.MyDeleteByID(temp[i].Block.ID);
-                    }
-                    else if (temp[i].MyActionType == MyAction.EditSize)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Rect = temp[i].Block.Rect;
-                    }
-                    else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
-                    {
-                        CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
-                    }
-                    else if (temp[i].MyActionType == MyAction.Delete)
-                    {
-                        CanvObj.Add(temp[i].Block);
-                    }
-                    else if (temp[i].MyActionType == MyAction.Move)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Rect= temp[i].Block.Rect;
-                    }
-                    else if (temp[i].MyActionType==MyAction.Edit)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Label = temp[i].Block.Label;
-                        CanvObj[index].AutoResize = temp[i].Block.AutoResize;
-                        CanvObj[index].BackColor = temp[i].Block.BackColor;
-                        CanvObj[index].BackColorStorage = temp[i].Block.BackColorStorage;
-                        CanvObj[index].Code = temp[i].Block.Code;
-                        CanvObj[index].FontColor = temp[i].Block.FontColor;
-                        CanvObj[index].FontSize = temp[i].Block.FontSize;
-                        CanvObj[index].IsLocked = temp[i].Block.IsLocked;
-                        CanvObj[index].IsSelected = temp[i].Block.IsSelected;
-                        CanvObj[index].Shape = temp[i].Block.Shape;
-                        CanvObj[index].Rect = temp[i].Block.Rect;
-                        showProperties = true;
-                    }
-
-                }
-                else//linia
-                {
-                    
-                }
-            }
-            CanvLines.MyUpdate(ref CanvObj);
-            _rubbers.MyHideRubbers();
-            if (!showProperties)
-            {
-                OnHideBlockProperties();
-            }
-            else
-            { ShowProperties(); }
-            Invalidate();
-        }
-        //zmiana rozmiaru nwm czemu musi zczytać 2 razy stos
-        public void Redo()
-        {
-            bool showProperties = false;
-            var temp = History.DoPrzodu();
-            temp = (
-                temp?[0].MyActionType == MyAction.EditSize || 
-                temp?[0].MyActionType == MyAction.Move||
-                temp?[0].MyActionType == MyAction.Edit) ? History.DoPrzodu() : temp;
-            if (temp == null) return;
-            for (int i = 0; i < temp.Count; i++)
-            {
-                if (temp[i].Block != null)//blok
-                {
-                    if (temp[i].MyActionType == MyAction.Add)//został dodany wiec usuń blok
-                    {
-                        CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
-                    }
-                    else if (temp[i].MyActionType == MyAction.EditSize)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Rect = temp[i].Block.Rect;
-                    }
-                    else if (temp[i].MyActionType == MyAction.Cut)
-                    {
-                        CanvObj.MyDeleteByID(temp[i].Block.ID);
-                    }
-                    else if (temp[i].MyActionType == MyAction.Delete)
-                    {
-                        CanvObj.MyDeleteByID(temp[i].Block.ID);
-                    }
-                    else if (temp[i].MyActionType == MyAction.Move)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Rect = temp[i].Block.Rect;
-                    }
-                    else if (temp[i].MyActionType == MyAction.Edit)
-                    {
-                        var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                        CanvObj[index].Label = temp[i].Block.Label;
-                        CanvObj[index].AutoResize = temp[i].Block.AutoResize;
-                        CanvObj[index].BackColor = temp[i].Block.BackColor;
-                        CanvObj[index].BackColorStorage = temp[i].Block.BackColorStorage;
-                        CanvObj[index].Code = temp[i].Block.Code;
-                        CanvObj[index].FontColor = temp[i].Block.FontColor;
-                        CanvObj[index].FontSize = temp[i].Block.FontSize;
-                        CanvObj[index].IsLocked = temp[i].Block.IsLocked;
-                        CanvObj[index].IsSelected = temp[i].Block.IsSelected;
-                        CanvObj[index].Shape = temp[i].Block.Shape;
-                        CanvObj[index].Rect = temp[i].Block.Rect;
-                        showProperties = true;
-                    }
-                }
-                else//linia
-                {
-
-                }
-            }
-            CanvLines.MyUpdate(ref CanvObj);
-            if (!showProperties)
-            {
-                OnHideBlockProperties();
-            }
-            else
-            { ShowProperties(); }
-            Invalidate();
-        }
+       
 
         #endregion
         //todo V - ADD
@@ -383,7 +266,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 else
                 {
                     CanvObj.MyAdd(_scrolledPoint, ShapeToDraw);
-                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0]) });
+                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0], null) });
                     ShapeToDraw = Helper.Shape.Nothing;
                 }
                 if (CanvObj.Count>0) _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
@@ -391,6 +274,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 Invalidate();
             }
         }
+
         private void LPM_SelectObjectByClick(Point e)
         {
             if (ShapeToDraw == Helper.Shape.Nothing)
@@ -402,6 +286,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     Invalidate();
                 }
         }
+
+        //todo V - Move, X-line
         bool isMoved = false;
         private bool LPM_MoveObject(Point e)
         {
@@ -452,16 +338,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             AbortAddingObject();
         }
 
-        //V
-        //private void PPM_TryShowContextMenu(Point e)
-        //{
-        //    var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
-        //    if (CanvObj.My_IsAnyObjectContainingPoint(_scrolledPoint))
-        //    {
-        //        ShowContextMenu(e);
-        //        _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
-        //    }
-        //}
+      
 
         //todo - EditSize +linie
         private void PPM_SelectForResizeOrContextMenu(Point e)
@@ -488,5 +365,15 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             sizeChanged = true;
             Invalidate();
         }
+        //V
+        //private void PPM_TryShowContextMenu(Point e)
+        //{
+        //    var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
+        //    if (CanvObj.My_IsAnyObjectContainingPoint(_scrolledPoint))
+        //    {
+        //        ShowContextMenu(e);
+        //        _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
+        //    }
+        //}
     }
 }

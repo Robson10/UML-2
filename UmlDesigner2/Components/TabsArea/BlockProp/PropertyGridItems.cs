@@ -173,7 +173,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
                         PointInput = _block.PointInput,
                         Shape = _block.Shape,
                         Rect = _block.Rect,
-                        ID = _block.ID}) });
+                        ID = _block.ID},null) });
     }
     }
 }

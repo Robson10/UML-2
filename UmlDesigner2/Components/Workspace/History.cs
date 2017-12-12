@@ -16,7 +16,6 @@ namespace UmlDesigner2.Component.Workspace
         //lub dodac event przy textboxach aby nie zapisywać zmiany kazdej literki w TB
         private static Stack<List<HistoryItem>> cofnij = new Stack<List<HistoryItem>>();
         private static Stack<List<HistoryItem>>  doPrzodu = new Stack<List<HistoryItem>>();
-        public  static List<HistoryItem> temporary = new List<HistoryItem>();
         public static void Clear()
         {
             cofnij.Clear();
@@ -82,15 +81,16 @@ namespace UmlDesigner2.Component.Workspace
 
     public class HistoryItem
     {
-        public HistoryItem(MyAction myAction,MyLine line)
-        {
-            MyActionType = myAction;
-            Line = line;
-        }
-        public HistoryItem(MyAction myAction, MyBlock block)
+        //public HistoryItem(MyAction myAction,MyLine line)
+        //{
+        //    MyActionType = myAction;
+        //    Line = line;
+        //}
+        public HistoryItem(MyAction myAction, MyBlock block, MyLine line)
         {
             MyActionType = myAction;
             Block = block;
+            Line = line;
         }
         public MyAction MyActionType;
         public MyBlock Block=null;
