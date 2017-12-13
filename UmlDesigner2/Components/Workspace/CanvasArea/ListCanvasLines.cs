@@ -13,23 +13,18 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         public MyLine ToListHistory(int i)
         {
-                //List<MyLine> temp = new List<MyLine>();
-                //for (int i = 0; i < this.Count; i++)
-                //{
-                //    if (this[i].IsSelected)
-                //    {
-                       return new MyLine(){
-                            BackColor=this[i].BackColor,
-                            BackColorHTML= this[i].BackColorHTML,
-                            BeginId= this[i].BeginId,
-                            BeginPoint= this[i].BeginPoint,
-                            EndId= this[i].EndId,
-                            EndPoint= this[i].EndPoint,
-                            IsSelected= this[i].IsSelected,
-                            IsTrue= this[i].IsTrue
-                        };
-                //    }
-                //}
+
+            return new MyLine()
+            {
+                BackColor = this[i].BackColor,
+                BackColorHTML = this[i].BackColorHTML,
+                BeginId = this[i].BeginId,
+                BeginPoint = this[i].BeginPoint,
+                EndId = this[i].EndId,
+                EndPoint = this[i].EndPoint,
+                IsSelected = this[i].IsSelected,
+                IsTrue = this[i].IsTrue
+            };
         }
 
         public List<MyLine> GetLineByID(int blockId)

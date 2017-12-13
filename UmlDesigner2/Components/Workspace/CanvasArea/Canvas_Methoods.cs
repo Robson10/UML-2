@@ -151,25 +151,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         #region ShortcutsMethods
 
-        //todo V
+        //todo V block & lines
         public void Delete()
         {
             var ListHistoryItem = CanvObj.ToListHistory(MyAction.Delete);
-            for (int i = 0; i < CanvObj.Count; i++)
-            {
-                if (CanvObj[i].IsSelected)
-                {
-                    var temp = CanvLines.GetLineByID(CanvObj[i].ID);
-                    if (temp != null)
-                    {
-                        for (int j = 0; j < temp.Count; j++)
-                        {
-                            ListHistoryItem.Add(new HistoryItem(MyAction.Delete, null, temp[j]));
-                        }
-                        
-                    }
-                }
-            }
+            AddLinesToHistoryList(ref ListHistoryItem);
             History.Push(ListHistoryItem);
             for (int i = CanvObj.Count - 1; i >= 0; i--)
             {
@@ -225,6 +211,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     var blockTemp = (List<MyBlock>) Clipboard.GetData(Helper.BlockClipboardFormat);
                     var lineTemp = (List<MyLine>) Clipboard.GetData(Helper.LineClipboardFormat);
+                    lineTemp.RemoveAll(x => x.BeginId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID || x.EndId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID);
+                    blockTemp.RemoveAll(x => x.Shape == Helper.Shape.Start);
                     if (blockTemp.Count == 0) return;//jezeli nie ma nic do wklejenia to pomiń
                     for (int i = 0; i < blockTemp.Count; i++)
                     {

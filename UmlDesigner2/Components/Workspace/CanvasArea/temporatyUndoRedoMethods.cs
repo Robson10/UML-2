@@ -11,12 +11,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         //zlapanie usuniecia linii
         public void Undo()
         {
-            bool showProperties = false;
-            var temp = History.Cofnij();
-            temp = (temp?[0].MyActionType == MyAction.EditSize ||
-                temp?[0].MyActionType == MyAction.Move ||
-                temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij() : temp;//podwojny pop na EditSize.NWM czemu
-            if (temp == null) return;
+                    bool showProperties = false;
+                    var temp = History.Cofnij();
+                    temp = (temp?[0].MyActionType == MyAction.EditSize ||
+                        temp?[0].MyActionType == MyAction.Move ||
+                        temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij() : temp;//podwojny pop na EditSize.NWM czemu
+                    if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
                 if (temp[i].Block != null)//blok
@@ -182,7 +182,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     }
                     else if (temp[i].MyActionType == MyAction.Delete)
                     {
-                        //CanvObj.Add(temp[i].Block);
+                        CanvLines.MyRemove(temp[i].Line.BeginId);
                     }
                     //else if (temp[i].MyActionType == MyAction.Move)
                     //{
@@ -215,6 +215,25 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             else
             { ShowProperties(); }
             Invalidate();
+        }
+
+        private void AddLinesToHistoryList(ref List<HistoryItem> ListHistoryItem)
+        {
+            for (int i = 0; i < CanvObj.Count; i++)
+            {
+                if (CanvObj[i].IsSelected)
+                {
+                    var temp = CanvLines.GetLineByID(CanvObj[i].ID);
+                    if (temp != null)
+                    {
+                        for (int j = 0; j < temp.Count; j++)
+                        {
+                            ListHistoryItem.Add(new HistoryItem(MyAction.Delete, null, temp[j]));
+                        }
+
+                    }
+                }
+            }
         }
     }
 }
