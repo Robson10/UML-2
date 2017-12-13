@@ -182,7 +182,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     }
                     else if (temp[i].MyActionType == MyAction.Delete)
                     {
-                        CanvLines.MyRemove(temp[i].Line.BeginId);
+                        CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
                     //else if (temp[i].MyActionType == MyAction.Move)
                     //{

@@ -150,6 +150,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             RemoveAll(x => x.BeginId == id || x.EndId == id);
         }
+        public void MyRemove(int beginId, int endId)
+        {
+            RemoveAll(x => x.BeginId == beginId && x.EndId == endId);
+        }
 
         /// <summary>
         /// Metoda przerywająca dodawanie linii
