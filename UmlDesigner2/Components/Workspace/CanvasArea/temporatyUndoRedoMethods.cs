@@ -64,42 +64,19 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     if (temp[i].MyActionType == MyAction.Add)//został dodany wiec usuń blok
                     {
-                        CanvLines.MyRemove(temp[i].Line.BeginId);
+                        CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
-                    //else if (temp[i].MyActionType == MyAction.EditSize)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //}
+                   
                     else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
                     {
+                        CanvLines.Add(temp[i].Line);
                         //CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
                     }
                     else if (temp[i].MyActionType == MyAction.Delete)
                     {
                         CanvLines.Add(temp[i].Line);
                     }
-                    //else if (temp[i].MyActionType == MyAction.Move)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //}
-                    //else if (temp[i].MyActionType == MyAction.Edit)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Label = temp[i].Block.Label;
-                    //    //CanvObj[index].AutoResize = temp[i].Block.AutoResize;
-                    //    //CanvObj[index].BackColor = temp[i].Block.BackColor;
-                    //    //CanvObj[index].BackColorStorage = temp[i].Block.BackColorStorage;
-                    //    //CanvObj[index].Code = temp[i].Block.Code;
-                    //    //CanvObj[index].FontColor = temp[i].Block.FontColor;
-                    //    //CanvObj[index].FontSize = temp[i].Block.FontSize;
-                    //    //CanvObj[index].IsLocked = temp[i].Block.IsLocked;
-                    //    //CanvObj[index].IsSelected = temp[i].Block.IsSelected;
-                    //    //CanvObj[index].Shape = temp[i].Block.Shape;
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //    //showProperties = true;
-                    //}
+                    //nadpisanie linii
                 }
             }
             CanvLines.MyUpdate(ref CanvObj);
@@ -171,40 +148,16 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         CanvLines.Add(temp[i].Line);
                     }
-                    //else if (temp[i].MyActionType == MyAction.EditSize)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //}
+
                     else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
                     {
-                        //CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
+                        CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
                     else if (temp[i].MyActionType == MyAction.Delete)
                     {
                         CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
-                    //else if (temp[i].MyActionType == MyAction.Move)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //}
-                    //else if (temp[i].MyActionType == MyAction.Edit)
-                    //{
-                    //    //var index = CanvObj.FindIndex(x => x.ID == temp[i].Block.ID);
-                    //    //CanvObj[index].Label = temp[i].Block.Label;
-                    //    //CanvObj[index].AutoResize = temp[i].Block.AutoResize;
-                    //    //CanvObj[index].BackColor = temp[i].Block.BackColor;
-                    //    //CanvObj[index].BackColorStorage = temp[i].Block.BackColorStorage;
-                    //    //CanvObj[index].Code = temp[i].Block.Code;
-                    //    //CanvObj[index].FontColor = temp[i].Block.FontColor;
-                    //    //CanvObj[index].FontSize = temp[i].Block.FontSize;
-                    //    //CanvObj[index].IsLocked = temp[i].Block.IsLocked;
-                    //    //CanvObj[index].IsSelected = temp[i].Block.IsSelected;
-                    //    //CanvObj[index].Shape = temp[i].Block.Shape;
-                    //    //CanvObj[index].Rect = temp[i].Block.Rect;
-                    //    //showProperties = true;
-                    //}
+                 
                 }
             }
             CanvLines.MyUpdate(ref CanvObj);
@@ -216,8 +169,26 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             { ShowProperties(); }
             Invalidate();
         }
+        private void CutToHistory()
+        {
+            var ListHistoryItem = CanvObj.ToListHistory(MyAction.Cut);
+            AddLinesToHistoryList(ref ListHistoryItem, MyAction.Cut);
+            History.Push(ListHistoryItem);
+        }
+        private void PasteToHistory()
+        {
+            var ListHistoryItem = CanvObj.ToListHistory(MyAction.Add);
+            AddLinesToHistoryList(ref ListHistoryItem, MyAction.Add);
+            History.Push(ListHistoryItem);
+        }
 
-        private void AddLinesToHistoryList(ref List<HistoryItem> ListHistoryItem)
+        private void DeleteToHistory()
+        {
+            var ListHistoryItem = CanvObj.ToListHistory(MyAction.Delete);
+            AddLinesToHistoryList(ref ListHistoryItem, MyAction.Delete);
+            History.Push(ListHistoryItem);
+        }
+        private void AddLinesToHistoryList(ref List<HistoryItem> ListHistoryItem, MyAction action)
         {
             for (int i = 0; i < CanvObj.Count; i++)
             {
@@ -227,10 +198,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     if (temp != null)
                     {
                         for (int j = 0; j < temp.Count; j++)
-                        {
-                            ListHistoryItem.Add(new HistoryItem(MyAction.Delete, null, temp[j]));
-                        }
-
+                            ListHistoryItem.Add(new HistoryItem(action, null, temp[j]));
                     }
                 }
             }

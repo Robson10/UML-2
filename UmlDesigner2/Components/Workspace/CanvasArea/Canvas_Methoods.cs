@@ -154,9 +154,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         //todo V block & lines
         public void Delete()
         {
-            var ListHistoryItem = CanvObj.ToListHistory(MyAction.Delete);
-            AddLinesToHistoryList(ref ListHistoryItem);
-            History.Push(ListHistoryItem);
+            DeleteToHistory();
             for (int i = CanvObj.Count - 1; i >= 0; i--)
             {
                 if (CanvObj[i].IsSelected && !CanvObj[i].IsLocked)
@@ -187,7 +185,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             Clipboard.Clear();
             IDataObject clips = new DataObject();
-            History.Push(CanvObj.ToListHistory(MyAction.Cut));
+            CutToHistory();
             clips.SetData(Helper.BlockClipboardFormat, CanvObj.MyCut(Helper.BlockClipboardFormat));
             Clipboard.SetDataObject(clips, true);
 
@@ -211,8 +209,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     var blockTemp = (List<MyBlock>) Clipboard.GetData(Helper.BlockClipboardFormat);
                     var lineTemp = (List<MyLine>) Clipboard.GetData(Helper.LineClipboardFormat);
-                    lineTemp.RemoveAll(x => x.BeginId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID || x.EndId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID);
-                    blockTemp.RemoveAll(x => x.Shape == Helper.Shape.Start);
+                    try
+                    {
+                        lineTemp.RemoveAll(x =>
+                            x.BeginId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID ||
+                            x.EndId == blockTemp.Find(y => y.Shape == Helper.Shape.Start).ID);
+                        blockTemp.RemoveAll(x => x.Shape == Helper.Shape.Start);
+                    }catch{}
                     if (blockTemp.Count == 0) return;//jezeli nie ma nic do wklejenia to pomiń
                     for (int i = 0; i < blockTemp.Count; i++)
                     {
@@ -225,7 +228,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                         }
                     }
                     CanvLines.MyPaste(lineTemp);
-                    History.Push(CanvObj.ToListHistory(MyAction.Add));
+                    PasteToHistory();
+
                     if (CanvObj.Count > 1 && CanvObj[1].IsSelected)
                         OnHideBlockProperties();
                     else
@@ -240,6 +244,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
        
 
         #endregion
+
         //todo V - ADD
         private void LPM_TryAddObject(Point e)
         {

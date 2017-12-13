@@ -123,7 +123,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     var temp1 = listBlocks.TryGetElementWithId(this[i].BeginId);
                     var temp2 = listBlocks.TryGetElementWithId(this[i].EndId);
-                    //if (temp1 == null || temp2==null)
+                    //if (temp1 == null || temp2 == null)
                     //{
                     //    this.RemoveAt(i);
                     //    i--;
