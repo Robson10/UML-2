@@ -15,7 +15,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     var temp = History.Cofnij();
                     temp = (temp?[0].MyActionType == MyAction.EditSize ||
                         temp?[0].MyActionType == MyAction.Move ||
-                        temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij() : temp;//podwojny pop na EditSize.NWM czemu
+                        temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij() : temp;
                     if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -62,21 +62,23 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
                 else if (temp[i].Line != null)
                 {
-                    if (temp[i].MyActionType == MyAction.Add)//został dodany wiec usuń blok
+                    if (temp[i].MyActionType == MyAction.Add)
                     {
                         CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
-                   
-                    else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
+                    else if (temp[i].MyActionType == MyAction.Cut)
                     {
                         CanvLines.Add(temp[i].Line);
-                        //CanvObj.Add(temp[i].Block);//wykorzystujemy metode domyslną ponieważ CanvObj.MyAdd zmieniłaby ID bloku
                     }
                     else if (temp[i].MyActionType == MyAction.Delete)
                     {
                         CanvLines.Add(temp[i].Line);
                     }
-                    //nadpisanie linii
+                    else if (temp[i].MyActionType == MyAction.OverrideLine)
+                    {
+                        CanvLines.RemoveAll(x => x.BeginId == temp[i].Line.BeginId && x.IsTrue== temp[i].Line.IsTrue);
+                        CanvLines.Add(temp[i].Line);
+                    }
                 }
             }
             CanvLines.MyUpdate(ref CanvObj);
@@ -89,7 +91,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             { ShowProperties(); }
             Invalidate();
         }
-        //zmiana rozmiaru nwm czemu musi zczytać 2 razy stos
+
         public void Redo()
         {
             bool showProperties = false;
@@ -148,7 +150,6 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         CanvLines.Add(temp[i].Line);
                     }
-
                     else if (temp[i].MyActionType == MyAction.Cut)//został dodany wiec usuń blok
                     {
                         CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
@@ -157,7 +158,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         CanvLines.MyRemove(temp[i].Line.BeginId, temp[i].Line.EndId);
                     }
-                 
+                    else if (temp[i].MyActionType == MyAction.OverrideLine)
+                    {
+                        CanvLines.RemoveAll(x => x.BeginId == temp[i].Line.BeginId && x.IsTrue == temp[i].Line.IsTrue);
+                    }
                 }
             }
             CanvLines.MyUpdate(ref CanvObj);

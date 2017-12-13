@@ -105,6 +105,7 @@ namespace UmlDesigner2.Component.Workspace
         Delete,
         Edit,
         EditSize,
-        Move
+        Move,
+        OverrideLine
     }
 }

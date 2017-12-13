@@ -78,37 +78,53 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                             MessageBox.Show("Czy ma być to linia dla prawdy (true)", "", MessageBoxButtons.YesNo);
                         if (dialogResult == DialogResult.Yes)
                         {
-                            for (int i = 0; i < Count; i++)
-                            {
-                                if (this[i].BeginId == temp.ID && this[i].IsTrue) //już istnieje taka linia
-                                    RemoveAt(i);
-                            }
+                            OverrideLine(false, temp);
                             Insert(0, new MyLine(temp.PointOutput1, temp.ID, true));
-
                         }
                         else if (dialogResult == DialogResult.No)
                         {
-                            for (int i = 0; i < Count; i++)
-                            {
-                                if (this[i].BeginId == temp.ID && !this[i].IsTrue) //już istnieje taka linia
-                                    RemoveAt(i);
-                            }
+                            OverrideLine(true, temp);
                             Insert(0, new MyLine(temp.PointOutput2, temp.ID, false));
-
                         }
                     }
                     else
                     {
-                        for (int i = 0; i < Count; i++)
-                        {
-                            if (this[i].BeginId == temp.ID) //już istnieje taka linia
-                                RemoveAt(i);
-                        }
+                        OverrideLine(false, temp);
                         Insert(0, new MyLine(temp.PointOutput1, temp.ID));
 
                     }
                 }
             }
+        }
+
+        private bool OverrideLine(bool isFalseLine, MyBlock block)
+        {
+            bool isOverride = false;
+            if (isFalseLine)
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    if (this[i].BeginId == block.ID && !this[i].IsTrue) //już istnieje taka linia
+                    {
+                        History.Push(new List<HistoryItem>(){ new HistoryItem(MyAction.OverrideLine, null, ToListHistory(i))});
+                        RemoveAt(i);
+                        isOverride = true;
+                    }
+                }
+            }
+            else
+            {
+                for (int i = 0; i < Count; i++)
+                {
+                    if (this[i].BeginId == block.ID&& this[i].IsTrue) //już istnieje taka linia
+                    {
+                        History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.OverrideLine, null, ToListHistory(i)) });
+                        RemoveAt(i);
+                        isOverride = true;
+                    }
+                }
+            }
+            return isOverride;
         }
 
         /// <summary>
@@ -150,9 +166,12 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             RemoveAll(x => x.BeginId == id || x.EndId == id);
         }
-        public void MyRemove(int beginId, int endId)
+        public void MyRemove(int beginId, int endId,bool oneMatchParameter=false)
         {
+            if(!oneMatchParameter)
             RemoveAll(x => x.BeginId == beginId && x.EndId == endId);
+            else
+                RemoveAll(x => x.BeginId == beginId || x.EndId == endId);
         }
 
         /// <summary>
