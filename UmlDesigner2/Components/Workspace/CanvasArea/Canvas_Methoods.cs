@@ -32,7 +32,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             CanvObj.Clear();
             Clipboard.Clear();
             _rubbers.MyHideRubbers();
-            History.Clear();//wyczyszczenie historii ctrl z/y
+            UndoRedo.Clear();//wyczyszczenie historii ctrl z/y
             Invalidate();
         }
 
@@ -75,13 +75,13 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     if (!CheckIsStartExist())
                     {
                         CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
-                        History.Push(new List<HistoryItem>(){new HistoryItem(MyAction.Add,CanvObj[0], null) });
+                        UndoRedo.Push(new List<UndoRedoItem>(){new UndoRedoItem(MyAction.Add,CanvObj[0], null) });
                     }
                 }
                 else
                 {
                     CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
-                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0], null) });
+                    UndoRedo.Push(new List<UndoRedoItem>() { new UndoRedoItem(MyAction.Add, CanvObj[0], null) });
                 }
                 ShapeToDraw = Helper.Shape.Nothing;
                 Invalidate();
@@ -144,7 +144,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         //    CanvLines.MyUpdate(ref CanvObj);
         //    _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
 
-        //    History.Push(CanvObj.ToListHistory(MyAction.Edit));
+        //    UndoRedo.Push(CanvObj.ToListHistory(MyAction.Edit));
         //    ShowProperties();
         //    Invalidate();
         //}
@@ -259,7 +259,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 else
                 {
                     CanvObj.MyAdd(_scrolledPoint, ShapeToDraw);
-                    History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.Add, CanvObj[0], null) });
+                    UndoRedo.Push(new List<UndoRedoItem>() { new UndoRedoItem(MyAction.Add, CanvObj[0], null) });
                     ShapeToDraw = Helper.Shape.Nothing;
                 }
                 if (CanvObj.Count>0) _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
@@ -289,7 +289,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                if (!isMoved)
                 {
-                    History.Push(CanvObj.ToListHistory(MyAction.Move));
+                    UndoRedo.Push(CanvObj.ToListHistory(MyAction.Move));
                     isMoved = true;
                 }
                 CanvObj.My_MoveSelectedObjects(ref _mouseDownLocation, _scrolledPoint);
@@ -340,7 +340,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             var _scrolledPoint = new Point(e.X - AutoScrollPosition.X, e.Y - AutoScrollPosition.Y);
             CanvObj.My_SelectObjectContainingPoint(_scrolledPoint);
             _ppm = true;
-            History.Push(CanvObj.ToListHistory(MyAction.EditSize));
+            UndoRedo.Push(CanvObj.ToListHistory(MyAction.EditSize));
             Invalidate();
         }
 

@@ -158,7 +158,7 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         }
         private void addChangesToHistory()
         {
-            History.Push(new System.Collections.Generic.List<HistoryItem>() { new HistoryItem(MyAction.Edit,
+            UndoRedo.Push(new System.Collections.Generic.List<UndoRedoItem>() { new UndoRedoItem(MyAction.Edit,
                 new MyBlock() { AutoResize = _block.AutoResize,
                         Code = _block.Code,
                         FontColor = _block.FontColor,

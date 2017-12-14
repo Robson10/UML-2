@@ -13,14 +13,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
     {
         private static int _id = 0;
 
-        public List<HistoryItem> ToListHistory(MyAction action)
+        public List<UndoRedoItem> ToListHistory(MyAction action)
         {
-            List<HistoryItem> temp = new List<HistoryItem>();
+            List<UndoRedoItem> temp = new List<UndoRedoItem>();
             for (int i = 0; i < this.Count; i++)
             {
                 if (this[i].IsSelected)
                 {
-                    temp.Add(new HistoryItem(action, new MyBlock()
+                    temp.Add(new UndoRedoItem(action, new MyBlock()
                     {
                         AutoResize = this[i].AutoResize,
                         Code = this[i].Code,

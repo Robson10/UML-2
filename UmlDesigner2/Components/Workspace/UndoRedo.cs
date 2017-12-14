@@ -7,26 +7,26 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace
 {
-    class History
+    class UndoRedo
     {
         //textbox nie ma ctrlZ/Y wiec zaskakuje moja historia - nalezy jednak edycje tekstu takze dorzucic do mojej historii
         //todo move, oraz okno propertisów 
 
         //łapać historie edycji bloku z poziomu properties po zmianie aktywnego bloku lub zamkniecie properties
         //lub dodac event przy textboxach aby nie zapisywać zmiany kazdej literki w TB
-        private static Stack<List<HistoryItem>> cofnij = new Stack<List<HistoryItem>>();
-        private static Stack<List<HistoryItem>>  doPrzodu = new Stack<List<HistoryItem>>();
+        private static Stack<List<UndoRedoItem>> cofnij = new Stack<List<UndoRedoItem>>();
+        private static Stack<List<UndoRedoItem>>  doPrzodu = new Stack<List<UndoRedoItem>>();
         public static void Clear()
         {
             cofnij.Clear();
             doPrzodu.Clear();
         }
-        public static void Push(List<HistoryItem> value)
+        public static void Push(List<UndoRedoItem> value)
         {
             cofnij.Push(value);
             doPrzodu.Clear();
         }
-        public static List<HistoryItem> Cofnij()
+        public static List<UndoRedoItem> Undo()
         {
             if (cofnij.Count == 0) return null;
             var temp = cofnij.Pop();
@@ -34,7 +34,7 @@ namespace UmlDesigner2.Component.Workspace
             return temp;
         }
 
-        public static List<HistoryItem> DoPrzodu()
+        public static List<UndoRedoItem> Redo()
         {
             if (doPrzodu.Count == 0) return null;
             var temp=doPrzodu.Pop();
@@ -42,7 +42,7 @@ namespace UmlDesigner2.Component.Workspace
             return temp;
         }
 
-        public static bool compareWithLastPush(List<HistoryItem> value,MyAction action)
+        public static bool compareWithLastPush(List<UndoRedoItem> value,MyAction action)
         {
             if (cofnij.Count > 0 && value.Count > 0)
             {
@@ -60,14 +60,6 @@ namespace UmlDesigner2.Component.Workspace
                         }
                     }
                 }
-                //if (value[0].MyActionType == MyAction.Move)
-                //{
-                //    var temp1 = cofnij.ToList()[1];
-                //    for (int i = 0; i < temp1.Count; i++)
-                //    {
-                //        if (value[i].Block.Rect != temp1[i].Block.Rect) return false;
-                //    }
-                //}
             }
                 return true;
         }
@@ -79,14 +71,9 @@ namespace UmlDesigner2.Component.Workspace
         }
     }
 
-    public class HistoryItem
+    public class UndoRedoItem
     {
-        //public HistoryItem(MyAction myAction,MyLine line)
-        //{
-        //    MyActionType = myAction;
-        //    Line = line;
-        //}
-        public HistoryItem(MyAction myAction, MyBlock block, MyLine line)
+        public UndoRedoItem(MyAction myAction, MyBlock block, MyLine line)
         {
             MyActionType = myAction;
             Block = block;

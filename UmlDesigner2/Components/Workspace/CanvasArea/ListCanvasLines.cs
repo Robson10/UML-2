@@ -61,9 +61,9 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         this[0].EndPoint = temp.PointInput;
                         this[0].EndId = temp.ID;
-                        History.Push(new List<HistoryItem>()
+                        UndoRedo.Push(new List<UndoRedoItem>()
                         {
-                            new HistoryItem(MyAction.Add, null, this.ToListHistory(0))
+                            new UndoRedoItem(MyAction.Add, null, this.ToListHistory(0))
                         });
                         shapeToDraw = Helper.Shape.Nothing;
                     }
@@ -97,7 +97,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        private bool OverrideLine(bool isFalseLine, MyBlock block)
+        private void OverrideLine(bool isFalseLine, MyBlock block)
         {
             bool isOverride = false;
             if (isFalseLine)
@@ -106,9 +106,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     if (this[i].BeginId == block.ID && !this[i].IsTrue) //już istnieje taka linia
                     {
-                        History.Push(new List<HistoryItem>(){ new HistoryItem(MyAction.OverrideLine, null, ToListHistory(i))});
+                        UndoRedo.Push(new List<UndoRedoItem>(){ new UndoRedoItem(MyAction.OverrideLine, null, ToListHistory(i))});
                         RemoveAt(i);
-                        isOverride = true;
                     }
                 }
             }
@@ -118,13 +117,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 {
                     if (this[i].BeginId == block.ID&& this[i].IsTrue) //już istnieje taka linia
                     {
-                        History.Push(new List<HistoryItem>() { new HistoryItem(MyAction.OverrideLine, null, ToListHistory(i)) });
+                        UndoRedo.Push(new List<UndoRedoItem>() { new UndoRedoItem(MyAction.OverrideLine, null, ToListHistory(i)) });
                         RemoveAt(i);
-                        isOverride = true;
                     }
                 }
             }
-            return isOverride;
         }
 
         /// <summary>

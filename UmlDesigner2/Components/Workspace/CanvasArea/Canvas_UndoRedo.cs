@@ -12,10 +12,10 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Undo()
         {
                     bool showProperties = false;
-                    var temp = History.Cofnij();
+                    var temp = UndoRedo.Undo();
                     temp = (temp?[0].MyActionType == MyAction.EditSize ||
                         temp?[0].MyActionType == MyAction.Move ||
-                        temp?[0].MyActionType == MyAction.Edit) ? History.Cofnij() : temp;
+                        temp?[0].MyActionType == MyAction.Edit) ? UndoRedo.Undo() : temp;
                     if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -95,11 +95,11 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public void Redo()
         {
             bool showProperties = false;
-            var temp = History.DoPrzodu();
+            var temp = UndoRedo.Redo();
             temp = (
                 temp?[0].MyActionType == MyAction.EditSize ||
                 temp?[0].MyActionType == MyAction.Move ||
-                temp?[0].MyActionType == MyAction.Edit) ? History.DoPrzodu() : temp;
+                temp?[0].MyActionType == MyAction.Edit) ? UndoRedo.Redo() : temp;
             if (temp == null) return;
             for (int i = 0; i < temp.Count; i++)
             {
@@ -177,22 +177,22 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             var ListHistoryItem = CanvObj.ToListHistory(MyAction.Cut);
             AddLinesToHistoryList(ref ListHistoryItem, MyAction.Cut);
-            History.Push(ListHistoryItem);
+            UndoRedo.Push(ListHistoryItem);
         }
         private void PasteToHistory()
         {
             var ListHistoryItem = CanvObj.ToListHistory(MyAction.Add);
             AddLinesToHistoryList(ref ListHistoryItem, MyAction.Add);
-            History.Push(ListHistoryItem);
+            UndoRedo.Push(ListHistoryItem);
         }
 
         private void DeleteToHistory()
         {
             var ListHistoryItem = CanvObj.ToListHistory(MyAction.Delete);
             AddLinesToHistoryList(ref ListHistoryItem, MyAction.Delete);
-            History.Push(ListHistoryItem);
+            UndoRedo.Push(ListHistoryItem);
         }
-        private void AddLinesToHistoryList(ref List<HistoryItem> ListHistoryItem, MyAction action)
+        private void AddLinesToHistoryList(ref List<UndoRedoItem> ListHistoryItem, MyAction action)
         {
             for (int i = 0; i < CanvObj.Count; i++)
             {
@@ -202,7 +202,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     if (temp != null)
                     {
                         for (int j = 0; j < temp.Count; j++)
-                            ListHistoryItem.Add(new HistoryItem(action, null, temp[j]));
+                            ListHistoryItem.Add(new UndoRedoItem(action, null, temp[j]));
                     }
                 }
             }

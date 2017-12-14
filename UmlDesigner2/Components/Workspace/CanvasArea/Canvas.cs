@@ -4,8 +4,55 @@ using System.Windows.Forms;
 
 namespace UmlDesigner2.Component.Workspace.CanvasArea
 {
-    partial class Canvas : Panel
+    public partial class Canvas : Panel
     {
+        //todo delete this method
+        private void CreateExampleOnCanvas()
+        {
+            
+            CanvObj.MyAdd(new Point(500, 100), Helper.Shape.Start);
+            CanvObj.MyAdd(new Point(500, 200), Helper.Shape.Input);
+            CanvObj.MyAdd(new Point(500, 300), Helper.Shape.Decision);
+            CanvObj.MyAdd(new Point(750, 400), Helper.Shape.Execution);
+            CanvObj.MyAdd(new Point(250, 400), Helper.Shape.Execution);
+            CanvObj.MyAdd(new Point(250, 500), Helper.Shape.Input);
+            CanvObj.MyAdd(new Point(250, 600), Helper.Shape.Execution);
+            CanvObj.MyAdd(new Point(500, 700), Helper.Shape.End);
+            for (int i = CanvObj.Count - 1; i >= 1; i--)
+            {
+                if (i != 4 && i != 5)
+                {
+                    var shape = Helper.Shape.ConnectionLine;
+                    CanvLines.MyAdd(
+                        new Point(CanvObj[i].Rect.Location.X + CanvObj[i].Rect.Width / 2,
+                            CanvObj[i].Rect.Location.Y + CanvObj[i].Rect.Height / 2), ref shape,
+                        ref CanvObj);
+
+                    CanvLines.MyAdd(
+                        new Point(CanvObj[i - 1].Rect.Location.X + CanvObj[i - 1].Rect.Width / 2,
+                            CanvObj[i - 1].Rect.Location.Y + CanvObj[i - 1].Rect.Height / 2), ref shape,
+                        ref CanvObj);
+                }
+                else
+                {
+                    if (i == 4)
+                    {
+                        CanvLines.Add(new MyLine(CanvObj[i].PointOutput1, CanvObj[i].ID) { EndId = CanvObj[i + 1].ID, EndPoint = CanvObj[i + 1].PointInput });
+                    }
+                    else if (i == 5)
+                    {
+                        CanvLines.Add(new MyLine(CanvObj[i].PointOutput1, CanvObj[i].ID, false) { EndId = CanvObj[i - 1].ID, EndPoint = CanvObj[i - 1].PointInput });
+                        CanvLines.Add(new MyLine(CanvObj[i].PointOutput1, CanvObj[i].ID, true) { EndId = CanvObj[i - 2].ID, EndPoint = CanvObj[i - 2].PointInput });
+                    }
+                }
+            }
+            for (int i = 0; i < CanvObj.Count; i++)
+            {
+                CanvObj[i].Label = CanvObj[i].ID.ToString();
+                CanvObj[i].Code = CanvObj[i].ID.ToString();
+            }
+        }
+
         public static ListCanvasBlocks CanvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
         public static ListCanvasLines CanvLines = new ListCanvasLines(); //lista blokow wyrysowanych na ekranie
 
@@ -33,6 +80,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
             //ContextMenuPresets();
             _rubbers.AddRubbersToControl(this);
+            CreateExampleOnCanvas();
         }
         
         protected override void OnSizeChanged(EventArgs e)
@@ -107,17 +155,17 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 if (sizeChanged)
                 {
-                    History.Push(CanvObj.ToListHistory(MyAction.EditSize));
+                    UndoRedo.Push(CanvObj.ToListHistory(MyAction.EditSize));
                     sizeChanged = false;
                 }
-                if(History.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
-                    History.DeleteLast();
+                if(UndoRedo.compareWithLastPush(CanvObj.ToListHistory(MyAction.EditSize), MyAction.EditSize))
+                    UndoRedo.DeleteLast();
             }
             if (e.Button == MouseButtons.Left)
             {
                 if (isMoved)
                 {
-                    History.Push(CanvObj.ToListHistory(MyAction.Move));
+                    UndoRedo.Push(CanvObj.ToListHistory(MyAction.Move));
                     isMoved = false;
                 }
             }

@@ -53,10 +53,10 @@
     <Compile Include="Components\ToolStripArea\MyToolStripButton.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Workspace\CanvasArea\temporatyUndoRedoMethods.cs">
+    <Compile Include="Components\Workspace\CanvasArea\Canvas_UndoRedo.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Workspace\History.cs" />
+    <Compile Include="Components\Workspace\UndoRedo.cs" />
     <Compile Include="Components\Workspace\ResultComponent\Compile.cs" />
     <Compile Include="Components\Workspace\ResultComponent\Results.cs">
       <SubType>Component</SubType>
