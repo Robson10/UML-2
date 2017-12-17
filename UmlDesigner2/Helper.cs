@@ -76,6 +76,7 @@ namespace UmlDesigner2
         public static Keys KeySaveFile = Keys.Control | Keys.S;
         public static Keys KeyNewFile = Keys.Control | Keys.N;
         public static Keys KeyOpenFile = Keys.Control | Keys.O;
+        public static Keys SelectAll = Keys.Control | Keys.A;
         //shift
         public static Keys KeyDebug = Keys.Shift | Keys.F5;
         //ctrl shift

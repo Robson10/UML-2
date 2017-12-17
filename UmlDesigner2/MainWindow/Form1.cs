@@ -88,6 +88,8 @@ namespace UmlDesigner2.MainWindow
                 canvas1.IsMultiSelect = true;
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeyRun))
                 Run();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.SelectAll))
+                canvas1.SelectAll();
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeyCopy))
                 canvas1.Copy();
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeyCut))

@@ -220,11 +220,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-       
+        public void SelectAll()
+        {
+            CanvObj.My_IsSelectedSetForAll(true);
+            Invalidate();
+        }
 
         #endregion
-
-        //todo V - ADD
+        
         private void LPM_TryAddObject(Point e)
         {
             if (ShapeToDraw != Helper.Shape.Nothing)
