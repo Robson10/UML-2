@@ -94,7 +94,6 @@
     <Compile Include="Components\Workspace\CanvasArea\Canvas.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\Workspace\CanvasArea\CanvasContextMenu.cs" />
     <Compile Include="Components\Workspace\CanvasArea\Canvas_Methoods.cs">
       <SubType>Component</SubType>
     </Compile>

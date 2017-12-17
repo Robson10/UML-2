@@ -127,28 +127,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             }
         }
 
-        ////todo X - Edit - Locked
-        //private void SetIsLockedForObject()
-        //{
-        //    CanvObj.MySetIsLockedForSelectedObj();
-        //    IsMultiSelect = false;
-        //}
-        //todo X - Edit -Autoresize
-        //private void AutoResizeBlockToContent()
-        //{
-        //    CanvObj.Where(x => !x.IsLocked && x.IsSelected).ToList().ForEach(x=>x.AutoResize=!x.AutoResize);
-        //    for (int i = 0; i < CanvObj.Count; i++)
-        //    {
-        //        CanvObj[i].UpdateRectSizeOnAutoresize();
-        //    }
-        //    CanvLines.MyUpdate(ref CanvObj);
-        //    _rubbers.ShowRubbers(CanvObj[0], AutoScrollPosition);
-
-        //    UndoRedo.Push(CanvObj.ToListHistory(MyAction.Edit));
-        //    ShowProperties();
-        //    Invalidate();
-        //}
-
+        
         #region ShortcutsMethods
 
         //todo V block & lines
@@ -280,7 +259,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                 }
         }
 
-        //todo V - Move, X-line
+
         bool isMoved = false;
         private bool LPM_MoveObject(Point e)
         {
@@ -332,8 +311,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         }
 
       
-
-        //todo - EditSize +linie
+        
         private void PPM_SelectForResizeOrContextMenu(Point e)
         {
             Cursor = Cursors.SizeAll;

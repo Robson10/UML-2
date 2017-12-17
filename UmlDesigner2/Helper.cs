@@ -177,7 +177,7 @@ namespace UmlDesigner2
 
         public static ClockType ClockChoosenType = ClockType.Analog;
         public static int ClockSize = 70;
-        public static TimeSpan ClockTimeForExam = new TimeSpan(4, 0, 0);
+        public static TimeSpan ClockTimeForExam = new TimeSpan(1, 45, 0);
         public static Color ClockColorHand = Color.Black;
         public static Color ClockColorScale = Color.Black;
         public static string ClockMessageWhenTimeIsOver = "Skończył ci się czas";

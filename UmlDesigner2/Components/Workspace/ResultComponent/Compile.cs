@@ -12,8 +12,6 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace.ResultComponent
 {
-    //todo dodać możliwość wyszukiwania bloków po ich ID
-    //todo dodać możliwość wpisywania include do kodu
     public class Compile
     {
         public static string Includes = "#include <stdio.h>" + Environment.NewLine +
@@ -89,27 +87,35 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         public static string TransformBlockToCode(ListCanvasBlocks blocks, ListCanvasLines lines)
         {
             string code = "";
-            var indexBegin = blocks.FindIndex(x => x.Shape == Helper.Shape.Start);
-            int endId = lines.Find(x => x.BeginId == blocks[indexBegin].ID).EndId;
-            StartToCode(ref code, endId);
-            for (int i = 0; i < blocks.Count; i++)
+            try
             {
-                if (blocks[i].Shape == Helper.Shape.Decision)
+                blocks.Sort((x, y) => x.ID.CompareTo(y.ID));
+                var indexBegin = blocks.FindIndex(x => x.Shape == Helper.Shape.Start);
+                int endId = lines.Find(x => x.BeginId == blocks[indexBegin].ID).EndId;
+                StartToCode(ref code, endId);
+                for (int i = 0; i < blocks.Count; i++)
                 {
-                    DecisionToCode(ref code, blocks[i], ref lines);
+                    if (blocks[i].Shape == Helper.Shape.Decision)
+                    {
+                        DecisionToCode(ref code, blocks[i], ref lines);
+                    }
+                    else if (blocks[i].Shape != Helper.Shape.End && blocks[i].Shape != Helper.Shape.Start)
+                    {
+                        endId = lines.Find(x => x.BeginId == blocks[i].ID).EndId;
+                        InputExecutionToCode(ref code, blocks[i], endId);
+                    }
+                    else if (blocks[i].Shape == Helper.Shape.End)
+                    {
+                        EndToCode(ref code, blocks[i].ID);
+                    }
+                    code += Environment.NewLine;
                 }
-                else if (blocks[i].Shape != Helper.Shape.End && blocks[i].Shape != Helper.Shape.Start)
-                {
-                    endId = lines.Find(x => x.BeginId == blocks[i].ID).EndId;
-                    InputExecutionToCode(ref code, blocks[i], endId);
-                }
-                else if (blocks[i].Shape == Helper.Shape.End)
-                {
-                    EndToCode(ref code, blocks[i].ID);
-                }
+                FinishCode(ref code);
+                Results.Text = code;
             }
-            FinishCode(ref code);
-            Results.Text = code;
+            catch
+            {
+            }
             return code;
         }
 
@@ -117,15 +123,15 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         {
             code += "          case(" + block.ID + "):" + Environment.NewLine +
                     "               " + block.Code + Environment.NewLine +
-                    "               {" + Environment.NewLine +
+                    //"               {" + Environment.NewLine +
                     "                   ID=" + lines.Find(x => x.BeginId == block.ID && x.IsTrue).EndId + ";" +
                     Environment.NewLine +
-                    "               }" + Environment.NewLine +
+                    //"               }" + Environment.NewLine +
                     "               else" + Environment.NewLine +
-                    "               {" + Environment.NewLine +
+                    //"               {" + Environment.NewLine +
                     "                   ID=" + lines.Find(x => x.BeginId == block.ID && !x.IsTrue).EndId + ";" +
                     Environment.NewLine +
-                    "               }" + Environment.NewLine +
+                    //"               }" + Environment.NewLine +
                     "              break;" + Environment.NewLine;
         }
 
@@ -150,9 +156,13 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
 
         private static void InputExecutionToCode(ref string code, MyBlock block, int endID)
         {
-
-            code += "          case(" + block.ID + "):" + Environment.NewLine +
-                    "             " + block.Code + Environment.NewLine +
+            code += "          case(" + block.ID + "):" + Environment.NewLine;
+            var temp = block.Code.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+            for (int i = 0; i < temp.Count; i++)
+            {
+                code += "             " + temp[i]+Environment.NewLine;
+            }
+            code+=
                     "              ID=" + endID + ";" + Environment.NewLine +
                     "              break;" + Environment.NewLine;
         }

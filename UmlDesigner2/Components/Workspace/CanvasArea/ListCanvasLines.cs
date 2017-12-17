@@ -335,41 +335,47 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (EndPoint != Point.Empty)
             {
-                var YBreak = Math.Abs(BeginPoint.Y - EndPoint.Y) * 50 / 100;
-                var XBreak = Math.Abs(BeginPoint.X - EndPoint.X) * 50 / 100;
+                //var YBreak = Math.Abs(BeginPoint.Y - EndPoint.Y) * 50 / 100;
+                //var XBreak = Math.Abs(BeginPoint.X - EndPoint.X) * 50 / 100;
+                var YBreak = 10;
+                var XBreak = 10;
                 if (BeginPoint.Y > EndPoint.Y)
+                {
+                    XBreak= Canvas.CanvObj.Find(x => x.ID == this.BeginId).Rect.Width/2+10;
                     if (BeginPoint.X > EndPoint.X)
                         g.DrawLines(
                             new Pen(BackColor, 4),
-                            new []
+                            new[]
                             {
                                 BeginPoint,
-                                new Point(BeginPoint.X, BeginPoint.Y+YBreak),
-                                new Point(BeginPoint.X-XBreak,BeginPoint.Y+YBreak),
-                                new Point(EndPoint.X+XBreak,EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y-YBreak),
-                                EndPoint
+                                new Point(BeginPoint.X, BeginPoint.Y + YBreak), //1
+                                new Point(BeginPoint.X + XBreak, BeginPoint.Y + YBreak), //2
+                                new Point(BeginPoint.X + XBreak, EndPoint.Y - YBreak), //3
+                                new Point(EndPoint.X, EndPoint.Y - YBreak), //4
+                                EndPoint //5
                             });
                     else
                         g.DrawLines(
                             new Pen(BackColor, 4),
-                            new []
+                            new[]
                             {
                                 BeginPoint,
-                                new Point(BeginPoint.X, BeginPoint.Y+YBreak),
-                                new Point(BeginPoint.X+XBreak,BeginPoint.Y+YBreak),
-                                new Point(EndPoint.X-XBreak,EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y-YBreak),
+                                new Point(BeginPoint.X, BeginPoint.Y + YBreak),
+                                new Point(BeginPoint.X - XBreak, BeginPoint.Y + YBreak),
+                                new Point(BeginPoint.X - XBreak, EndPoint.Y - YBreak),
+                                new Point(EndPoint.X, EndPoint.Y - YBreak),
                                 EndPoint
                             });
+                }
                 else
                     g.DrawLines(
                         new Pen(BackColor, 4),
-                        new []
+                        new[]
                         {
                             BeginPoint,
-                            new Point(BeginPoint.X, BeginPoint.Y+YBreak),
-                            new Point(EndPoint.X, EndPoint.Y-YBreak),
+                            new Point(BeginPoint.X, BeginPoint.Y + YBreak),
+                            //new Point(EndPoint.X, EndPoint.Y-YBreak),//skośne linie łączące
+                            new Point(EndPoint.X, BeginPoint.Y + YBreak), //kąty proste
                             EndPoint
                         });
             }
@@ -378,40 +384,68 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         {
             if (EndPoint != Point.Empty)
             {
-                var YBreak = Math.Abs(BeginPoint.Y - EndPoint.Y) * 50 / 100;
-                var XBreak = Math.Abs(BeginPoint.X - EndPoint.X) * 50 / 100;
+                var YBreak = 10;
+                var XBreak = 10;
                 if (BeginPoint.Y > EndPoint.Y)
-                    if (BeginPoint.X > EndPoint.X)
+                {
+                    XBreak = (IsTrue ? -1 : 1) * XBreak;
+                    YBreak += (IsTrue ? 5 : 0);
+                    if (BeginPoint.X > EndPoint.X) //lewo
+                    {
                         g.DrawLines(
                             new Pen(BackColor, 4),
                             new[]
                             {
                                 BeginPoint,
-                                new Point(BeginPoint.X-XBreak,BeginPoint.Y),
-                                new Point(EndPoint.X+XBreak,EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y-YBreak),
+                                new Point(BeginPoint.X + XBreak, BeginPoint.Y),
+                                new Point(BeginPoint.X + XBreak, EndPoint.Y - YBreak),
+                                new Point(EndPoint.X, EndPoint.Y - YBreak ),
                                 EndPoint
                             });
+                    }
                     else
+                    {
                         g.DrawLines(
                             new Pen(BackColor, 4),
                             new[]
                             {
                                 BeginPoint,
-                                new Point(BeginPoint.X+XBreak,BeginPoint.Y),
-                                new Point(EndPoint.X-XBreak,EndPoint.Y-YBreak),
-                                new Point(EndPoint.X, EndPoint.Y-YBreak),
+                                new Point(BeginPoint.X + XBreak, BeginPoint.Y),
+                                new Point(BeginPoint.X + XBreak, EndPoint.Y - YBreak),
+                                new Point(EndPoint.X, EndPoint.Y -YBreak),
                                 EndPoint
                             });
+                    }
+                }
                 else
-                    g.DrawLines(
-                        new Pen(BackColor, 4),
-                        new[]
-                        {
-                            BeginPoint,
-                            new Point(EndPoint.X, BeginPoint.Y),
-                            EndPoint
-                        });
+                {
+                    if ((BeginPoint.X < EndPoint.X && !this.IsTrue)|| (BeginPoint.X > EndPoint.X && this.IsTrue))
+                    {
+                        g.DrawLines(
+                            new Pen(BackColor, 4),
+                            new[]
+                            {
+                                BeginPoint,
+                                new Point(EndPoint.X, BeginPoint.Y),
+                                EndPoint
+                            });
+                    }
+                    else
+                    {
+                        XBreak = (IsTrue ? -1 : 1) * XBreak;
+                        YBreak = Canvas.CanvObj.Find(x => x.ID == this.BeginId).Rect.Height / 2 + 10+ (IsTrue ? 5 : 0);
+                        g.DrawLines(
+                            new Pen(BackColor, 4),
+                            new[]
+                            {
+                                BeginPoint,
+                                new Point(BeginPoint.X+XBreak, BeginPoint.Y),
+                                new Point(BeginPoint.X+XBreak, BeginPoint.Y+YBreak),
+                                new Point(EndPoint.X, BeginPoint.Y+YBreak),
+                                EndPoint
+                            });
+                    }
+                }
             }
         }
     }

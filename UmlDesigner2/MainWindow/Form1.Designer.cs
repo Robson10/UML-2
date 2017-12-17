@@ -144,7 +144,7 @@ namespace UmlDesigner2.MainWindow
             this.tabsArea1.Multiline = true;
             this.tabsArea1.Name = "tabsArea1";
             this.tabsArea1.SelectedIndex = 0;
-            this.tabsArea1.Size = new System.Drawing.Size(267, 190);
+            this.tabsArea1.Size = new System.Drawing.Size(150, 50);
             this.tabsArea1.TabIndex = 0;
             // 
             // splitContainer3
@@ -152,13 +152,12 @@ namespace UmlDesigner2.MainWindow
             this.splitContainer3.Dock = System.Windows.Forms.DockStyle.Fill;
             this.splitContainer3.Location = new System.Drawing.Point(0, 0);
             this.splitContainer3.Name = "splitContainer3";
-            this.splitContainer3.Orientation = System.Windows.Forms.Orientation.Horizontal;
             // 
             // splitContainer3.Panel1
             // 
             this.splitContainer3.Panel1.Controls.Add(this.canvas1);
             this.splitContainer3.Size = new System.Drawing.Size(846, 451);
-            this.splitContainer3.SplitterDistance = 391;
+            this.splitContainer3.SplitterDistance = 698;
             this.splitContainer3.TabIndex = 0;
             // 
             // canvas1
@@ -172,7 +171,7 @@ namespace UmlDesigner2.MainWindow
             this.canvas1.IsMultiSelect = false;
             this.canvas1.Location = new System.Drawing.Point(0, 0);
             this.canvas1.Name = "canvas1";
-            this.canvas1.Size = new System.Drawing.Size(846, 391);
+            this.canvas1.Size = new System.Drawing.Size(698, 451);
             this.canvas1.TabIndex = 0;
             // 
             // tabPage1

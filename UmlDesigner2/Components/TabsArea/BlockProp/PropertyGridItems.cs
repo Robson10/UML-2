@@ -18,7 +18,13 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             _block = null;
             _block = block;
         }
-
+        [Category("Parametry")]
+        [Description("ID bloku wykorzystywane w konstrukcji programu")]
+        [DisplayName("ID")]
+        public int ID
+        {
+            get { return _block.ID; }
+        }
         /// <summary>
         /// Property do pola IsLocked
         /// </summary>
