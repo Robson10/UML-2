@@ -158,10 +158,15 @@ namespace UmlDesigner2.MainWindow
             }
         }
 
+        private void Debug()
+        {
+            Compile.Debug(Canvas.CanvObj, Canvas.CanvLines);
+        }
 
-        //todo
-        #region metody dla skrótów i przycisków z paska narzedzi
-        //todo save shortcuts to file
+        private void Run()
+        {
+            Compile.Run(Canvas.CanvObj, Canvas.CanvLines);
+        }
         private void Options()
         {
             SettingWindow settings = new SettingWindow();
@@ -170,6 +175,9 @@ namespace UmlDesigner2.MainWindow
                 Helper.SaveShortcuts();
             }
         }
+        //todo
+        #region metody dla skrótów i przycisków z paska narzedzi
+
 
         private void OpenFileFromServer()
         {
@@ -181,15 +189,7 @@ namespace UmlDesigner2.MainWindow
 
         }
 
-        private void Debug()
-        {
 
-        }
-
-        private void Run()
-        {
-            Compile.Run(Canvas.CanvObj, Canvas.CanvLines);
-        }
         #endregion
     }
 }

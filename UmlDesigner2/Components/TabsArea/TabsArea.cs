@@ -5,14 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UmlDesigner2.Component.TabsArea.TabBlocks;
-using UmlDesigner2.Component.TabsArea.TabSchemats;
 
 namespace UmlDesigner2.Component.TabsArea
 {
     class TabsArea:TabControl
     {
         private BlocksTab _blocksTab = new BlocksTab();
-        private SchematsTab _schematsTab = new SchematsTab();
 
         /// <summary>
         /// Konstruktor ustawiający wygląd kontrolki oraz dodający zakładkę z blokami oraz schematami
@@ -21,7 +19,6 @@ namespace UmlDesigner2.Component.TabsArea
         {
             Alignment = TabAlignment.Left;
             TabPages.Add(_blocksTab);
-            TabPages.Add(_schematsTab);
             Anchor = (AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Top|AnchorStyles.Right);
         }
 
@@ -42,24 +39,6 @@ namespace UmlDesigner2.Component.TabsArea
         {
             add { _blocksTab.ListItemDoubleClick += value; }
             remove { _blocksTab.ListItemDoubleClick += value; }
-        }
-
-        /// <summary>
-        /// Eventhandler do pojedynczego kliknięcia na element listy schematów
-        /// </summary>
-        public event EventHandler SchematsListItemClick
-        {
-            add { _schematsTab.ListItemClick += value; }
-            remove { _schematsTab.ListItemClick += value; }
-        }
-
-        /// <summary>
-        /// Eventhandler do podwójnego kliknięcia na element listy schematów
-        /// </summary>
-        public event EventHandler SchematsListItemDoubleClick
-        {
-            add { _schematsTab.ListItemDoubleClick += value; }
-            remove { _schematsTab.ListItemDoubleClick += value; }
         }
 
         /// <summary>

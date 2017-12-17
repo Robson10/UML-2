@@ -10,18 +10,6 @@ namespace UmlDesigner2.MainWindow
         {
             tabsArea1.BlocksListItemClick += tabsArea1_BlocksListItemClick;
             tabsArea1.BlocksListItemDoubleClick += tabsArea1_BlocksListItemDoubleClick;
-            tabsArea1.SchematsListItemClick += tabsArea1_SchematsListItemClick;
-            tabsArea1.SchematsListItemDoubleClick += tabsArea1_SchematsListItemDoubleClick;
-        }
-
-        private void tabsArea1_SchematsListItemDoubleClick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
-        }
-
-        private void tabsArea1_SchematsListItemClick(object sender, EventArgs e)
-        {
-            throw new NotImplementedException();
         }
 
         private void tabsArea1_BlocksListItemDoubleClick(object sender, EventArgs e)

@@ -85,9 +85,6 @@
     <Compile Include="Components\TabsArea\TabBlocks\BlocksTab.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Components\TabsArea\TabSchemats\SchematsTab.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="Components\TabsArea\TabsArea.cs">
       <SubType>Component</SubType>
     </Compile>
