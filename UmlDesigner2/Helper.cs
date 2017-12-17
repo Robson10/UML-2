@@ -33,6 +33,7 @@ namespace UmlDesigner2
 
     public partial class Helper
     {
+        public static string CompilePath = AppDomain.CurrentDomain.BaseDirectory;
         #region View
         public static Color BackColor = Color.FromArgb(47, 47, 47);
         public static Color ButtonColor = Color.Gray;

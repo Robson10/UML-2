@@ -12,9 +12,15 @@ using UmlDesigner2.Component.Workspace.CanvasArea;
 
 namespace UmlDesigner2.Component.Workspace.ResultComponent
 {
+    //todo dodać możliwość wyszukiwania bloków po ich ID
+    //todo dodać możliwość wpisywania include do kodu
     public class Compile
     {
-        public static string Includes = "#include <stdio.h>";
+        public static string Includes = "#include <stdio.h>" + Environment.NewLine +
+                                        "#include <iostream>" + Environment.NewLine +
+                                        "#include <string>" + Environment.NewLine +
+                                        "using namespace std;" + Environment.NewLine;
+
         public static TextBox Results = new System.Windows.Forms.TextBox();
 
         private static string OutputCode =
@@ -29,59 +35,98 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         {
             if (ValidateSchema(ref blocks, ref lines))
             {
-                if (TransformBlockToCode(blocks, lines))
-                {
-                    //zapisanie jako plik kodu i jego kompilacja wraz z uruchomieniem
-                    //mozna jeszcze zapisywać projekt
-                }
+
+                if (File.Exists(Helper.CompilePath + @"\project.cpp"))
+                    File.Delete(Helper.CompilePath + @"\project.cpp");
+                if (File.Exists(Helper.CompilePath + @"\project.exe"))
+                    File.Delete(Helper.CompilePath + @"\project.exe");
+
+                
+                    File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
+                RunCMD(false);
 
             }
             return "asd";
 
         }
-        
-        private static bool TransformBlockToCode(ListCanvasBlocks blocks, ListCanvasLines lines)
+
+        private static void RunCMD(bool debug)
         {
-            string code="";
+            CmdCompile();
+            if (File.Exists(Helper.CompilePath + @"\project.exe"))
+                if (!debug)
+                {
+                    File.WriteAllText(Helper.CompilePath + @"\run.bat","start project.exe" );
+                    Process cmd = new Process();
+                    cmd.StartInfo.FileName = Helper.CompilePath + @"\run.bat";
+                    cmd.StartInfo.UseShellExecute = false;
+                    cmd.Start();
+                    cmd.Close();
+                }
+                else
+                {
+                    File.WriteAllText(Helper.CompilePath + @"\run.bat","g++ -g -o project.exe project.cpp" + Environment.NewLine + "gdb project.exe" );
+                    Process cmd = new Process();
+                    cmd.StartInfo.FileName = Helper.CompilePath + @"\run.bat";
+                    cmd.StartInfo.UseShellExecute = false;
+                    cmd.Start();
+                    cmd.Close();
+                }
+
+        }
+
+        private static void CmdCompile()
+        {
+            File.WriteAllText(Helper.CompilePath + @"\run.bat", "echo Kompilacja"+Environment.NewLine+"g++ project.cpp -o project.exe" +Environment.NewLine+"pause");
+            Process cmd = new Process();
+            cmd.StartInfo.FileName = Helper.CompilePath + @"\run.bat";
+            cmd.StartInfo.UseShellExecute = false;
+            cmd.Start();
+            cmd.WaitForExit();
+            cmd.Close();
+        }
+
+        public static string TransformBlockToCode(ListCanvasBlocks blocks, ListCanvasLines lines)
+        {
+            string code = "";
             var indexBegin = blocks.FindIndex(x => x.Shape == Helper.Shape.Start);
-            int endId=lines.Find(x=>x.BeginId==blocks[indexBegin].ID).EndId;
-            StartToCode(ref code, blocks[indexBegin].ID);
-            for (int i = 0; i < blocks.Count-1; i++)
+            int endId = lines.Find(x => x.BeginId == blocks[indexBegin].ID).EndId;
+            StartToCode(ref code, endId);
+            for (int i = 0; i < blocks.Count; i++)
             {
-                //indexBegin = indexEnd;
                 if (blocks[i].Shape == Helper.Shape.Decision)
                 {
-                    code += "          case(" + blocks[i].ID + "):" + Environment.NewLine +
-                            "               " + blocks[i].Code + Environment.NewLine +
-                            "               {" + Environment.NewLine +
-                            "                   ID=" +lines.Find(x => x.BeginId == blocks[i].ID && x.IsTrue).EndId+ Environment.NewLine +
-                            "               }" + Environment.NewLine +
-                            "               else"+Environment.NewLine+
-                            "               {" + Environment.NewLine +
-                            "                   ID=" + lines.Find(x => x.BeginId == blocks[i].ID && !x.IsTrue).EndId + Environment.NewLine +
-                            "               }" + Environment.NewLine +
-                            "              ID=" + endId + ";" + Environment.NewLine +
-                            "              break;" + Environment.NewLine;
+                    DecisionToCode(ref code, blocks[i], ref lines);
                 }
-                else if (blocks[i].Shape != Helper.Shape.End)
+                else if (blocks[i].Shape != Helper.Shape.End && blocks[i].Shape != Helper.Shape.Start)
                 {
                     endId = lines.Find(x => x.BeginId == blocks[i].ID).EndId;
-                    code += "          case(" + blocks[i].ID + "):" + Environment.NewLine +
-                            "             "+blocks[i].Code + Environment.NewLine +
-                            "              ID=" + endId + ";" + Environment.NewLine +
-                            "              break;" + Environment.NewLine;
+                    InputExecutionToCode(ref code, blocks[i], endId);
                 }
                 else if (blocks[i].Shape == Helper.Shape.End)
                 {
-                    //endId = lines.Find(x => x.BeginId == blocks[i].ID).EndId;
-                    code += "          case(" + blocks[i].ID + "):" + Environment.NewLine +
-                            "              return 0;" + Environment.NewLine +
-                            "              break;" + Environment.NewLine;
+                    EndToCode(ref code, blocks[i].ID);
                 }
             }
             FinishCode(ref code);
-            MessageBox.Show(code);
-            return true;
+            Results.Text = code;
+            return code;
+        }
+
+        private static void DecisionToCode(ref string code, MyBlock block, ref ListCanvasLines lines)
+        {
+            code += "          case(" + block.ID + "):" + Environment.NewLine +
+                    "               " + block.Code + Environment.NewLine +
+                    "               {" + Environment.NewLine +
+                    "                   ID=" + lines.Find(x => x.BeginId == block.ID && x.IsTrue).EndId + ";" +
+                    Environment.NewLine +
+                    "               }" + Environment.NewLine +
+                    "               else" + Environment.NewLine +
+                    "               {" + Environment.NewLine +
+                    "                   ID=" + lines.Find(x => x.BeginId == block.ID && !x.IsTrue).EndId + ";" +
+                    Environment.NewLine +
+                    "               }" + Environment.NewLine +
+                    "              break;" + Environment.NewLine;
         }
 
         private static void StartToCode(ref string code, int startID)
@@ -89,48 +134,57 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
             code += Includes + Environment.NewLine + Environment.NewLine;
             code += "int main()" + Environment.NewLine +
                     "{" + Environment.NewLine +
-                    "   int ID=" + startID + ";" + Environment.NewLine +
+                    "   int ID=" + startID + ";int x=0;" + Environment.NewLine +
                     "   while(true)" + Environment.NewLine +
                     "   {" + Environment.NewLine +
                     "       switch(ID)" + Environment.NewLine +
                     "       {" + Environment.NewLine;
         }
 
+        private static void EndToCode(ref string code, int ID)
+        {
+            code += "          case(" + ID + "):" + Environment.NewLine +
+                    "              return 0;" + Environment.NewLine +
+                    "              break;" + Environment.NewLine;
+        }
+
+        private static void InputExecutionToCode(ref string code, MyBlock block, int endID)
+        {
+
+            code += "          case(" + block.ID + "):" + Environment.NewLine +
+                    "             " + block.Code + Environment.NewLine +
+                    "              ID=" + endID + ";" + Environment.NewLine +
+                    "              break;" + Environment.NewLine;
+        }
+
         private static void FinishCode(ref string code)
         {
-            code +="       }" + Environment.NewLine +
-                   "   }" + Environment.NewLine+
-                   "return 0;" + Environment.NewLine + 
-                   "}" + Environment.NewLine;
+            code += "       }" + Environment.NewLine +
+                    "   }" + Environment.NewLine +
+                    "return 0;" + Environment.NewLine +
+                    "}" + Environment.NewLine;
         }
 
 
         public static void Debug(ListCanvasBlocks blocks, ListCanvasLines lines)
         {
-            if (ValidateSchema(ref blocks, ref lines))
+             if (ValidateSchema(ref blocks, ref lines))
             {
-                
+
+                if (File.Exists(Helper.CompilePath + @"\project.cpp"))
+                    File.Delete(Helper.CompilePath + @"\project.cpp");
+                if (File.Exists(Helper.CompilePath + @"\project.exe"))
+                    File.Delete(Helper.CompilePath + @"\project.exe");
+
+
+                File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
+                RunCMD(true);
+
             }
         }
 
 
-        //public static void LookForErrors(string Code)
-        //{
-
-        //}
-        //public static void DebugNextStep()
-        //{
-        //}
-
-        //public static void Build()
-        //{
-
-        //}
-
-        //public static void Stop()
-        //{
-
-        //}
+        
 
         private static bool ValidateSchema(ref ListCanvasBlocks blocks, ref ListCanvasLines lines)
         {
@@ -143,12 +197,12 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
             if (!isStartExist)
             {
                 myOutput += "Błąd: algorytm musi posiadać " +
-                          Helper.DefaultBlocksSettings[Helper.Shape.Start].Label + Environment.NewLine;
+                            Helper.DefaultBlocksSettings[Helper.Shape.Start].Label + Environment.NewLine;
             }
             if (!isEndExist)
             {
                 myOutput += "Błąd: algorytm musi posiadać " +
-                          Helper.DefaultBlocksSettings[Helper.Shape.End].Label + Environment.NewLine;
+                            Helper.DefaultBlocksSettings[Helper.Shape.End].Label + Environment.NewLine;
             }
             int count = 0;
             count += blocks.FindAll(x => x.Shape == Helper.Shape.Decision).Count * 2;
@@ -157,7 +211,7 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
             if (!isCountOfLinesCorrect)
             {
                 myOutput += "Błąd: Brakuje połączeń między blokami" +
-                          Environment.NewLine;
+                            Environment.NewLine;
             }
             myOutput += (isCountOfLinesCorrect && isStartExist && isEndExist)
                 ? "Twój kod wstępnie wygląda w porządku"
@@ -174,6 +228,6 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         }
 
     }
-    
+
 
 }

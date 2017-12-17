@@ -358,6 +358,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             sizeChanged = true;
             Invalidate();
         }
+
         //V
         //private void PPM_TryShowContextMenu(Point e)
         //{

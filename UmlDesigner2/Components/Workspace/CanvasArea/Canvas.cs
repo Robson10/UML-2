@@ -126,6 +126,7 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
             {
                 PPM_SelectForResizeOrContextMenu(e.Location);
             }
+
             _mouseDownLocation = new Point(e.Location.X+ -AutoScrollPosition.X,e.Location.Y+-AutoScrollPosition.Y);
         }
 
