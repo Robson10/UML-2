@@ -34,14 +34,22 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
             if (ValidateSchema(ref blocks, ref lines))
             {
 
-                if (File.Exists(Helper.CompilePath + @"\project.cpp"))
-                    File.Delete(Helper.CompilePath + @"\project.cpp");
-                if (File.Exists(Helper.CompilePath + @"\project.exe"))
-                    File.Delete(Helper.CompilePath + @"\project.exe");
+                try
+                {
+                    if (File.Exists(Helper.CompilePath + @"\project.cpp"))
+                        File.Delete(Helper.CompilePath + @"\project.cpp");
+                    if (File.Exists(Helper.CompilePath + @"\project.exe"))
+                        File.Delete(Helper.CompilePath + @"\project.exe");
 
-                
+
                     File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
-                RunCMD(false);
+                    RunCMD(false);
+                }
+                catch
+                {
+                    MessageBox.Show(
+                        "Odmowa dostępu! Prawdopodobnie masz uruchomione projekty w konsoli. Zamknij je i spróbuj ponownie");
+                }
 
             }
             return "asd";
@@ -180,15 +188,21 @@ namespace UmlDesigner2.Component.Workspace.ResultComponent
         {
              if (ValidateSchema(ref blocks, ref lines))
             {
+                try
+                {
+                    if (File.Exists(Helper.CompilePath + @"\project.cpp"))
+                        File.Delete(Helper.CompilePath + @"\project.cpp");
+                    if (File.Exists(Helper.CompilePath + @"\project.exe"))
+                        File.Delete(Helper.CompilePath + @"\project.exe");
+                    File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
+                    RunCMD(true);
+                }
+                catch (UnauthorizedAccessException e)
+                {
+                    MessageBox.Show("Nie udało się usunąc plików projektu. Prawdopodobnie masz uruchomione projekty?");
+                }
 
-                if (File.Exists(Helper.CompilePath + @"\project.cpp"))
-                    File.Delete(Helper.CompilePath + @"\project.cpp");
-                if (File.Exists(Helper.CompilePath + @"\project.exe"))
-                    File.Delete(Helper.CompilePath + @"\project.exe");
-
-
-                File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
-                RunCMD(true);
+                
 
             }
         }

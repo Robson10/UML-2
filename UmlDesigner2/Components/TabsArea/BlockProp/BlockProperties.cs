@@ -59,8 +59,52 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
             _pg.Dock = DockStyle.Top;
             _pg.PropertyValueChanged += Pg_PropertyValueChanged;
             Controls.Add(_pg);
+            if (_block.Shape == Helper.Shape.Start)
+            {
+                _grCode = new GroupBox()
+                {
+                    Text = "Variables",
+                    Font = new Font("Arial", 13),
+                    Size = new Size(ClientRectangle.Width - 10, 100),
+                    Dock = DockStyle.Top
+                };
+                _tbCode = new TextBox()
+                {
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Font = new Font("Arial", 12),
+                    Location = new Point(5, 20),
+                    Size = new Size(_grCode.ClientRectangle.Width - 10, _grCode.ClientRectangle.Height - 25),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Text = _block.Variables
+                };
+                _tbCode.KeyUp += TbCode_KeyUp;
 
-            if (_block.Shape != Helper.Shape.Start && _block.Shape != Helper.Shape.End)
+                _grLabel = new GroupBox()
+                {
+                    Text = "Includes",
+                    Font = new Font("Arial", 13),
+                    Size = new Size(ClientRectangle.Width - 10, 70),
+                    Dock = DockStyle.Top
+                };
+                _tbLabel = new TextBox()
+                {
+                    Anchor = AnchorStyles.Bottom | AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right,
+                    Font = new Font("Arial", 12),
+                    Location = new Point(5, 20),
+                    Size = new Size(_grLabel.ClientRectangle.Width - 10, _grLabel.ClientRectangle.Height - 25),
+                    Multiline = true,
+                    ScrollBars = ScrollBars.Vertical,
+                    Text = _block.Includes
+                };
+                _tbLabel.KeyUp += TbLabel_KeyUp;
+
+                Controls.Add(_grCode);
+                Controls.Add(_grLabel);
+                _grLabel.Controls.Add(_tbLabel);
+                _grCode.Controls.Add(_tbCode);
+            }
+            else if (_block.Shape != Helper.Shape.Start && _block.Shape != Helper.Shape.End)
             {
                 _grCode = new GroupBox()
                 {
@@ -134,7 +178,10 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         private void TbLabel_KeyUp(object sender, KeyEventArgs e)
         {
             addChangesToHistory();
-            _block.Label = _tbLabel.Text;
+            if (_block.Shape == Helper.Shape.Start)
+                _block.Includes = _tbCode.Text;
+            else
+                _block.Label = _tbLabel.Text;
             OnBlockPropertyChanged();
             addChangesToHistory();
         }
@@ -147,6 +194,9 @@ namespace UmlDesigner2.Component.TabsArea.BlockProp
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
             addChangesToHistory();
+            if (_block.Shape==Helper.Shape.Start)
+                _block.Variables = _tbCode.Text;
+            else
             _block.Code = _tbCode.Text;
             addChangesToHistory();
         }

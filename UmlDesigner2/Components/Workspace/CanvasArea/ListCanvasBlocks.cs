@@ -24,6 +24,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
                     {
                         AutoResize = this[i].AutoResize,
                         Code = this[i].Code,
+                        Includes = this[i].Includes,
+                        Variables = this[i].Variables,
                         FontColor = this[i].FontColor,
                         FontColorHTML = this[i].FontColorHTML,
                         FontSize = this[i].FontSize,
@@ -212,6 +214,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public void MyAdd(Point e, Helper.Shape shapeToDraw)
         {
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                if (!this.Exists(x => x.ID == i))
+                {
+                    _id = i;
+                    break;
+                }
+            }
             Insert(0, 
                 new MyBlock(new Rectangle(e.X - Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Width / 2,
                     e.Y - Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Height / 2, Helper.DefaultBlocksSettings[shapeToDraw].BlockSize.Width,
@@ -261,6 +271,14 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
 
         public int MyPaste(MyBlock block)
         {
+            for (int i = 0; i < int.MaxValue; i++)
+            {
+                if (!this.Exists(x => x.ID == i))
+                {
+                    _id = i;
+                    break;
+                }
+            }
             block.ID = _id;
             _id++;
             Insert(0, block);
@@ -279,6 +297,8 @@ namespace UmlDesigner2.Component.Workspace.CanvasArea
         public Helper.Shape Shape;
         public string Label = "";
         public string Code  = "";
+        public string Includes = "";
+        public string Variables = "";
         public bool IsSelected = false;
         public bool IsLocked = false;
         public bool AutoResize  = false;
