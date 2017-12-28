@@ -65,6 +65,7 @@ namespace UmlDesigner2.MainWindow
 
             _properties.BlockPropertyChanged += _properties_BlockPropertyChanged;
             splitContainer2.Panel2.Controls.Add(_properties);
+
         }
 
         private void Canvas1_HideBlockPoperites(object sender, EventArgs e)

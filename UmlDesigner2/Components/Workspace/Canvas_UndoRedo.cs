@@ -54,6 +54,8 @@ namespace UmlDesigner2.Components.Workspace
                         CanvObj[index].IsSelected = temp[i].Block.IsSelected;
                         CanvObj[index].Shape = temp[i].Block.Shape;
                         CanvObj[index].Rect = temp[i].Block.Rect;
+                        CanvObj[index].Includes = temp[i].Block.Includes;
+                        CanvObj[index].Variables = temp[i].Block.Variables;
                         showProperties = true;
                     }
                 }
@@ -138,6 +140,8 @@ namespace UmlDesigner2.Components.Workspace
                         CanvObj[index].IsSelected = temp[i].Block.IsSelected;
                         CanvObj[index].Shape = temp[i].Block.Shape;
                         CanvObj[index].Rect = temp[i].Block.Rect;
+                        CanvObj[index].Includes = temp[i].Block.Includes;
+                        CanvObj[index].Variables = temp[i].Block.Variables;
                         showProperties = true;
                     }
                 }

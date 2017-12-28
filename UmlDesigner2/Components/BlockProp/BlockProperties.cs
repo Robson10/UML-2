@@ -37,6 +37,8 @@ namespace UmlDesigner2.Components.BlockProp
         public void UpdateProperties()
         {
             _pg.SelectedObject= new PropertyGridItems(_block);
+            _tbCode.Text=_block.Shape==Helper.Shape.Start?_block.Variables:_block.Code;
+            _tbLabel.Text = _block.Shape == Helper.Shape.Start ? _block.Includes: _block.Label;
             SetPropertyLabelColumnWidth(_pg);
         }
 
@@ -179,9 +181,9 @@ namespace UmlDesigner2.Components.BlockProp
         {
             addChangesToHistory();
             if (_block.Shape == Helper.Shape.Start)
-                _block.Includes = _tbCode.Text;
+                _block.Includes = (sender as TextBox).Text;
             else
-                _block.Label = _tbLabel.Text;
+                _block.Label = (sender as TextBox).Text;
             OnBlockPropertyChanged();
             addChangesToHistory();
         }
@@ -194,10 +196,10 @@ namespace UmlDesigner2.Components.BlockProp
         private void TbCode_KeyUp(object sender, KeyEventArgs e)
         {
             addChangesToHistory();
-            if (_block.Shape==Helper.Shape.Start)
-                _block.Variables = _tbCode.Text;
+            if (_block.Shape == Helper.Shape.Start)
+                _block.Variables = (sender as TextBox).Text;
             else
-            _block.Code = _tbCode.Text;
+            _block.Code = (sender as TextBox).Text;
             addChangesToHistory();
         }
 
@@ -249,7 +251,10 @@ namespace UmlDesigner2.Components.BlockProp
                         PointInput = _block.PointInput,
                         Shape = _block.Shape,
                         Rect = _block.Rect,
-                        ID = _block.ID},null) });
+                        ID = _block.ID,
+                        Includes=_block.Includes,
+                        Variables=_block.Variables
+                },null) });
         }
     }
 }
