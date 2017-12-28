@@ -3,9 +3,10 @@ using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using UmlDesigner2.Component.Workspace.CanvasArea;
-using UmlDesigner2.Component.Workspace.ResultComponent;
-using UmlDesigner2.Settings;
+using UmlDesigner2.Class;
+using UmlDesigner2.Components.ResultComponent;
+using UmlDesigner2.Components.Settings;
+using UmlDesigner2.Components.Workspace;
 
 namespace UmlDesigner2.MainWindow
 {
@@ -178,15 +179,33 @@ namespace UmlDesigner2.MainWindow
         //todo
         #region metody dla skrótów i przycisków z paska narzedzi
 
-
+        private void SaveFileOnServer()
+        {
+            Components.ToolStripArea.SaveOnServer.SaveOnServerForm saveOnServerForm =
+                new Components.ToolStripArea.SaveOnServer.SaveOnServerForm();
+            if (saveOnServerForm.ShowDialog() == DialogResult.OK)
+            {
+                
+            }
+        }
         private void OpenFileFromServer()
         {
-
+            Components.ToolStripArea.OpenFromServer.OpenFromServerForm openFromServerForm =
+                new Components.ToolStripArea.OpenFromServer.OpenFromServerForm();
+            if (openFromServerForm.ShowDialog() == DialogResult.OK)
+            {
+                canvas1.Invalidate();
+            }
         }
 
         private void LogIn()
         {
-
+            Components.Login.LoginForm loginForm = new Components.Login.LoginForm();
+            if (loginForm.ShowDialog() == DialogResult.OK)
+            {
+                myToolStrip1.Login();
+                
+            }
         }
 
 

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
+using UmlDesigner2.Class;
 
 namespace UmlDesigner2.MainWindow
 {

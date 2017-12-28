@@ -1,14 +1,16 @@
 ﻿using System;
 using System.Windows.Forms;
-using UmlDesigner2.Component.TabsArea.BlockProp;
-using UmlDesigner2.Component.Workspace.CanvasArea;
+using UmlDesigner2.Class;
+using UmlDesigner2.Components.BlockProp;
+using UmlDesigner2.Components.ResultComponent;
+using UmlDesigner2.Components.Workspace;
 
 namespace UmlDesigner2.MainWindow
 {
     public partial class Form1 : Form
     {
-        private static Component.Workspace.ResultComponent.Results _results =
-            new Component.Workspace.ResultComponent.Results();
+        private static Results _results =
+            new Results();
 
         private BlockProperties _properties;
 

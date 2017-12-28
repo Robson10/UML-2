@@ -15,11 +15,23 @@ namespace UmlDesigner2.MainWindow
             myToolStrip1.RedoClick += MyToolStripContainer_Redo_Click;
             myToolStrip1.OptionsClick += MyToolStripContainer_Options_Click;
             myToolStrip1.LogInClick += MyToolStripContainer_LogIn_Click;
-            myToolStrip1.OpenCloudFileClick += MyToolStripContainer_OpenCloudFile_Click;
+            myToolStrip1.OpenFileFromServerClick += MyToolStrip1_OpenFileFromServerClick;
+            myToolStrip1.SaveFileOnServerClick += MyToolStrip1_SaveFileOnServerClick;
             myToolStrip1.RunClick += MyToolStripContainer_Run_Click;
             myToolStrip1.DebugClick += MyToolStripContainer_Debug_Click;
         }
-       private void MyToolStripContainer_Debug_Click(object sender, EventArgs e)
+
+        private void MyToolStrip1_SaveFileOnServerClick(object sender, EventArgs e)
+        {
+            SaveFileOnServer();
+        }
+
+        private void MyToolStrip1_OpenFileFromServerClick(object sender, EventArgs e)
+        {
+            OpenFileFromServer();
+        }
+
+        private void MyToolStripContainer_Debug_Click(object sender, EventArgs e)
        {
            Debug();
        }
@@ -27,11 +39,6 @@ namespace UmlDesigner2.MainWindow
         private void MyToolStripContainer_Run_Click(object sender, EventArgs e)
         {
             Run();
-        }
-
-        private void MyToolStripContainer_OpenCloudFile_Click(object sender, EventArgs e)
-        {
-            OpenFileFromServer();
         }
 
         private void MyToolStripContainer_LogIn_Click(object sender, EventArgs e)

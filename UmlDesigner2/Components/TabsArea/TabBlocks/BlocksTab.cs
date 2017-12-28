@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
+using UmlDesigner2.Class;
 
-namespace UmlDesigner2.Component.TabsArea.TabBlocks
+namespace UmlDesigner2.Components.TabsArea.TabBlocks
 {
     public class BlocksTab : TabPage
     {
@@ -66,7 +63,7 @@ namespace UmlDesigner2.Component.TabsArea.TabBlocks
             for (int i = 1; i <= Enum.GetValues(typeof(Helper.Shape)).Cast<int>().Max(); i++)
             {
                 using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly()
-                    .GetManifestResourceStream(Helper.DefaultBlocksSettings[(Helper.Shape) i].ImgPath))
+                    .GetManifestResourceStream(Helper.DefaultBlocksSettings[(Helper.Shape)i].ImgPath))
                 {
                     imageList1.Images.Add(Image.FromStream(stream));
                 }

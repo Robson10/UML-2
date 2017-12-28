@@ -1,6 +1,6 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea
+﻿namespace UmlDesigner2.Components.BlockProp
 {
-    partial class MyToolStrip
+    partial class BlockProperties
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,8 +28,14 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
-            //this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.SuspendLayout();
+            // 
+            // Properties
+            // 
+            this.Name = "Properties";
+            this.Size = new System.Drawing.Size(227, 234);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UmlDesigner2.Component.TabsArea.TabBlocks;
+using UmlDesigner2.Components.TabsArea.TabBlocks;
 
-namespace UmlDesigner2.Component.TabsArea
+namespace UmlDesigner2.Components.TabsArea
 {
     class TabsArea:TabControl
     {
