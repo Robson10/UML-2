@@ -50,10 +50,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Components\Login\LoginForm.cs">
+    <Compile Include="Components\ToolStripArea\Login\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Components\Login\LoginForm.Designer.cs">
+    <Compile Include="Components\ToolStripArea\Login\LoginForm.Designer.cs">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Components\ToolStripArea\MyToolStripButton.cs">
@@ -162,7 +162,7 @@
     <Compile Include="Components\Settings\SettingWindow.Designer.cs">
       <DependentUpon>SettingWindow.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Components\Login\LoginForm.resx">
+    <EmbeddedResource Include="Components\ToolStripArea\Login\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Components\BlockProp\BlockProperties.resx">

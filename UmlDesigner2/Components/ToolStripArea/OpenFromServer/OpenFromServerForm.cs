@@ -31,12 +31,15 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
 
         private void FillCombo()
         {
+            comboFiles.Items.Clear();
+            comboFiles.Text = "";
             var query = "select Name from SbWinNEW.dbo.Files where IdUser=" + Login.LoginForm.UserID;
             var temp = Helper.DataBaseSelect(query).Tables[0];
             for (int i = 0; i < temp.Rows.Count; i++)
-            {
                 comboFiles.Items.Add(temp.Rows[i].Field<string>(0));
-            }
+
+            if (temp.Rows.Count > 0)
+                comboFiles.SelectedIndex = 0;
         }
 
         private void btLoad_Click(object sender, EventArgs e)
@@ -45,19 +48,20 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
             {
                 var query = "select blocks,lines from SbWinNEW.dbo.Files where IdUser=" + Login.LoginForm.UserID+ "and Name='"+comboFiles.SelectedItem+"'";
                 var temp = Helper.DataBaseSelect(query).Tables[0];
-                var data = temp.Rows[0].Field<string>(0);
-
-                var serializer = new XmlSerializer(typeof(ListCanvasBlocks));
-                var reader = new StringReader(data);
-                Canvas.CanvObj = (ListCanvasBlocks)serializer.Deserialize(reader);
-
-                data = temp.Rows[0].Field<string>(1);
-                serializer = new XmlSerializer(typeof(ListCanvasLines));
-                reader = new StringReader(data);
-                Canvas.CanvLines = (ListCanvasLines)serializer.Deserialize(reader);
-                
+                Canvas.CanvObj=SqlVarcharToList(Canvas.CanvObj, temp.Rows[0].Field<string>(0));
+                Canvas.CanvLines=SqlVarcharToList(Canvas.CanvLines, temp.Rows[0].Field<string>(1));
                 DialogResult = DialogResult.OK;
                 Close();
+            }
+        }
+
+        private T SqlVarcharToList<T>(T mylist,string data)
+        {
+            using (var reader = new StringReader(data))
+            {
+                var serializer = new XmlSerializer(mylist.GetType());
+                return (T)serializer.Deserialize(reader);
+                reader.Close();
             }
         }
 
@@ -65,6 +69,26 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
         {
             DialogResult = DialogResult.Abort;
             Close();
+        }
+
+        private void comboFiles_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btLoad_Click(btLoad, null);
+            }
+            if (e.KeyChar == (char)Keys.Escape)
+                btAbort_Click(btAbort, null);
+        }
+
+        private void btDelete_Click(object sender, EventArgs e)
+        {
+            if (!comboFiles.SelectedItem.Equals(""))
+            {
+                var query = "DELETE FROM SbWinNew.dbo.Files WHERE IdUser=" + Login.LoginForm.UserID + " and Name='" + comboFiles.SelectedItem + "'";
+                Helper.DatabaseExecuteQuery(query);
+                FillCombo();
+            }
         }
     }
 }

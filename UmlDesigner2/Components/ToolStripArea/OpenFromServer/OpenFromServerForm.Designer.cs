@@ -32,6 +32,7 @@
             this.btLoad = new System.Windows.Forms.Button();
             this.btAbort = new System.Windows.Forms.Button();
             this.comboFiles = new System.Windows.Forms.ComboBox();
+            this.btDelete = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
@@ -50,9 +51,9 @@
             this.btLoad.FlatAppearance.BorderSize = 0;
             this.btLoad.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btLoad.ForeColor = System.Drawing.Color.Wheat;
-            this.btLoad.Location = new System.Drawing.Point(12, 38);
+            this.btLoad.Location = new System.Drawing.Point(10, 39);
             this.btLoad.Name = "btLoad";
-            this.btLoad.Size = new System.Drawing.Size(127, 23);
+            this.btLoad.Size = new System.Drawing.Size(154, 23);
             this.btLoad.TabIndex = 4;
             this.btLoad.Text = "Wczytaj";
             this.btLoad.UseVisualStyleBackColor = false;
@@ -64,9 +65,9 @@
             this.btAbort.FlatAppearance.BorderSize = 0;
             this.btAbort.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.btAbort.ForeColor = System.Drawing.Color.Wheat;
-            this.btAbort.Location = new System.Drawing.Point(145, 38);
+            this.btAbort.Location = new System.Drawing.Point(170, 39);
             this.btAbort.Name = "btAbort";
-            this.btAbort.Size = new System.Drawing.Size(127, 23);
+            this.btAbort.Size = new System.Drawing.Size(154, 23);
             this.btAbort.TabIndex = 5;
             this.btAbort.Text = "Anuluj";
             this.btAbort.UseVisualStyleBackColor = false;
@@ -79,13 +80,29 @@
             this.comboFiles.Name = "comboFiles";
             this.comboFiles.Size = new System.Drawing.Size(172, 21);
             this.comboFiles.TabIndex = 6;
+            this.comboFiles.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.comboFiles_KeyPress);
+            // 
+            // btDelete
+            // 
+            this.btDelete.BackColor = System.Drawing.Color.Gray;
+            this.btDelete.FlatAppearance.BorderSize = 0;
+            this.btDelete.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btDelete.ForeColor = System.Drawing.Color.Wheat;
+            this.btDelete.Location = new System.Drawing.Point(278, 5);
+            this.btDelete.Name = "btDelete";
+            this.btDelete.Size = new System.Drawing.Size(46, 23);
+            this.btDelete.TabIndex = 7;
+            this.btDelete.Text = " Usuń";
+            this.btDelete.UseVisualStyleBackColor = false;
+            this.btDelete.Click += new System.EventHandler(this.btDelete_Click);
             // 
             // OpenFromServerForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.DimGray;
-            this.ClientSize = new System.Drawing.Size(284, 74);
+            this.ClientSize = new System.Drawing.Size(328, 74);
+            this.Controls.Add(this.btDelete);
             this.Controls.Add(this.comboFiles);
             this.Controls.Add(this.btAbort);
             this.Controls.Add(this.btLoad);
@@ -103,5 +120,6 @@
         private System.Windows.Forms.Button btLoad;
         private System.Windows.Forms.Button btAbort;
         private System.Windows.Forms.ComboBox comboFiles;
+        private System.Windows.Forms.Button btDelete;
     }
 }

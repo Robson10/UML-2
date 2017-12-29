@@ -52,6 +52,7 @@
             this.tbProjectName.TabIndex = 2;
             this.tbProjectName.Text = ".xml";
             this.tbProjectName.TextChanged += new System.EventHandler(this.LoginTB_TextChanged);
+            this.tbProjectName.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.tbProjectName_KeyPress);
             // 
             // btSave
             // 

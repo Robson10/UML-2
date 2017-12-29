@@ -6,6 +6,7 @@ using System.Xml.Serialization;
 using UmlDesigner2.Class;
 using UmlDesigner2.Components.ResultComponent;
 using UmlDesigner2.Components.Settings;
+using UmlDesigner2.Components.ToolStripArea.Login;
 using UmlDesigner2.Components.Workspace;
 
 namespace UmlDesigner2.MainWindow
@@ -200,7 +201,7 @@ namespace UmlDesigner2.MainWindow
 
         private void LogIn()
         {
-            Components.Login.LoginForm loginForm = new Components.Login.LoginForm();
+            LoginForm loginForm = new LoginForm();
             if (loginForm.ShowDialog() == DialogResult.OK)
             {
                 myToolStrip1.Login();

@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.Login
+﻿namespace UmlDesigner2.Components.ToolStripArea.Login
 {
     partial class LoginForm
     {
@@ -32,7 +32,7 @@
             this.label2 = new System.Windows.Forms.Label();
             this.LoginTB = new System.Windows.Forms.TextBox();
             this.PasswordTB = new System.Windows.Forms.TextBox();
-            this.Zaloguj = new System.Windows.Forms.Button();
+            this.btLogin = new System.Windows.Forms.Button();
             this.Exit = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
@@ -62,6 +62,7 @@
             this.LoginTB.Name = "LoginTB";
             this.LoginTB.Size = new System.Drawing.Size(204, 20);
             this.LoginTB.TabIndex = 2;
+            this.LoginTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.LoginTB_KeyPress);
             // 
             // PasswordTB
             // 
@@ -70,20 +71,21 @@
             this.PasswordTB.PasswordChar = 'X';
             this.PasswordTB.Size = new System.Drawing.Size(204, 20);
             this.PasswordTB.TabIndex = 3;
+            this.PasswordTB.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.PasswordTB_KeyPress);
             // 
-            // Zaloguj
+            // btLogin
             // 
-            this.Zaloguj.BackColor = System.Drawing.Color.Gray;
-            this.Zaloguj.FlatAppearance.BorderSize = 0;
-            this.Zaloguj.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.Zaloguj.ForeColor = System.Drawing.Color.Wheat;
-            this.Zaloguj.Location = new System.Drawing.Point(12, 64);
-            this.Zaloguj.Name = "Zaloguj";
-            this.Zaloguj.Size = new System.Drawing.Size(127, 23);
-            this.Zaloguj.TabIndex = 4;
-            this.Zaloguj.Text = "Zaloguj";
-            this.Zaloguj.UseVisualStyleBackColor = false;
-            this.Zaloguj.Click += new System.EventHandler(this.Zaloguj_Click);
+            this.btLogin.BackColor = System.Drawing.Color.Gray;
+            this.btLogin.FlatAppearance.BorderSize = 0;
+            this.btLogin.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.btLogin.ForeColor = System.Drawing.Color.Wheat;
+            this.btLogin.Location = new System.Drawing.Point(12, 64);
+            this.btLogin.Name = "btLogin";
+            this.btLogin.Size = new System.Drawing.Size(127, 23);
+            this.btLogin.TabIndex = 4;
+            this.btLogin.Text = "Zaloguj";
+            this.btLogin.UseVisualStyleBackColor = false;
+            this.btLogin.Click += new System.EventHandler(this.btLogin_Click);
             // 
             // Exit
             // 
@@ -106,7 +108,7 @@
             this.BackColor = System.Drawing.Color.DimGray;
             this.ClientSize = new System.Drawing.Size(284, 102);
             this.Controls.Add(this.Exit);
-            this.Controls.Add(this.Zaloguj);
+            this.Controls.Add(this.btLogin);
             this.Controls.Add(this.PasswordTB);
             this.Controls.Add(this.LoginTB);
             this.Controls.Add(this.label2);
@@ -124,7 +126,7 @@
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox LoginTB;
         private System.Windows.Forms.TextBox PasswordTB;
-        private System.Windows.Forms.Button Zaloguj;
+        private System.Windows.Forms.Button btLogin;
         private System.Windows.Forms.Button Exit;
     }
 }

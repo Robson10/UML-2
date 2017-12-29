@@ -37,8 +37,16 @@ namespace UmlDesigner2.Components.BlockProp
         public void UpdateProperties()
         {
             _pg.SelectedObject= new PropertyGridItems(_block);
-            _tbCode.Text=_block.Shape==Helper.Shape.Start?_block.Variables:_block.Code;
-            _tbLabel.Text = _block.Shape == Helper.Shape.Start ? _block.Includes: _block.Label;
+            if (_block.Shape == Helper.Shape.Start)
+            {
+                _tbCode.Text=_block.Variables;
+                _tbLabel.Text = _block.Includes;
+            }
+            else if (_block.Shape != Helper.Shape.End)
+            {
+                _tbCode.Text =_block.Code;
+                _tbLabel.Text = _block.Label;
+            }
             SetPropertyLabelColumnWidth(_pg);
         }
 

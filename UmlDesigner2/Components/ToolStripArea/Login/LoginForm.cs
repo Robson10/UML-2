@@ -1,15 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using UmlDesigner2.Class;
 
-namespace UmlDesigner2.Components.Login
+namespace UmlDesigner2.Components.ToolStripArea.Login
 {
     public partial class LoginForm : Form
     {
@@ -28,7 +23,7 @@ namespace UmlDesigner2.Components.Login
         }
 
 
-        private void Zaloguj_Click(object sender, EventArgs e)
+        private void btLogin_Click(object sender, EventArgs e)
         {
             var temp = Helper.DataBaseSelect("select * from Users where Login='" + LoginTB.Text + "' and Password='" +
                                              PasswordTB.Text + "'");
@@ -46,6 +41,27 @@ namespace UmlDesigner2.Components.Login
             }
             
 
+        }
+
+        private void LoginTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char) Keys.Enter|| e.KeyChar == (char)Keys.Tab)
+            {
+                PasswordTB.Focus();
+            }
+            if (e.KeyChar == (char) Keys.Escape)
+                Exit_Click(Exit, null);
+
+        }
+
+        private void PasswordTB_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter || e.KeyChar == (char)Keys.Tab)
+            {
+                btLogin_Click(btLogin, null);
+            }
+            if (e.KeyChar == (char)Keys.Escape)
+                Exit_Click(Exit, null);
         }
 
         private void Exit_Click(object sender, EventArgs e)

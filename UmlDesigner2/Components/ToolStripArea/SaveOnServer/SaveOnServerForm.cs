@@ -35,25 +35,30 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
             var query= "select * from SbWinNEW.dbo.Files where Name="+name+" and IdUser="+idUser+" ";
             var queryResult=Helper.DataBaseSelect(query).Tables[0];
 
-            var writer = new StringWriter();
+            //var writer = new StringWriter();
 
-            writer.Flush();
-            var serializer = new XmlSerializer(typeof(int));
-            serializer.Serialize(writer, 0);
-            var sln = "CONVERT(NVARCHAR(max),'" + writer + "')";
+            //writer.Flush();
+            //var serializer = new XmlSerializer(typeof(int));
+            //serializer.Serialize(writer, 0);
+            //var sln = "CONVERT(NVARCHAR(max),'" + writer + "')";
 
-            writer.Flush();
-            writer = new StringWriter();
-            serializer = new XmlSerializer(typeof(ListCanvasBlocks));
-            serializer.Serialize(writer, Canvas.CanvObj);
-            var blocks = "CONVERT(NVARCHAR(max),'" + writer + "')";
+            //writer.Flush();
+            //writer = new StringWriter();
+            //serializer = new XmlSerializer(typeof(ListCanvasBlocks));
+            //serializer.Serialize(writer, Canvas.CanvObj);
+            //var blocks = "CONVERT(NVARCHAR(max),'" + writer + "')";
+            //writer.Flush();
+            //writer = new StringWriter();
+            //serializer = new XmlSerializer(typeof(ListCanvasLines));
+            //serializer.Serialize(writer, Canvas.CanvLines);
+            //var lines = "CONVERT(NVARCHAR(max),'" + writer + "')";
 
-            writer.Flush();
-            writer = new StringWriter();
-            serializer = new XmlSerializer(typeof(ListCanvasLines));
-            serializer.Serialize(writer, Canvas.CanvLines);
-            var lines = "CONVERT(NVARCHAR(max),'" + writer+ "')";
-
+           var sln=DataToSqlVarchar((int) 0);
+            var blocks= DataToSqlVarchar(Canvas.CanvObj);
+               var lines=DataToSqlVarchar(Canvas.CanvLines);
+            
+            
+           
 
             if (queryResult.Rows.Count > 0) //Override?
             {
@@ -61,10 +66,12 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
                 if (dialogResult == DialogResult.Yes)
                 {
                     query = "update SbWinNEW.dbo.Files set" +
-                            " sln="+sln + "," +
-                            " lines="+lines + "," +
-                            " blocks=" +blocks ;
-                    Helper.DataBaseInsert(query);
+                            " sln=" + sln + "," +
+                            " lines=" + lines + "," +
+                            " blocks=" + blocks +
+                            " where IdUser=" + idUser +
+                            " and Name=" + name;
+                    Helper.DatabaseExecuteQuery(query);
                     DialogResult = DialogResult.OK;
                     Close();
                 }
@@ -78,9 +85,20 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
                         sln + "," +
                         lines + "," +
                         blocks + ")";
-                Helper.DataBaseInsert(query);
+                Helper.DatabaseExecuteQuery(query);
                 DialogResult = DialogResult.OK;
                 Close();
+            }
+        }
+
+        private string DataToSqlVarchar<T>(T data)
+        {
+            using (var writer = new StringWriter())
+            {
+                var serializer = new XmlSerializer(data.GetType());
+                serializer.Serialize(writer, data);
+                return "CONVERT(NVARCHAR(max),'" + writer + "')";
+                writer.Close();
             }
         }
 
@@ -98,6 +116,16 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
                 tb.SelectionStart = tb.Text.Length - 4;
                 tb.SelectionLength = 0;
             }
+        }
+
+        private void tbProjectName_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (e.KeyChar == (char)Keys.Enter)
+            {
+                btSave_Click(btSave, null);
+            }
+            if (e.KeyChar == (char)Keys.Escape)
+                btAbort_Click(btAbort, null);
         }
     }
 }

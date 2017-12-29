@@ -84,7 +84,7 @@ namespace UmlDesigner2.Class
             adapter.Fill(dataSet, "tab");
             return dataSet;
         }
-        public static void DataBaseInsert(string querry)
+        public static void DatabaseExecuteQuery(string querry)
         {
             using (SqlConnection con = new SqlConnection() { ConnectionString = ConnectionString })
             {
