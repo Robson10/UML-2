@@ -10,34 +10,19 @@ namespace UmlDesigner2.Components.ResultComponent
 {
     public class Compile
     {
-        public static string Includes = "#include <stdio.h>" + Environment.NewLine +
-                                        "#include <iostream>" + Environment.NewLine +
-                                        "#include <string>" + Environment.NewLine +
-                                        "using namespace std;" + Environment.NewLine;
 
-        public static TextBox Results = new System.Windows.Forms.TextBox();
-
-        private static string OutputCode =
-            "#include <stdio.h>" +
-            "int main()" +
-            "{" +
-            @"printf(""Hello, World! This is a native C program compiled on the command line.\n"");" +
-            "return 0;" +
-            "}";
+        public static TextBox Results = new TextBox();
 
         public static string Run(ListCanvasBlocks blocks, ListCanvasLines lines)
         {
             if (ValidateSchema(ref blocks, ref lines))
             {
-
                 try
                 {
                     if (File.Exists(Helper.CompilePath + @"\project.cpp"))
                         File.Delete(Helper.CompilePath + @"\project.cpp");
                     if (File.Exists(Helper.CompilePath + @"\project.exe"))
                         File.Delete(Helper.CompilePath + @"\project.exe");
-
-
                     File.WriteAllText(Helper.CompilePath + @"\project.cpp", TransformBlockToCode(blocks, lines));
                     RunCMD(false);
                 }
@@ -46,10 +31,8 @@ namespace UmlDesigner2.Components.ResultComponent
                     MessageBox.Show(
                         "Odmowa dostępu! Prawdopodobnie masz uruchomione projekty w konsoli. Zamknij je i spróbuj ponownie");
                 }
-
             }
             return "asd";
-
         }
 
         private static void RunCMD(bool debug)
@@ -96,7 +79,7 @@ namespace UmlDesigner2.Components.ResultComponent
                 blocks.Sort((x, y) => x.ID.CompareTo(y.ID));
                 var indexBegin = blocks.FindIndex(x => x.Shape == Helper.Shape.Start);
                 int endId = lines.Find(x => x.BeginId == blocks[indexBegin].ID).EndId;
-                StartToCode(ref code, endId);
+                StartToCode(ref code,blocks[indexBegin], endId);
                 for (int i = 0; i < blocks.Count; i++)
                 {
                     if (blocks[i].Shape == Helper.Shape.Decision)
@@ -139,13 +122,18 @@ namespace UmlDesigner2.Components.ResultComponent
                     "              break;" + Environment.NewLine;
         }
 
-        private static void StartToCode(ref string code, int startID)
+        private static void StartToCode(ref string code, MyBlock block, int startID)
         {
-            code += Includes + Environment.NewLine + Environment.NewLine;
+            code += block.Includes + Environment.NewLine + Environment.NewLine;
             code += "int main()" + Environment.NewLine +
                     "{" + Environment.NewLine +
-                    "   int ID=" + startID + ";int x=0;" + Environment.NewLine +
-                    "   while(true)" + Environment.NewLine +
+                    "   int ID=" + startID + ";" + Environment.NewLine;
+            var temp = block.Variables.Split(new[] { Environment.NewLine }, StringSplitOptions.None).ToList();
+            for (int i = 0; i < temp.Count; i++)
+            {
+                code += "   " + temp[i] + Environment.NewLine;
+            }
+            code+="   while(true)" + Environment.NewLine +
                     "   {" + Environment.NewLine +
                     "       switch(ID)" + Environment.NewLine +
                     "       {" + Environment.NewLine;

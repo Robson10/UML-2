@@ -21,6 +21,7 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
             InitializeComponent();
             FormBorderStyle = FormBorderStyle.None;
             this.Shown += OpenFromServerForm_Shown;
+            comboFiles.DropDownStyle = ComboBoxStyle.DropDownList;
             FillCombo();
         }
 
@@ -44,14 +45,21 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
 
         private void btLoad_Click(object sender, EventArgs e)
         {
-            if (!comboFiles.SelectedItem.Equals(""))
+            try
             {
-                var query = "select blocks,lines from SbWinNEW.dbo.Files where IdUser=" + Login.LoginForm.UserID+ "and Name='"+comboFiles.SelectedItem+"'";
-                var temp = Helper.DataBaseSelect(query).Tables[0];
-                Canvas.CanvObj=SqlVarcharToList(Canvas.CanvObj, temp.Rows[0].Field<string>(0));
-                Canvas.CanvLines=SqlVarcharToList(Canvas.CanvLines, temp.Rows[0].Field<string>(1));
-                DialogResult = DialogResult.OK;
-                Close();
+                if (!comboFiles.SelectedItem.Equals(""))
+                {
+                    var query = "select blocks,lines from SbWinNEW.dbo.Files where IdUser=" + Login.LoginForm.UserID +
+                                "and Name='" + comboFiles.SelectedItem + "'";
+                    var temp = Helper.DataBaseSelect(query).Tables[0];
+                    Canvas.CanvObj = SqlVarcharToList(Canvas.CanvObj, temp.Rows[0].Field<string>(0));
+                    Canvas.CanvLines = SqlVarcharToList(Canvas.CanvLines, temp.Rows[0].Field<string>(1));
+                    DialogResult = DialogResult.OK;
+                    Close();
+                }
+            }
+            catch
+            {
             }
         }
 
@@ -61,7 +69,6 @@ namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
             {
                 var serializer = new XmlSerializer(mylist.GetType());
                 return (T)serializer.Deserialize(reader);
-                reader.Close();
             }
         }
 

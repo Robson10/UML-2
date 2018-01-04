@@ -1,4 +1,9 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Collections.Generic;
+using System.Drawing;
+using System.Linq;
+using System.Windows.Forms;
+using UmlDesigner2.Class;
 
 namespace UmlDesigner2.Components.ToolStripArea
 {
@@ -23,18 +28,18 @@ namespace UmlDesigner2.Components.ToolStripArea
         {
             switch (buttonType)
             {
-                case (StripButtons.NewFile): return "Nowy projekt";
-                case (StripButtons.OpenFile): return "Otwórz projekt";
-                case (StripButtons.SaveFile): return "Zapisz projekt";
-                case (StripButtons.SaveFileAs): return "Zapisz jako";
-                case (StripButtons.Redo): return "Cofnij";
-                case (StripButtons.Undo): return "Powtórz";
+                case (StripButtons.NewFile): return "Nowy projekt"+Environment.NewLine +KeyToString(Helper.KeyNewFile);
+                case (StripButtons.OpenFile): return "Otwórz projekt" + Environment.NewLine + KeyToString(Helper.KeyOpenFile);
+                case (StripButtons.SaveFile): return "Zapisz projekt" + Environment.NewLine + KeyToString(Helper.KeySaveFile);
+                case (StripButtons.SaveFileAs): return "Zapisz jako" + Environment.NewLine + KeyToString(Helper.KeySaveFileAs);
+                case (StripButtons.Undo): return "Cofnij" + Environment.NewLine + KeyToString(Helper.KeyUndo);
+                case (StripButtons.Redo): return "Powtórz" + Environment.NewLine + KeyToString(Helper.KeyRedo);
                 case (StripButtons.Options): return "Opcje";
                 case (StripButtons.LogIn): return "Zaloguj";
-                case (StripButtons.OpenFileFromServer): return "Otwórz plik z serwera";
-                case (StripButtons.SaveFileOnServer): return "Zapisz projekt na serwerze";
-                case (StripButtons.Run): return "Uruchom projekt";
-                case (StripButtons.Debug): return "Debuguj projekt";
+                case (StripButtons.OpenFileFromServer): return "Otwórz plik z serwera" + Environment.NewLine + KeyToString(Helper.KeyOpenFileFromServer);
+                case (StripButtons.SaveFileOnServer): return "Zapisz projekt na serwerze" + Environment.NewLine + KeyToString(Helper.KeySaveFileOnServer);
+                case (StripButtons.Run): return "Uruchom projekt" + Environment.NewLine + KeyToString(Helper.KeyRun);
+                case (StripButtons.Debug): return "Debuguj projekt" + Environment.NewLine + KeyToString(Helper.KeyDebug);
                 default: return "Error";
             }
         }
@@ -66,6 +71,33 @@ namespace UmlDesigner2.Components.ToolStripArea
             using (System.IO.Stream stream = System.Reflection.Assembly.GetExecutingAssembly().GetManifestResourceStream(SolutionPath))
             {
                 return Image.FromStream(stream);
+            }
+        }
+        private static string KeyToString(Keys shortcut)
+        {
+            var text = string.Empty;
+                var keyArr = shortcut.ToString().Split(',').ToList();
+                findKey(Keys.Control, ref text, ref keyArr);
+                findKey(Keys.Shift, ref text, ref keyArr);
+                findKey(Keys.Alt, ref text, ref keyArr);
+                for (int j = 0; j < keyArr.Count; j++)
+                {
+                    if (!text.Equals(string.Empty))
+                        text += " + ";
+                    text += keyArr[j];
+                }
+                return text;
+            
+        }
+        private static void findKey(Keys key, ref string text, ref List<string> keyArr)
+        {
+            var index = keyArr.FindIndex(stringToCheck => stringToCheck.Contains(key.ToString()));
+            if (index != -1)
+            {
+                if (!text.Equals(string.Empty))
+                    text += " +";
+                text += keyArr[index];
+                keyArr.RemoveAt(index);
             }
         }
     }

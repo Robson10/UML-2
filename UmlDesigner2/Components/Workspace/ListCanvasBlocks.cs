@@ -362,6 +362,13 @@ namespace UmlDesigner2.Components.Workspace
         }
         public MyBlock(Rectangle rect, Helper.Shape shape, int id)
         {
+            if (shape == Helper.Shape.Start)
+            {
+                Includes = "#include <stdio.h>" + Environment.NewLine +
+                           "#include <iostream>" + Environment.NewLine +
+                           "#include <string>" + Environment.NewLine +
+                           "using namespace std;" + Environment.NewLine;
+            }
             Rect = rect;
             Shape = shape;
             ID = id;
@@ -372,6 +379,7 @@ namespace UmlDesigner2.Components.Workspace
             FontSize = Helper.DefaultBlocksSettings[Shape].FontSize;
             AutoResize = Helper.DefaultBlockAutoresize;
             UpdateRectSizeOnAutoresize();
+
         }
 
         public void UpdateRectSizeOnAutoresize()

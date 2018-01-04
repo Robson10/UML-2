@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 using UmlDesigner2.Class;
 using UmlDesigner2.Components.Workspace;
@@ -35,23 +36,6 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
             var query= "select * from SbWinNEW.dbo.Files where Name="+name+" and IdUser="+idUser+" ";
             var queryResult=Helper.DataBaseSelect(query).Tables[0];
 
-            //var writer = new StringWriter();
-
-            //writer.Flush();
-            //var serializer = new XmlSerializer(typeof(int));
-            //serializer.Serialize(writer, 0);
-            //var sln = "CONVERT(NVARCHAR(max),'" + writer + "')";
-
-            //writer.Flush();
-            //writer = new StringWriter();
-            //serializer = new XmlSerializer(typeof(ListCanvasBlocks));
-            //serializer.Serialize(writer, Canvas.CanvObj);
-            //var blocks = "CONVERT(NVARCHAR(max),'" + writer + "')";
-            //writer.Flush();
-            //writer = new StringWriter();
-            //serializer = new XmlSerializer(typeof(ListCanvasLines));
-            //serializer.Serialize(writer, Canvas.CanvLines);
-            //var lines = "CONVERT(NVARCHAR(max),'" + writer + "')";
 
            var sln=DataToSqlVarchar((int) 0);
             var blocks= DataToSqlVarchar(Canvas.CanvObj);
@@ -93,12 +77,14 @@ namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
 
         private string DataToSqlVarchar<T>(T data)
         {
-            using (var writer = new StringWriter())
+
+            var xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineHandling = NewLineHandling.Entitize };
+            XmlSerializer serializer = new XmlSerializer(data.GetType());
+            var sw = new StringWriter();
+            using (XmlWriter xmlWriter = XmlWriter.Create(sw,xmlWriterSettings))
             {
-                var serializer = new XmlSerializer(data.GetType());
-                serializer.Serialize(writer, data);
-                return "CONVERT(NVARCHAR(max),'" + writer + "')";
-                writer.Close();
+                serializer.Serialize(xmlWriter, data);
+                return "CONVERT(NVARCHAR(max),'" + sw + "')";
             }
         }
 

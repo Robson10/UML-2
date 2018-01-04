@@ -17,6 +17,7 @@ namespace UmlDesigner2.Components.ResultComponent
             ScrollBars = ScrollBars.Both;
             WordWrap = false;
             Compile.Results.TextChanged += Results_TextChanged;
+            Font = new Font("Arial", 12);
         }
 
 

@@ -2,6 +2,7 @@
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
+using System.Xml;
 using System.Xml.Serialization;
 using UmlDesigner2.Class;
 using UmlDesigner2.Components.ResultComponent;
@@ -86,6 +87,7 @@ namespace UmlDesigner2.MainWindow
                 {
                         reader?.Close();
                 }
+                
             }
         }
         
@@ -97,32 +99,25 @@ namespace UmlDesigner2.MainWindow
                 return;
             }
             Canvas.CanvObj.My_IsSelectedSetForAll(false);
-            TextWriter writer = null;
-            try
-            {
-                writer?.Close();
-                var serializer = new XmlSerializer(typeof(int));
-                writer = new StreamWriter(ActualFilePath, false);
-                serializer.Serialize(writer, 0);
 
-                writer.Close();
-                ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hab";
-                serializer = new XmlSerializer(typeof(ListCanvasBlocks));
-                writer = new StreamWriter(ActualFilePath, false);
-                serializer.Serialize(writer, Canvas.CanvObj);
-
-                writer.Close();
-                ActualFilePath= ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hal";
-                serializer = new XmlSerializer(typeof(ListCanvasLines));
-                writer = new StreamWriter(ActualFilePath, false);
-                serializer.Serialize(writer, Canvas.CanvLines);
-            }
-            finally
-            {
-                writer?.Close();
-            }
+            ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "xml";
+            SaveObjToXmlFile(ActualFilePath, 0);
+            ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hab";
+            SaveObjToXmlFile(ActualFilePath, Canvas.CanvObj);
+            ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hal";
+            SaveObjToXmlFile(ActualFilePath, Canvas.CanvLines);
         }
 
+        private void SaveObjToXmlFile(string path,object obj)
+        {
+            var xmlWriterSettings = new XmlWriterSettings() { Indent = true, NewLineHandling=NewLineHandling.Entitize};
+            XmlSerializer serializer = new XmlSerializer(obj.GetType());
+            using (XmlWriter xmlWriter = XmlWriter.Create(path, xmlWriterSettings))
+            {
+                serializer.Serialize(xmlWriter, obj);
+                xmlWriter.Close();
+            }
+        }
         private void SaveFileAs()
         {
             SaveFileDialog savefile = new SaveFileDialog();
@@ -132,31 +127,12 @@ namespace UmlDesigner2.MainWindow
             if (savefile.ShowDialog() == DialogResult.OK)
             {
                 ActualFilePath = savefile.FileName;
-                TextWriter writer=null;
-                try
-                {
-                    writer?.Close();
-                    var serializer= new XmlSerializer(typeof(int));
-                    writer = new StreamWriter(savefile.FileName, false);
-                    serializer.Serialize(writer, 0);
-
-                    writer?.Close();
-                    savefile.FileName= savefile.FileName.Substring(0, savefile.FileName.Count()-3)+"hab";
-                    serializer = new XmlSerializer(typeof(ListCanvasBlocks));
-                    writer = new StreamWriter(savefile.FileName, false);
-                    serializer.Serialize(writer, Canvas.CanvObj);
-
-
-                    writer?.Close();
-                    savefile.FileName = savefile.FileName.Substring(0, savefile.FileName.Count() - 3) + "hal";
-                    serializer = new XmlSerializer(typeof(ListCanvasLines));
-                    writer = new StreamWriter(savefile.FileName, false);
-                    serializer.Serialize(writer, Canvas.CanvLines);
-                }
-                finally
-                {
-                    writer?.Close();
-                }
+                ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "xml";
+                SaveObjToXmlFile(ActualFilePath, 0);
+                ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hab";
+                SaveObjToXmlFile(ActualFilePath, Canvas.CanvObj);
+                ActualFilePath = ActualFilePath.Substring(0, ActualFilePath.Count() - 3) + "hal";
+                SaveObjToXmlFile(ActualFilePath, Canvas.CanvLines);
             }
         }
 
@@ -177,7 +153,6 @@ namespace UmlDesigner2.MainWindow
                 Helper.SaveShortcuts();
             }
         }
-        //todo
         #region metody dla skrótów i przycisków z paska narzedzi
 
         private void SaveFileOnServer()
@@ -186,7 +161,6 @@ namespace UmlDesigner2.MainWindow
                 new Components.ToolStripArea.SaveOnServer.SaveOnServerForm();
             if (saveOnServerForm.ShowDialog() == DialogResult.OK)
             {
-                
             }
         }
         private void OpenFileFromServer()
@@ -196,6 +170,8 @@ namespace UmlDesigner2.MainWindow
             if (openFromServerForm.ShowDialog() == DialogResult.OK)
             {
                 canvas1.Invalidate();
+                
+                ActualFilePath = string.Empty;
             }
         }
 

@@ -72,10 +72,11 @@ namespace UmlDesigner2.Class
         public static Keys KeyOpenFile = Keys.Control | Keys.O;
         public static Keys SelectAll = Keys.Control | Keys.A;
         //shift
+        public static Keys KeyOpenFileFromServer = Keys.Shift | Keys.O;
+        public static Keys KeySaveFileOnServer = Keys.Shift | Keys.S;
         public static Keys KeyDebug = Keys.Shift | Keys.F5;
         //ctrl shift
         public static Keys KeySaveFileAs = Keys.Control | Keys.Shift | Keys.S;
-        public static Keys KeyOpenFileFromServer = Keys.Control | Keys.Shift | Keys.O;
         #endregion
 
         #region Clipboard
