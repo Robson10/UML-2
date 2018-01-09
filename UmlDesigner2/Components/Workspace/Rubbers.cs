@@ -7,13 +7,13 @@ namespace UmlDesigner2.Components.Workspace
 {
     class Rubbers : List<UserControl>
     {
-        private ListCanvasBlocks _canvasBlocks;
+        //private ListCanvasBlocks _canvasBlocks;
         private Point MouseDownLocation_Rubbers;
         private Point AutoScrollPosition;
 
-        public Rubbers(ref ListCanvasBlocks _listCanvasBlocks)
+        public Rubbers()//ref ListCanvasBlocks _listCanvasBlocks)
         {
-            _canvasBlocks = _listCanvasBlocks;
+            //_canvasBlocks = _listCanvasBlocks;
             RubbersPresets();
         }
       
@@ -46,7 +46,7 @@ namespace UmlDesigner2.Components.Workspace
         private void Rubbers_MouseUp(object sender, MouseEventArgs e)
         {
             if(e.Button==MouseButtons.Left)
-            UndoRedo.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+            UndoRedo.Push(Canvas.CanvObj.ToListHistory(MyAction.EditSize));
         }
 
 
@@ -59,7 +59,7 @@ namespace UmlDesigner2.Components.Workspace
         {
             if (e.Button == MouseButtons.Left)
             {
-                UndoRedo.Push(_canvasBlocks.ToListHistory(MyAction.EditSize));
+                UndoRedo.Push(Canvas.CanvObj.ToListHistory(MyAction.EditSize));
                 MouseDownLocation_Rubbers = e.Location;
             }
         }
@@ -74,11 +74,11 @@ namespace UmlDesigner2.Components.Workspace
             if (e.Button == MouseButtons.Left)
             {
                 var _scrolledPoint = e.Location;
-                _canvasBlocks.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, _scrolledPoint,
-                    (sender as UserControl).TabIndex);
-                if (_canvasBlocks.Count > 0)
-                    ShowRubbers(_canvasBlocks[0],AutoScrollPosition);
+                Canvas.CanvObj.My_ResizeSelectedObjectsByRubbers(ref MouseDownLocation_Rubbers, _scrolledPoint,(sender as UserControl).TabIndex);
+                if (Canvas.CanvObj.Count > 0)
+                    ShowRubbers(Canvas.CanvObj[0],AutoScrollPosition);
                 this[0].Parent.Invalidate();
+                Canvas.CanvLines.MyUpdate(ref Canvas.CanvObj);
             }
         }
 

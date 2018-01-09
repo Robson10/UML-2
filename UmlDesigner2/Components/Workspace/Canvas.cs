@@ -10,7 +10,7 @@ namespace UmlDesigner2.Components.Workspace
         public static ListCanvasBlocks CanvObj = new ListCanvasBlocks(); //lista blokow wyrysowanych na ekranie
         public static ListCanvasLines CanvLines = new ListCanvasLines(); //lista blokow wyrysowanych na ekranie
 
-        private readonly Rubbers _rubbers = new Rubbers(ref CanvObj);
+        private readonly Rubbers _rubbers = new Rubbers();
 
         public bool IsMultiSelect { get; set; }
         private Helper.Shape _shapeToDraw = Helper.Shape.Nothing;

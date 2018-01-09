@@ -50,7 +50,7 @@ namespace UmlDesigner2.Components.ResultComponent
                 }
                 else
                 {
-                    File.WriteAllText(Helper.CompilePath + @"\run.bat","g++ -g -o project.exe project.cpp" + Environment.NewLine + "gdb project.exe" );
+                    File.WriteAllText(Helper.CompilePath + @"\run.bat", "g++ -g -o project.exe project.cpp" + Environment.NewLine + "gdb project.exe" );
                     Process cmd = new Process();
                     cmd.StartInfo.FileName = Helper.CompilePath + @"\run.bat";
                     cmd.StartInfo.UseShellExecute = false;
@@ -62,7 +62,7 @@ namespace UmlDesigner2.Components.ResultComponent
 
         private static void CmdCompile()
         {
-            File.WriteAllText(Helper.CompilePath + @"\run.bat", "echo Kompilacja"+Environment.NewLine+"g++ project.cpp -o project.exe" +Environment.NewLine+"pause");
+            File.WriteAllText(Helper.CompilePath + @"\run.bat", "g++ project.cpp -o project.exe" +Environment.NewLine+"pause");
             Process cmd = new Process();
             cmd.StartInfo.FileName = Helper.CompilePath + @"\run.bat";
             cmd.StartInfo.UseShellExecute = false;
@@ -185,9 +185,6 @@ namespace UmlDesigner2.Components.ResultComponent
                 {
                     MessageBox.Show("Nie udało się usunąc plików projektu. Prawdopodobnie masz uruchomione projekty?");
                 }
-
-                
-
             }
         }
 
