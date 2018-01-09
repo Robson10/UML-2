@@ -7,13 +7,11 @@ namespace UmlDesigner2.Components.Workspace
 {
     class Rubbers : List<UserControl>
     {
-        //private ListCanvasBlocks _canvasBlocks;
         private Point MouseDownLocation_Rubbers;
         private Point AutoScrollPosition;
 
-        public Rubbers()//ref ListCanvasBlocks _listCanvasBlocks)
+        public Rubbers()
         {
-            //_canvasBlocks = _listCanvasBlocks;
             RubbersPresets();
         }
       
