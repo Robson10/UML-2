@@ -1,6 +1,6 @@
-﻿using UmlDesigner2.Components.Settings.SetShortcut.Keyboard;
+﻿using SbWinNew.Components.Settings.SetShortcut.Keyboard;
 
-namespace UmlDesigner2.Components.Settings
+namespace SbWinNew.Components.Settings
 {
     partial class SettingWindow
     {

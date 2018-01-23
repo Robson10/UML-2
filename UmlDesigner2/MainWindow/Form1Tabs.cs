@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.MainWindow
+namespace SbWinNew.MainWindow
 {
     partial class Form1
     {

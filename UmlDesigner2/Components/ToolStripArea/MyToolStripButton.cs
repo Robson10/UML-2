@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea
+﻿namespace SbWinNew.Components.ToolStripArea
 {
     public sealed class MyToolStripButton : System.Windows.Forms.ToolStripButton
     {

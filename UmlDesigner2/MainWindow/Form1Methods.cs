@@ -1,16 +1,15 @@
-﻿using System.Drawing;
-using System.IO;
+﻿using System.IO;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Serialization;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.ResultComponent;
-using UmlDesigner2.Components.Settings;
-using UmlDesigner2.Components.ToolStripArea.Login;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.ResultComponent;
+using SbWinNew.Components.Settings;
+using SbWinNew.Components.ToolStripArea.Login;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.MainWindow
+namespace SbWinNew.MainWindow
 {
     partial class Form1
     {
@@ -181,7 +180,7 @@ namespace UmlDesigner2.MainWindow
             if (loginForm.ShowDialog() == DialogResult.OK)
             {
                 myToolStrip1.Login();
-                
+                isLogedIn = true;
             }
         }
 

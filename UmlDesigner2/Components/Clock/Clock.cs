@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Drawing;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Clock
+namespace SbWinNew.Components.Clock
 {
     public partial class Clock : Panel
     {

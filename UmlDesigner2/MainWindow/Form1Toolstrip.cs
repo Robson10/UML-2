@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Drawing;
 
-namespace UmlDesigner2.MainWindow
+namespace SbWinNew.MainWindow
 {
     partial class Form1
     {

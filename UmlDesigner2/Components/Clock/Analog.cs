@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Clock
+namespace SbWinNew.Components.Clock
 {
     //Analog Clock Class
     partial class Clock

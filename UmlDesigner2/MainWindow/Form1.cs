@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.BlockProp;
-using UmlDesigner2.Components.ResultComponent;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.BlockProp;
+using SbWinNew.Components.ResultComponent;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.MainWindow
+namespace SbWinNew.MainWindow
 {
     public partial class Form1 : Form
     {
@@ -13,6 +13,8 @@ namespace UmlDesigner2.MainWindow
             new Results();
 
         private BlockProperties _properties;
+        private bool egzamStarted = false;
+        private bool isLogedIn = false;
 
         public Form1()
         {
@@ -37,6 +39,7 @@ namespace UmlDesigner2.MainWindow
         {
             canvas1.ClearCanvas();
             myToolStrip1.BlockButtonsForEgzam();
+            egzamStarted = true;
         }
         
         private void _properties_BlockPropertyChanged(object sender, EventArgs e)
@@ -105,16 +108,18 @@ namespace UmlDesigner2.MainWindow
                 canvas1.Redo();
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeySaveFile))
                 SaveFile();
-            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyNewFile))
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyNewFile) && !egzamStarted)
                 NewFile();
-            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFile))
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFile) && !egzamStarted)
                 OpenFile();
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeyDebug))
                 Debug();
             else if ((e.Modifiers | e.KeyCode) == (Helper.KeySaveFileAs))
                 SaveFileAs();
-            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFileFromServer))
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeyOpenFileFromServer) && !egzamStarted && isLogedIn)
                 OpenFileFromServer();
+            else if ((e.Modifiers | e.KeyCode) == (Helper.KeySaveFileOnServer) && isLogedIn)
+                SaveFileOnServer();
             else if ((e.Modifiers | e.KeyCode) == (Keys.None | Keys.Escape))
                 canvas1.AbortAddingObject();
             else if ((e.Modifiers | e.KeyCode) == (Keys.None | Keys.Delete))

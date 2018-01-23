@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea.Login
+﻿namespace SbWinNew.Components.ToolStripArea.Login
 {
     partial class LoginForm
     {

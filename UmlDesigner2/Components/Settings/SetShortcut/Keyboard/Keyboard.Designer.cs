@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.Settings.SetShortcut.Keyboard
+﻿namespace SbWinNew.Components.Settings.SetShortcut.Keyboard
 {
     partial class Keyboard
     {

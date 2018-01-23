@@ -2,9 +2,9 @@
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.TabsArea.TabBlocks
+namespace SbWinNew.Components.TabsArea.TabBlocks
 {
     public class BlocksTab : TabPage
     {

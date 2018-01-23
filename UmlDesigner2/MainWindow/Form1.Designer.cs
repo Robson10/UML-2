@@ -1,9 +1,9 @@
-﻿using UmlDesigner2.Components.Clock;
-using UmlDesigner2.Components.TabsArea;
-using UmlDesigner2.Components.ToolStripArea;
-using UmlDesigner2.Components.Workspace;
+﻿using SbWinNew.Components.Clock;
+using SbWinNew.Components.TabsArea;
+using SbWinNew.Components.ToolStripArea;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.MainWindow
+namespace SbWinNew.MainWindow
 {
     partial class Form1
     {
@@ -36,17 +36,17 @@ namespace UmlDesigner2.MainWindow
             this.components = new System.ComponentModel.Container();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this.tabsArea1 = new UmlDesigner2.Components.TabsArea.TabsArea();
+            this.tabsArea1 = new TabsArea();
             this.splitContainer3 = new System.Windows.Forms.SplitContainer();
-            this.canvas1 = new UmlDesigner2.Components.Workspace.Canvas();
+            this.canvas1 = new Canvas();
             this.tabPage1 = new System.Windows.Forms.TabPage();
             this.tabPage2 = new System.Windows.Forms.TabPage();
             this.tabPage3 = new System.Windows.Forms.TabPage();
             this.tabPage4 = new System.Windows.Forms.TabPage();
             this.tabPage5 = new System.Windows.Forms.TabPage();
             this.tabPage6 = new System.Windows.Forms.TabPage();
-            this.myToolStrip1 = new UmlDesigner2.Components.ToolStripArea.MyToolStrip();
-            this.clock1 = new UmlDesigner2.Components.Clock.Clock();
+            this.myToolStrip1 = new MyToolStrip();
+            this.clock1 = new Clock();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();

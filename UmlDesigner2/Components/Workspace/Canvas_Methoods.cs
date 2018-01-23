@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Workspace
+namespace SbWinNew.Components.Workspace
 {
     //zaznaczanie przez rect i przesuwanie bez ctrl???
     partial class Canvas
@@ -77,6 +77,14 @@ namespace UmlDesigner2.Components.Workspace
                         UndoRedo.Push(new List<UndoRedoItem>(){new UndoRedoItem(MyAction.Add,CanvObj[0], null) });
                     }
                 }
+                else if (ShapeToDraw == Helper.Shape.End)
+                {
+                    if (!CheckIsEndExist())
+                    {
+                        CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
+                        UndoRedo.Push(new List<UndoRedoItem>() { new UndoRedoItem(MyAction.Add, CanvObj[0], null) });
+                    }
+                }
                 else
                 {
                     CanvObj.MyAdd(new Point(Width * 10 / 100, Height * 10 / 100), ShapeToDraw);
@@ -98,6 +106,11 @@ namespace UmlDesigner2.Components.Workspace
                 if (!CheckIsStartExist())
                     ShapeToDraw = shape;
             }
+            else if (shape == Helper.Shape.End)
+            {
+                if (!CheckIsEndExist())
+                    ShapeToDraw = shape;
+            }
             else
                 ShapeToDraw = shape;
         }
@@ -114,7 +127,17 @@ namespace UmlDesigner2.Components.Workspace
                 }
             return false;
         }
-
+        private bool CheckIsEndExist()
+        {
+            for (int i = 0; i < CanvObj.Count; i++)
+                if (CanvObj[i].Shape == Helper.Shape.End)
+                {
+                    MessageBox.Show("Każdy schemat blokowy może posiadać tylko jeden koniec (blok końca)");
+                    Cursor = Cursors.Default;
+                    return true;
+                }
+            return false;
+        }
         //V
         public void AbortAddingObject()
         {

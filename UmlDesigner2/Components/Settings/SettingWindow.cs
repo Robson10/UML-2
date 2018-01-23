@@ -2,11 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.Settings.SetShortcut;
-using UmlDesigner2.Components.Settings.SetShortcut.Keyboard;
+using SbWinNew.Class;
+using SbWinNew.Components.Settings.SetShortcut;
+using SbWinNew.Components.Settings.SetShortcut.Keyboard;
 
-namespace UmlDesigner2.Components.Settings
+namespace SbWinNew.Components.Settings
 {
     public partial class SettingWindow : Form
     {

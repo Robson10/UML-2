@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Windows.Forms;
-using UmlDesigner2.Components.TabsArea.TabBlocks;
+using SbWinNew.Components.TabsArea.TabBlocks;
 
-namespace UmlDesigner2.Components.TabsArea
+namespace SbWinNew.Components.TabsArea
 {
     class TabsArea:TabControl
     {

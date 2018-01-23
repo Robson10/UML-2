@@ -3,10 +3,10 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.Components.ResultComponent
+namespace SbWinNew.Components.ResultComponent
 {
     public class Compile
     {

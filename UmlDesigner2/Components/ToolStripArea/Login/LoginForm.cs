@@ -2,9 +2,9 @@
 using System.Data;
 using System.Drawing;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.ToolStripArea.Login
+namespace SbWinNew.Components.ToolStripArea.Login
 {
     public partial class LoginForm : Form
     {

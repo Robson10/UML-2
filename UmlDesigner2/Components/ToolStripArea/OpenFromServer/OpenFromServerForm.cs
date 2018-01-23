@@ -1,18 +1,13 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
+namespace SbWinNew.Components.ToolStripArea.OpenFromServer
 {
     public partial class OpenFromServerForm : Form
     {

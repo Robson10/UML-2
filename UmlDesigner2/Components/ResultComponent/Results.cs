@@ -3,7 +3,7 @@ using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Components.ResultComponent
+namespace SbWinNew.Components.ResultComponent
 {
     //class Results:ListView
     class Results : TextBox

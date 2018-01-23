@@ -1,11 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using UmlDesigner2.MainWindow;
+using SbWinNew.MainWindow;
 
-namespace UmlDesigner2
+namespace SbWinNew
 {
     static class Program
     {

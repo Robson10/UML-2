@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Workspace
+namespace SbWinNew.Components.Workspace
 {
     public class ListCanvasLines:List<MyLine>
     {

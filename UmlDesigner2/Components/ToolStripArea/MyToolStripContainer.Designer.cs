@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea
+﻿namespace SbWinNew.Components.ToolStripArea
 {
     partial class MyToolStrip
     {

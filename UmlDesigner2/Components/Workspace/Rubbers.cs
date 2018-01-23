@@ -1,9 +1,9 @@
 using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Workspace
+namespace SbWinNew.Components.Workspace
 {
     class Rubbers : List<UserControl>
     {

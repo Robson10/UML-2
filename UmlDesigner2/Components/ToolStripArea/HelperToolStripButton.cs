@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.ToolStripArea
+namespace SbWinNew.Components.ToolStripArea
 {
     public class ToolStripButtonParameters
     {
@@ -47,7 +47,7 @@ namespace UmlDesigner2.Components.ToolStripArea
         public static int IconSize = 3;
         public static Image GetIcon(StripButtons buttonType, int size)
         {
-            string path = "UmlDesigner2.Icons.";
+            string path = "SbWinNew.Icons.";
             switch (buttonType)
             {
                 case (StripButtons.NewFile): return ImageRead(path + "NewFile.png");

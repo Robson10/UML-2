@@ -5,7 +5,7 @@ using System.IO;
 using System.Windows.Forms;
 using System.Xml.Serialization;
 
-namespace UmlDesigner2.Class
+namespace SbWinNew.Class
 {
     partial class Helper
     {

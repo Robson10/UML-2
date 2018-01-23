@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Settings.SetShortcut.Keyboard
+namespace SbWinNew.Components.Settings.SetShortcut.Keyboard
 {
     public partial class Keyboard : UserControl
     {

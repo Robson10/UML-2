@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.Class
+namespace SbWinNew.Class
 {
     class UndoRedo
     {

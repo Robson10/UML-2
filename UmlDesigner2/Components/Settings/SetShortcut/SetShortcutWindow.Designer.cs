@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.Settings.SetShortcut
+﻿namespace SbWinNew.Components.Settings.SetShortcut
 {
     partial class SetShortcutWindow
     {

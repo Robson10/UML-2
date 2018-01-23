@@ -8,8 +8,8 @@
     <ProjectGuid>{E67E4943-C9A9-44DC-BE31-EBC715F59871}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>UmlDesigner2</RootNamespace>
-    <AssemblyName>UmlDesigner2</AssemblyName>
+    <RootNamespace>SbWinNew</RootNamespace>
+    <AssemblyName>SbWinNew</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>

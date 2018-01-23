@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.Drawing;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.Components.BlockProp
+namespace SbWinNew.Components.BlockProp
 {
     class PropertyGridItems
     {

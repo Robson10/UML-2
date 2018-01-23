@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea.OpenFromServer
+﻿namespace SbWinNew.Components.ToolStripArea.OpenFromServer
 {
     partial class OpenFromServerForm
     {

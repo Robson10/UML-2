@@ -1,8 +1,9 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Drawing;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Settings
+namespace SbWinNew.Components.Settings
 {
     class SettingsPropertyGrid
     {
@@ -190,6 +191,14 @@ namespace UmlDesigner2.Components.Settings
         {
             get { return (Helper.ClockPartOfTimeColor as SolidBrush).Color; }
             set { Helper.ClockPartOfTimeColor =new SolidBrush(value); }
+        }
+        [Category("Zegar")]
+        [Description("Pozwala ustawić czas przewidziany na egzamin")]
+        [DisplayName("Czas trwania egzaminu")]
+        public TimeSpan TimeForEgzam
+        {
+            get { return Helper.ClockTimeForExam; }
+            set { Helper.ClockTimeForExam=value; }
         }
         #endregion
 

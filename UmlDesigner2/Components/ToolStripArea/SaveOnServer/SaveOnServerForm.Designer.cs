@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.ToolStripArea.SaveOnServer
+﻿namespace SbWinNew.Components.ToolStripArea.SaveOnServer
 {
     partial class SaveOnServerForm
     {

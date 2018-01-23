@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using UmlDesigner2.Class;
+using SbWinNew.Class;
 
-namespace UmlDesigner2.Components.Workspace
+namespace SbWinNew.Components.Workspace
 {
     partial class Canvas
     {

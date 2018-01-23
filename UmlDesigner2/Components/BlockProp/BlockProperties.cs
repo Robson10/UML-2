@@ -2,10 +2,10 @@
 using System.Drawing;
 using System.Reflection;
 using System.Windows.Forms;
-using UmlDesigner2.Class;
-using UmlDesigner2.Components.Workspace;
+using SbWinNew.Class;
+using SbWinNew.Components.Workspace;
 
-namespace UmlDesigner2.Components.BlockProp
+namespace SbWinNew.Components.BlockProp
 {
     public partial class BlockProperties : UserControl
     {
@@ -73,7 +73,7 @@ namespace UmlDesigner2.Components.BlockProp
             {
                 _grCode = new GroupBox()
                 {
-                    Text = "Variables",
+                    Text = "Zmienne",
                     Font = new Font("Arial", 13),
                     Size = new Size(ClientRectangle.Width - 10, 100),
                     Dock = DockStyle.Top
@@ -92,7 +92,7 @@ namespace UmlDesigner2.Components.BlockProp
 
                 _grLabel = new GroupBox()
                 {
-                    Text = "Includes",
+                    Text = "Biblioteki",
                     Font = new Font("Arial", 13),
                     Size = new Size(ClientRectangle.Width - 10, 70),
                     Dock = DockStyle.Top

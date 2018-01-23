@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Class
+namespace SbWinNew.Class
 {
     public class DictionaryBlock
     {
@@ -40,16 +40,6 @@ namespace UmlDesigner2.Class
         #region Blocks
 
         public static string BlockTabText = "Bloki";
-
-        #endregion
-
-        #region Schemats
-
-        public static string SchematsTabText = "Schematy";
-
-        public static string SchematsPath =  System.IO.Path.GetDirectoryName(Application.ExecutablePath) + "\\Schemats";
-
-        public static string SchematsExtension = ".txt";
 
         #endregion
 
@@ -121,33 +111,33 @@ namespace UmlDesigner2.Class
         {
             {
                 Shape.Start,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "Start",
-                    "UmlDesigner2.Icons.Start.jpg")
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Start",
+                    "SbWinNew.Icons.Start.jpg")
             },
             {
                 Shape.End,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "End",
-                    "UmlDesigner2.Icons.End.jpg")
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Koniec",
+                    "SbWinNew.Icons.End.jpg")
             },
             {
                 Shape.Input,
-                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Wprowadzania",
-                    "UmlDesigner2.Icons.Input.jpg")
+                new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Wejścia/wyjścia",
+                    "SbWinNew.Icons.Input.jpg")
             },
             {
                 Shape.Execution,
                 new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Wykonawczy",
-                    "UmlDesigner2.Icons.Execution.jpg")
+                    "SbWinNew.Icons.Execution.jpg")
             },
             {
                 Shape.Decision,
                 new DictionaryBlock(Color.FromArgb(255, 130, 130, 130), Color.Wheat, 10, "B. Warunkowy",
-                    "UmlDesigner2.Icons.Decision.jpg")
+                    "SbWinNew.Icons.Decision.jpg")
             },
             {
                 Shape.ConnectionLine,
                 new DictionaryBlock(Color.FromArgb(255, 0, 0, 0), Color.Wheat, 10, "Linia łącząca",
-                    "UmlDesigner2.Icons.ConnectionLine.jpg")
+                    "SbWinNew.Icons.ConnectionLine.jpg")
             },
             {
                 Shape.Nothing,

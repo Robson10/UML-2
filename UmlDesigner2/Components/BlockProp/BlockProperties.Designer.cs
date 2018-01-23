@@ -1,4 +1,4 @@
-﻿namespace UmlDesigner2.Components.BlockProp
+﻿namespace SbWinNew.Components.BlockProp
 {
     partial class BlockProperties
     {

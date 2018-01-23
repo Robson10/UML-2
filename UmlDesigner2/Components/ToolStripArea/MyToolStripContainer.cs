@@ -2,7 +2,7 @@
 using System.Drawing;
 using System.Windows.Forms;
 
-namespace UmlDesigner2.Components.ToolStripArea
+namespace SbWinNew.Components.ToolStripArea
 {
     public partial class MyToolStrip : ToolStrip
     {
@@ -76,7 +76,8 @@ namespace UmlDesigner2.Components.ToolStripArea
 
         public void Login()
         {
-            _openFileFromServer.Enabled = true;
+            if (_newFile.Enabled)
+                _openFileFromServer.Enabled = true;
             _saveFileOnServer.Enabled = true;
         }
 
