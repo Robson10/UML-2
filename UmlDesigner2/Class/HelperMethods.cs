@@ -53,7 +53,8 @@ namespace SbWinNew.Class
             {
                 using (var sr = new StreamReader(FilePath))
                 {
-                    XmlSerializer xs = new XmlSerializer(TypeOfSavedData.GetType());
+                    XmlSerializer xs = 
+                        new XmlSerializer(TypeOfSavedData.GetType());
                     TypeOfSavedData = xs.Deserialize(sr);
                     sr.Close();
                 }

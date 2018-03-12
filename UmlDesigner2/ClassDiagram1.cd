@@ -1,0 +1,240 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="SbWinNew.Class.DictionaryBlock" Collapsed="true">
+    <Position X="9.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AACAAIAAEAAAAAAAAAAAAgIAAAAAAAAAAAAAACABAAA=</HashCode>
+      <FileName>Class\Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Class.Helper" Collapsed="true">
+    <Position X="2.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAACEBQIiAEgVSIOACgSDAggEEVBBQkQCISAAMBEIA=</HashCode>
+      <FileName>Class\Helper.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Class.UndoRedo" Collapsed="true">
+    <Position X="2.25" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIAAAAAAAAABAAAAAABAAABAAkAAAAAAAAAAABACAA=</HashCode>
+      <FileName>Class\UndoRedo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Class.UndoRedoItem" Collapsed="true">
+    <Position X="4" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABIAA=</HashCode>
+      <FileName>Class\UndoRedo.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.BlockProp.BlockProperties" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAgAAABAASAAAIAAQAGAAEACAgAEQAGQAAAAAAAQgCA=</HashCode>
+      <FileName>Components\BlockProp\BlockProperties.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.BlockProp.PropertyGridItems" Collapsed="true">
+    <Position X="4" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABgACIAAAAAAgIAAAAIAAgAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Components\BlockProp\PropertyGridItems.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Clock.Clock" Collapsed="true">
+    <Position X="5.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CASQolABAEAgAARAZAJAAiAAAALCAAAIAEAAiwMAiSA=</HashCode>
+      <FileName>Components\Clock\Analog.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ResultComponent.Compile" Collapsed="true">
+    <Position X="7.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAIRQAAAACCAgCAAAAAAAAABAABAAAAI=</HashCode>
+      <FileName>Components\ResultComponent\Compile.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ResultComponent.Results" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAIAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ResultComponent\Results.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Settings.SetShortcut.Keyboard.Keyboard" Collapsed="true">
+    <Position X="4" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ACGA+QcCECAAAAIBAACAAMECAMw6gEIwAIABYCAQASA=</HashCode>
+      <FileName>Components\Settings\SetShortcut\Keyboard\Keyboard.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Settings.SetShortcut.Keyboard.KeyboardKey" Collapsed="true">
+    <Position X="5.75" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQQAAAAAAQAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\Settings\SetShortcut\Keyboard\KeyboardKey.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Settings.SetShortcut.SetShortcutWindow" Collapsed="true">
+    <Position X="2.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAIACAAAgAAAACAAAACBAABAAAAAAABAAAQAAA=</HashCode>
+      <FileName>Components\Settings\SetShortcut\SetShortcutWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Settings.SettingsPropertyGrid" Collapsed="true">
+    <Position X="5.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAAABAAQEAgBACQABAAgAAgIAJAABEAgBAACAAUAI=</HashCode>
+      <FileName>Components\Settings\SettingsPropertyGrid.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Settings.SettingWindow" Collapsed="true">
+    <Position X="7.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>+BGAACIAACCAQhAABECAACgCAIBAAAACAEAAAUABRGA=</HashCode>
+      <FileName>Components\Settings\SettingWindow.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.TabsArea.TabBlocks.BlocksTab" Collapsed="true">
+    <Position X="2.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAQAAAABCAIAAAAAAAAQAAAACAAAA=</HashCode>
+      <FileName>Components\TabsArea\TabBlocks\BlocksTab.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.TabsArea.TabBlocks.OAKListView" Collapsed="true">
+    <Position X="9.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>JgAgAAAAAAECAgAAACAAAAAAACAgAAAAAAAAAAACBEQ=</HashCode>
+      <FileName>Components\TabsArea\TabBlocks\OAKListView.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.TabsArea.TabsArea" Collapsed="true">
+    <Position X="9.25" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>EAAAAAAAAAAAAAAAAgAgCAAQAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\TabsArea\TabsArea.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.ToolStripButtonParameters" Collapsed="true">
+    <Position X="0.5" Y="5.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BBAAAAIAAgAAAAAAAAQAAQAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ToolStripArea\HelperToolStripButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.MyToolStripButton" Collapsed="true">
+    <Position X="7.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Components\ToolStripArea\MyToolStripButton.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.MyToolStrip" Collapsed="true">
+    <Position X="5.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAIAAASAEQAAAAQWAAAkDKAEAgACSpCRQAAIgAAA=</HashCode>
+      <FileName>Components\ToolStripArea\MyToolStripContainer.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.Login.LoginForm" Collapsed="true">
+    <Position X="0.5" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAQgCCABBAAAgCAAAgCQAAAAAACIAAQAAAAAAA=</HashCode>
+      <FileName>Components\ToolStripArea\Login\LoginForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.OpenFromServer.OpenFromServerForm" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABCACAACBAAAACAEACCAAMAQBAAAAAAAAAAAGA=</HashCode>
+      <FileName>Components\ToolStripArea\OpenFromServer\OpenFromServerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.ToolStripArea.SaveOnServer.SaveOnServerForm" Collapsed="true">
+    <Position X="0.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAIIAAAAACAAABAAAACAAAAGAAIQAECAAgAAAAAAAEA=</HashCode>
+      <FileName>Components\ToolStripArea\SaveOnServer\SaveOnServerForm.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.Canvas" Collapsed="true">
+    <Position X="4" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>QASWNAAICWADFAChIQBAAKABIhEgBAAicgADABCiAAE=</HashCode>
+      <FileName>Components\Workspace\Canvas.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.ListCanvasBlocks" Collapsed="true">
+    <Position X="7.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AEAAIAAQAAEQAACSIABAAwAAAAAAAgAEAAAQAAQgEIA=</HashCode>
+      <FileName>Components\Workspace\ListCanvasBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.MyBlock" Collapsed="true">
+    <Position X="2.25" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>ABAFCMCAkAACmwAAQAAgAgAAACLIAAAAABQAAAABAAg=</HashCode>
+      <FileName>Components\Workspace\ListCanvasBlocks.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.ListCanvasLines" Collapsed="true">
+    <Position X="9.25" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIIAAAAAAAAAQIAAAAQAAACAAAgAAAAAAgAAgEAA=</HashCode>
+      <FileName>Components\Workspace\ListCanvasLines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.MyLine" Collapsed="true">
+    <Position X="4" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAABIAAQAEAAUAkAAAIAAAAAAAAAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Components\Workspace\ListCanvasLines.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Components.Workspace.Rubbers" Collapsed="true">
+    <Position X="9.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAACAAAAQAAAEAgAAAAAAAAAAAAAAAAQQAAAIAAAgQA=</HashCode>
+      <FileName>Components\Workspace\Rubbers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.MainWindow.Form1" Collapsed="true">
+    <Position X="0.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>MAGIjDAAADCAUchEAICSYAAqAaABk1UCBBQCAgBDAEo=</HashCode>
+      <FileName>MainWindow\Form1.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Program" Collapsed="true">
+    <Position X="2.25" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Properties.Resources" Collapsed="true">
+    <Position X="5.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAABEAAAAQAAAAAAAAAAAAAAAIA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="SbWinNew.Properties.Settings" Collapsed="true">
+    <Position X="4" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAIAAAAAABAAAAAAAAAAAAAAA=</HashCode>
+    </TypeIdentifier>
+  </Class>
+  <Enum Name="SbWinNew.Class.MyAction" Collapsed="true">
+    <Position X="0.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AgYABIAAAIAAAAAAAAAAAAAAAAEAAAACAAAAAAAAAAA=</HashCode>
+      <FileName>Class\UndoRedo.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

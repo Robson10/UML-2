@@ -50,6 +50,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Class\DictionaryBlock.cs" />
+    <Compile Include="Class\MyAction.cs" />
+    <Compile Include="Class\UndoRedoItem.cs" />
     <Compile Include="Components\ToolStripArea\Login\LoginForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -80,6 +83,8 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Class\HelperMethods.cs" />
+    <Compile Include="Components\Workspace\MyBlock.cs" />
+    <Compile Include="Components\Workspace\MyLine.cs" />
     <Compile Include="MainWindow\Form1.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -197,6 +202,7 @@
       <DependentUpon>SettingWindow.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="AppClassDiagram.cd" />
+    <None Include="ClassDiagram1.cd" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
